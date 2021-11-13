@@ -1,4 +1,3 @@
-// import { cardData } from './DummyData'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import ArticleCard from '../Cards/ArticleCard'
