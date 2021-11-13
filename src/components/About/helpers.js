@@ -1,7 +1,3 @@
-import member_1 from '../../assets/teamMembers/member_1.jpg'
-import member_2 from '../../assets/teamMembers/member_2.jpg'
-import member_3 from '../../assets/teamMembers/member_3.jpg'
-
 const headingText =
         'Our objective is to provide a platform to share experiences ' +
         'and facilitate the exchange of ideas and expertise on conflict' +
@@ -23,25 +19,4 @@ const aboutText =
         ' understanding and dealing with conflict situations and furtherance of peace studies.'
 
 
-const teamMembers = [
-  {
-    name: 'Dr.Jyoti M Pathania',
-    position: 'Founding Editor',
-    description: 'Author, Academic and Research Analyst with over 20 years of teaching, training and research experience in various Indian universities. Her areas of interests and specialisation are International Politics, Diplomacy, Conflict Resolution & Peace, United Nations, Women issues, Non-Traditional Security and South Asia.',
-    profilePhoto: member_1
-  },
-  {
-    name: "Preeti Mankotia",
-    position: 'Media Head',
-    description: 'Experienced Strategic Sales with a demonstrated history of working in the financial services industry. Skilled in Portfolio Management,Relationship Management, Business Planning and Sales. Strong sales professional with a MBA focused in Marketing & Finance from Symbiosis International University.',
-    profilePhoto: member_2
-  },
-  {
-    name: "Shomaila Tahzib",
-    position: 'Managing Editor',
-    description: 'Shomaila Tahzib is a social activist and research scholar with a keen focus on sociopolitical and gender parity issues. She is actively involved in awareness campaigns among underprivileged women folk. She is a Master in Political Science with Gold Medal from St.Xavier’s College, Ranchi',
-    profilePhoto: member_3
-  },
-]
-
-export {headingText, aboutText, teamMembers}
+export {headingText, aboutText}
