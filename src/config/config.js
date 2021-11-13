@@ -1,5 +1,5 @@
 const config = {
-  host: 'http://localhost:5000/'
+  host: 'https://oijpcr-prod.herokuapp.com/'
 }
 
 export default config
