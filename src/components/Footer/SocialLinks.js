@@ -1,4 +1,4 @@
-import {SocialLinks as Links} from '../Home/Socials/Links'
+import {SocialLinks as Links} from '../Home/Podcast/Socials/Links'
 
 export const SocialLinks = [
     {

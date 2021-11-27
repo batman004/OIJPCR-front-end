@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import stock_loading_photo from '../../assets/stockPhotos/stock_loading_photo.jpg'
 import ArticleCard from '../Cards/ArticleCard'
 import ArticleCardFullWidth from '../Cards/ArticleCardFullWidth'
 import config from '../../config/config'
 
 function LeftGrid () {
-  const [cardData, setCardData] = useState([])
+  const loadingInfo = {
+      cover: stock_loading_photo,
+      author: "Loading...",
+      title: "Loading...",
+      volume: "...",
+      slug: "...",
+      _id: "",
+      path: "",
+      cname: {
+        container: '',
+        button: 'ml-4 mt-8',
+      }
+  }
+
+  const [cardData, setCardData] = useState([loadingInfo])
 
   useEffect(() => {
     async function fetchJournals () {
       return await axios.get(`${config.host}journals/home/5`)
     }
 
-    fetchJournals().then((result) => {
-      setCardData(result?.data)
-    })
+    fetchJournals().then((result) => setCardData(result?.data))
   }, [])
 
   const cardGrid = cardData?.map((card, index) => {
