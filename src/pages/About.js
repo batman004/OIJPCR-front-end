@@ -1,6 +1,5 @@
 import Podcast from '../components/Home/Podcast/Podcast'
-import MeetTheTeam from '../components/About/MeetTheTeam'
-import { headingText, aboutText, teamMembers } from '../components/About/helpers'
+import { headingText, aboutText } from '../components/About/helpers'
 
 function About () {
   return (
@@ -12,7 +11,6 @@ function About () {
         <Description>
           {aboutText}
         </Description>
-        <MeetTheTeam teamMembers={teamMembers}/>
         <Podcast/>
       </AboutContainer>
     </div>
