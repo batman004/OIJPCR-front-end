@@ -1,39 +1,40 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import stock_loading_photo from '../../assets/stockPhotos/stock_loading_photo.jpg'
+import { LoadingCard, LoadingCardFullWidth } from '../Cards/LoadingCards'
 import ArticleCard from '../Cards/ArticleCard'
 import ArticleCardFullWidth from '../Cards/ArticleCardFullWidth'
 import config from '../../config/config'
 
-function LeftGrid () {
-  const loadingInfo = {
-      cover: stock_loading_photo,
-      author: "Loading...",
-      title: "Loading...",
-      volume: "...",
-      slug: "...",
-      _id: "",
-      path: "",
-      cname: {
-        container: '',
-        button: 'ml-4 mt-8',
-      }
-  }
-
-  const [cardData, setCardData] = useState([loadingInfo])
+function LeftGrid() {
+  const [cardData, setCardData] = useState([1, 2, 3, 4, 5])
 
   useEffect(() => {
-    async function fetchJournals () {
-      return await axios.get(`${config.host}journals/home/5`)
+    const getCardData = async () => {
+      const cardData = await fetchJournals()
+      setCardData(cardData)
     }
 
-    fetchJournals().then((result) => setCardData(result?.data))
+    getCardData()
   }, [])
 
+  const fetchJournals = async () => {
+    const res = await axios.get(`${config.host}journals/home/5`)
+    return res?.data
+  }
+
+  const cname = {
+    container: '',
+    button: 'ml-4 mt-8',
+  }
+
   const cardGrid = cardData?.map((card, index) => {
-    const cname = {
-      container: '',
-      button: 'ml-4 mt-8',
+    if (!card?.author) {
+      return (
+        index === 0 ?
+          <LoadingCardFullWidth />
+          :
+          <LoadingCard />
+      )
     }
 
     return (
