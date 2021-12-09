@@ -10,12 +10,16 @@ function LeftGrid() {
 
   useEffect(() => {
     const getCardData = async () => {
-      const cardData = await fetchJournals()
-      setCardData(cardData)
+      const journals = await fetchJournals()
+      let newCardData = cardData.map(data => {
+        const journal = journals.shift()
+        return journal || data
+      })
+      setCardData(newCardData)
     }
 
     getCardData()
-  }, [])
+  }, [cardData])
 
   const fetchJournals = async () => {
     const res = await axios.get(`${config.host}journals/home/5`)

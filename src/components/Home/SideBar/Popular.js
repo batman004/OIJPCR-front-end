@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { CircularLoader } from '../../utils/Loaders'
 import config from '../../../config/config'
 import slugify from 'slugify'
 
@@ -9,46 +10,56 @@ const Popular = () => {
   const [mostPopular, setPopular] = useState([])
 
   useEffect(() => {
-    async function fetchPopular () {
-      const url = `${config.host}journals/home/5`
-      return await axios.get(url)
+    const getPopular = async () => {
+      const data = await fetchPopular()
+      setPopular(data)
     }
-    fetchPopular().then((result) => {
-      setPopular(result?.data)
-    })
+
+    getPopular()
   }, [])
+
+  const fetchPopular = async () => {
+    const url = `${config.host}journals/home/5`
+    const res = await axios.get(url)
+    return res?.data
+  }
 
   return (
     <div className="p-2 mx-1 mb-6 md:mb-0 mt-4 rounded-lg shadow-xl border">
       <p className="text-3xl text-gray-900 text-center font-bold my-4 mx-2">Most Popular</p>
       <div className="flex flex-col justify-center">
-        <LinkItems links={mostPopular}/>
+        {
+          mostPopular.length === 0 ?
+            <CircularLoader height="h-16" width="w-16" />
+            :
+            <LinkItems links={mostPopular} />
+        }
       </div>
     </div>
   )
 }
 
-function LinkItems ({ links }) {
+function LinkItems({ links }) {
   return (
     links.map((item, index) => {
-      return <NavLink key={index} {...item} index={index}/>
+      return <NavLink key={index} {...item} index={index} />
     })
   )
 }
 
-function NavLink (props) {
+function NavLink(props) {
   const {
-          author,
-          volume,
-          title,
-          index,
-          _id: id,
-        } = props
+    author,
+    volume,
+    title,
+    index,
+    _id: id,
+  } = props
   const urlSlug = slugify(title)
 
   const url = `/archive/${urlSlug}/${id}`
   return (
-    <div className="flex flex-row flex-1 my-2 mr-4 pb-2 border-b-2  border-transparent hover:border-indigo-400 ">
+    <div className="flex flex-row flex-1 my-2 mr-4 pb-2 border-b-2  border-transparent hover:border-indigo-400">
       <div className="w-1/4 font-bold text-5xl text-right pr-2">
         {index + 1}
       </div>
