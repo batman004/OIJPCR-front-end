@@ -4,6 +4,7 @@ import {
   Route, Redirect,
 } from 'react-router-dom'
 import ArticleCard from '../../components/Cards/ArticleCard'
+import { CircularLoader } from '../../components/utils/Loaders'
 
 const ArticleList = (props) => {
   const { path, journals } = props
@@ -12,20 +13,20 @@ const ArticleList = (props) => {
     <div className="flex-grow">
       <Switch>
         <Route path={path} render={(routeProps) =>
-          <Journals journals={journals} {...routeProps}/>}
+          <Journals journals={journals} {...routeProps} />}
         />
         <Route exact path={`${path}/*`}
-               render={() => <Redirect to="/notFound"/>}
+          render={() => <Redirect to="/notFound" />}
         />
       </Switch>
     </div>
   )
 }
 
-function Journals ({ journals }) {
+function Journals({ journals }) {
   let journalList
   if (!journals)
-    journalList = '...Loading'
+    journalList = <CircularLoader height="h-16" width="w-16" />
   else if (journals.length === 0)
     journalList = 'No Articles Found'
   else journalList = createJournals(journals)
@@ -39,7 +40,7 @@ function Journals ({ journals }) {
   )
 }
 
-function createJournals (journals=[]) {
+function createJournals(journals = []) {
   return journals?.map((article) => {
     const articleProps = {
       id: article._id,
@@ -50,7 +51,7 @@ function createJournals (journals=[]) {
       },
       ...article,
     }
-    return <ArticleCard {...articleProps} key={article._id}/>
+    return <ArticleCard {...articleProps} key={article._id} />
   })
 }
 
