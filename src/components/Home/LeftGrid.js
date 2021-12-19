@@ -19,7 +19,8 @@ function LeftGrid() {
     }
 
     getCardData()
-  }, [cardData])
+    // eslint-disable-next-line
+  }, [])
 
   const fetchJournals = async () => {
     const res = await axios.get(`${config.host}journals/home/5`)

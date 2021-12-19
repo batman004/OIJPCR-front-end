@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import india from '../../assets/india.svg'
+import pen from '../../assets/pen.svg'
 import alertCircle from '../../assets/alert-circle.svg'
 
 export default function Header() {
   const headerText = (
-    <h1 className="text-2xl md:text-5xl font-bold">
+    <h1 className="text-2xl font-bold md:text-5xl">
       Online Indian Journal <br /> of Peace and Conflict Resolution
     </h1>
   )
@@ -16,22 +17,25 @@ export default function Header() {
     ' managing and resolving conflicts.'
 
   return (
-    <div className="header-home primary-color-bg bg-no-repeat bg-contain bg-right" style={{ backgroundImage: `url(${india})` }}>
-      <div className="p-2 max-w-prose flex-1">
+    <div className="relative bg-right bg-no-repeat bg-contain header-home primary-color-bg" style={{ backgroundImage: `url(${india})` }}>
+      <div className="relative z-50 flex-1 p-2 max-w-prose">
         {headerText}
       </div>
-      <div className="p-2 flex-1 max-w-prose">
-        <p className="md:text-xl text-sm mb-4">
+      <div className="relative z-50 flex-1 p-2 max-w-prose">
+        <p className="mb-4 text-sm md:text-xl">
           {aboutJournal}
         </p>
         <Link
-          className="py-2 px-4 max-w-max rounded-lg bg-black"
+          className="relative z-50 px-4 py-2 bg-black rounded-lg max-w-max"
           to="/about"
         >
-          <img src={alertCircle} className="mr-2 mb-1 inline" alt="alert icon" />
+          <img src={alertCircle} className="inline mb-1 mr-2" alt="alert icon" />
           Learn More
         </Link>
       </div>
+      <img className="absolute inset-x-0 bottom-0 hidden w-24 h-24 transform -translate-x-1/2 md:inline left-1/2"
+        src={pen} alt="decoration"
+      />
     </div>
   )
 }
