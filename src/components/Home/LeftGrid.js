@@ -65,13 +65,7 @@ function LeftGrid() {
   })
 
   return (
-    <div
-      className={
-        `grid grid-cols-1 grid-flow-row
-         grid-rows-5 lg:grid-cols-2 
-         lg:grid-rows-3 lg:w-3/4 
-         md:w-2/3 w-full`}
-    >
+    <div className="grid w-full grid-flow-row grid-cols-1 grid-rows-5 lg:grid-cols-2 lg:grid-rows-3 lg:w-3/4 md:w-2/3">
       {cardGrid}
     </div>
   )
