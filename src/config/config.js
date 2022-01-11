@@ -1,6 +1,6 @@
 const config = {
-  host: 'https://oijpcr-prod.herokuapp.com/'
-//   host: 'http://localhost:5000/'
+
+  host: 'https://oijpcrapi.live/'
 }
 
 export default config
