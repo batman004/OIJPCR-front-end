@@ -6,4 +6,4 @@ const CircularLoader = ({ height = "h-16", width = "w-16" }) => (
 
 
 
-export { CircularLoader }
+export default CircularLoader;

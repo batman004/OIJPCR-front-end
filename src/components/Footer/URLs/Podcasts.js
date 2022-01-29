@@ -1,6 +1,6 @@
-import {PodcastLinks as Links} from '../Home/Podcast/Links'
+import {PodcastLinks as Links} from '../../Home/Podcast/Links'
 
-export const PodcastLinks = [
+const Podcasts = [
   {
     url: Links.spotify,
     value: 'Spotify',
@@ -25,4 +25,7 @@ export const PodcastLinks = [
     url: Links.radioPublic,
     value: 'RadioPublic',
   },
-]
+];
+
+
+export default Podcasts;

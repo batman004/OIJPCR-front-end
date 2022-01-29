@@ -3,7 +3,7 @@ import {
   Switch,
   Route, Redirect,
 } from 'react-router-dom'
-import ArticleCard from "../../components/Cards";
+import { ArticleCard } from "../../components/Cards";
 import { CircularLoader } from "../../components/Loaders";
 
 const ArticleList = (props) => {

@@ -1,8 +1,6 @@
-export const
-  SocialLinks = {
-    Linkedin: 'https://www.linkedin.com/company/oijpcr/',
+export const SocialMediaLinks = {
+  Linkedin: 'https://www.linkedin.com/company/oijpcr/',
 
-    Twitter: 'https://twitter.com/oijpcr',
-  }
+  Twitter: 'https://twitter.com/oijpcr',
+}
 
-  

@@ -1,8 +1,8 @@
 import { Component } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Volume from './Volume'
-import VolumeCard from "../../components/Cards";
 import axios from 'axios'
+import Volume from './Volume'
+import { VolumeCard } from "../../components/Cards";
 import FlexContainer from '../../components/utils/FlexContainer'
 import ReadArticle from '../Articles/ReadArticle'
 import SubmitArticleFormFullWidth from './SubmitArticleFormFullWidth'

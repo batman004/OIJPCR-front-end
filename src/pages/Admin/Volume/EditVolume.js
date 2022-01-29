@@ -1,16 +1,16 @@
-import config from '../../../config/config'
-import React, { Component } from 'react'
-import VolumeForm from '../../../components/Admin/VolumeForm'
 import axios from 'axios'
+import { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import PopUp from '../../../components/utils/Popup'
 import { UserContext } from '../../../UserContext'
+import config from '../../../config/config'
+import VolumeForm from '../../../components/Admin/VolumeForm'
+import PopUp from '../../../components/utils/Popup'
 import { deleteOldImage, uploadMultipart } from '../utils'
 
 class EditVolume extends Component {
   static contextType = UserContext
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       volume: this.props.volume || '',
@@ -30,7 +30,7 @@ class EditVolume extends Component {
     }
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     this.setState({ token: this.context?.token })
 
     const headerConfig = {
@@ -151,10 +151,9 @@ class EditVolume extends Component {
 
       const { volume, about, date, id } = this.state
 
-      const cover =
-              this.state.file
-                ?
-                this.state.cover : ''
+      const cover = this.state.file
+        ? this.state.cover
+        : ''
 
       const url = `${config.host}admin/volume`
 
@@ -198,10 +197,10 @@ class EditVolume extends Component {
     return await uploadMultipart(file, { url, authToken })
   }
 
-  render () {
+  render() {
     const { redirect } = this.state
     if (redirect)
-      return <Redirect to={this.state.redirect}/>
+      return <Redirect to={this.state.redirect} />
 
     return (
       <>

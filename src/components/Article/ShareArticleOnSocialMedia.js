@@ -20,21 +20,23 @@ const SocialMediaLinks = [
     },
 ]
 
-const ShareArticleOnSocialMedia = () => (
-    <div className="fixed right-0 z-50 p-1 bg-white rounded-sm shadow-xl top-1/2 print:hidden">
-        <div className="flex flex-col">
+const ShareArticleOnSocialMedia = () => {
+    const copyURLToClipBoard = url => navigator.clipboard.writeText(url)
+
+    return (
+        <div className="flex p-1 my-4 rounded-sm noprint">
             {SocialMediaLinks.map((link, index) => {
                 return (
                     <a href={link.url} className="block mx-2 my-2" key={index}
-                        onClick={navigator.clipboard.writeText(link.url)}
+                        onClick={() => copyURLToClipBoard(link.url)}
                     >
                         <img src={link.img} className="w-6 h-6" alt={link.alt} />
                     </a>
                 )
             })}
         </div>
-    </div>
-)
+    )
+}
 
 
 export default ShareArticleOnSocialMedia;

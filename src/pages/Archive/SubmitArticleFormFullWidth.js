@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 function SubmitArticleFormFullWidth() {
     return (
-        <div className="p-2 pb-6 mx-1 mt-4 mb-6 border rounded-lg shadow-xl md:mt-10 print:hidden">
+        <div className="p-2 pb-6 mx-1 mt-4 mb-6 border rounded-lg shadow-xl md:mt-10 noprint">
             <div className="flex flex-col justify-center ml-4">
                 <p className="px-2 my-4 text-5xl font-bold text-left text-gray-900 sm:text-4xl primary-color">
                     Interested in seeing your article in this space?

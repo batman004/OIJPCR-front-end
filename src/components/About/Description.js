@@ -1,9 +1,9 @@
-const headingText =
+const HeadingText =
         'Our objective is to provide a platform to share experiences ' +
         'and facilitate the exchange of ideas and expertise on conflict' +
         ' resolution techniques in the Indian context.'
 
-const aboutText =
+const AboutText =
         'It is an irony that ‘India – the Land of Ahimsa and Peace’, ' +
         'has very few centre pursuing Peace Studies and promoting the development' +
         ' of skills for conflict resolution. The Journal will endeavour to highlight' +
@@ -19,4 +19,4 @@ const aboutText =
         ' understanding and dealing with conflict situations and furtherance of peace studies.'
 
 
-export {headingText, aboutText}
+export { HeadingText, AboutText }

@@ -3,18 +3,18 @@ import CardButton from '../utils/CardButton'
 import CardCover from './CardCover'
 import slugify from 'slugify'
 
-export default function ArticleCard (props) {
+const ArticleCard = (props) => {
   const {
-          coverPhoto,
-          author,
-          volume,
-          title,
-          slug,
-        } = props
+    coverPhoto,
+    author,
+    volume,
+    title,
+    slug,
+  } = props
 
   const { cname, id, path } = props
   const authorText =
-          `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
+    `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
   const defaultPhoto = coverPhoto ? coverPhoto : dollar
   return (
     <div className={
@@ -23,7 +23,7 @@ export default function ArticleCard (props) {
        min-40`
     }
     >
-      <CardCover coverPhoto={defaultPhoto} authorText={authorText}/>
+      <CardCover coverPhoto={defaultPhoto} authorText={authorText} />
       <CardContent
         title={title}
         slug={slug}
@@ -35,9 +35,9 @@ export default function ArticleCard (props) {
   )
 }
 
-function CardContent ({ title, slug, id, path, cname }) {
+function CardContent({ title, slug, id, path, cname }) {
   const start = 0,
-        end   = slug.length >= 250 ? 250 : slug.length
+    end = slug.length >= 250 ? 250 : slug.length
   /**
    * slug length limit is 250 for optimal viewing.
    * url slug limit will be enforced later
@@ -69,3 +69,4 @@ function CardContent ({ title, slug, id, path, cname }) {
 }
 
 
+export default ArticleCard;

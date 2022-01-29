@@ -10,7 +10,7 @@ const MoreArticles = ({
         return <CircularLoader height="h-16" width="w-16" />
 
     return (
-        <div className="my-4 print:hidden">
+        <div className="my-4 noprint">
             <h1 className="text-2xl font-bold border-b-2 border-gray-900 primary-color">
                 More from this volume
             </h1>

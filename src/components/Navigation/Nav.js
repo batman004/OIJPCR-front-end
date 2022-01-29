@@ -30,7 +30,7 @@ class Nav extends Component {
     toggleClass += ' lg:flex lg:items-center lg:w-auto w-full'
 
     return (
-      <Header cname="header-nav">
+      <Header cname="header-nav noprint">
         <Brand logo={logo} logo_mobile={logo_mobile} brandName="OIJPCR"/>
         <MenuToggle MenuClick={this.handleMenuClick}/>
         <NavMenu cname={toggleClass}>
@@ -76,7 +76,7 @@ function NavLink ({ url, value }) {
   return (
     <li className="list-none">
       <Link
-        className="nav-link text-black no-underline"
+        className="text-black no-underline nav-link"
         to={url}
       >
         {value}
@@ -97,9 +97,9 @@ function MenuToggle ({ MenuClick }) {
   return (
     <label
       htmlFor="menu-toggle"
-      className=" lg:hidden block cursor-pointer"
+      className="block cursor-pointer  lg:hidden"
     >
-      <svg className="fill-current text-gray-900 "
+      <svg className="text-gray-900 fill-current "
            xmlns={svg.xmlns}
            width={svg.width}
            height={svg.height}
@@ -119,11 +119,11 @@ function Brand ({ logo, logo_mobile, brandName }) {
     brandLogoCN: 'sm:w-14 sm:h-14 w-16 h-16 mr-2',
   }
   return (
-    <div className="flex-1 flex justify-between items-center md:mt-2">
+    <div className="flex items-center justify-between flex-1 md:mt-2">
       <Link to="/">
         <BrandLogo {...BrandProps} logo={logo} hidden={true} />
         <BrandLogo {...BrandProps} logo={logo_mobile} hidden={false} />
-        <label className="sm:hidden font-black text-lg">{brandName}</label>
+        <label className="text-lg font-black sm:hidden">{brandName}</label>
       </Link>
     </div>
   )

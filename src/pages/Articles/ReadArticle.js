@@ -1,22 +1,19 @@
+import axios from 'axios'
 import { Component } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import HTMLReactParser from 'html-react-parser'
 import UTCToFormalDate from '../../utils/DateTime'
-
-// import ArticleHeader from '../../components/Article/ArticleHeader'
-// import ArticleCardSmall from '../../components/Cards/ArticleCardSmall'
-import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
 import config from '../../config/config'
-// import { CircularLoader } from '../../components/utils/Loaders'
-import { LoadingCardFullWidth } from '../../components/Cards/LoadingCards'
-import PrintButton from '../../components/utils/PrintButton'
+
+import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
 import {
   ArticleHeader,
   ArticleContainer,
   MoreArticles,
   ShareArticleOnSocialMedia
 } from "../../components/Article";
+import PrintButton from '../../components/utils/PrintButton'
+import { LoadingCardFullWidth } from '../../components/Loaders'
 
 class ReadArticle extends Component {
   constructor(props) {
@@ -70,12 +67,13 @@ class ReadArticle extends Component {
 
   articleHasLoaded() {
     const article = this.state.article
-    return !(article === 'undefined' || Object.keys(article).length === 0)
+    if (!article) return false
+    return Object.keys(article).length !== 0
   }
 
   render() {
-    const article = this.state.article
-    const author = article.author
+    const article = this.articleHasLoaded() ? this.state.article : false
+    const author = article?.author
     const content = this.articleHasLoaded() ? article.content : ''
     // convert createdAt into formal Date
     const date = UTCToFormalDate(article.createdAt)
@@ -99,16 +97,15 @@ class ReadArticle extends Component {
             : <LoadingCardFullWidth />
         }
 
-        <ShareArticleOnSocialMedia />
-        
+
         <div className="mt-16 lg:mx-4">
           {HTMLReactParser(content.toString())}
+          <ShareArticleOnSocialMedia />
         </div>
 
+        <PrintButton />
         <Tags tags={article.tags} />
 
-        <PrintButton />
-        <h1 className='hidden print:block'>Print me Baby!</h1>
 
         <MoreArticles
           articles={this.state.moreArticles}
@@ -124,7 +121,7 @@ class ReadArticle extends Component {
 
 function Tags({ tags }) {
   return (
-    <div className="flex flex-row flex-wrap my-10 print:hidden">
+    <div className="flex flex-row flex-wrap mt-2 mb-6 noprint">
       {
         tags?.split(', ').map(
           (tag, index) => {
@@ -144,7 +141,7 @@ function Tags({ tags }) {
 }
 
 function TagBlock(props) {
-  const cname = "mx-4 my-2 px-4 py-2 block font-semibold text-gray-900 bg-gray-300"
+  const cname = "mx-2 my-2 px-4 py-2 block font-semibold text-center text-white border-0 border-indigo-400 rounded bg-oijpcr-blue focus:outline-none"
   const { url, value, index, newTab } = props
 
   return (
