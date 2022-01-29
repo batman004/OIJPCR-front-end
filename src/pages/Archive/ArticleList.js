@@ -3,8 +3,8 @@ import {
   Switch,
   Route, Redirect,
 } from 'react-router-dom'
-import ArticleCard from '../../components/Cards/ArticleCard'
-import { CircularLoader } from '../../components/utils/Loaders'
+import ArticleCard from "../../components/Cards";
+import { CircularLoader } from "../../components/Loaders";
 
 const ArticleList = (props) => {
   const { path, journals } = props
@@ -33,7 +33,7 @@ function Journals({ journals }) {
 
   return (
     <div className="h-full mx-2 md:mx-4">
-      <div className="flex flex-row flex-wrap h-full justify-evenly py-2 my-4 w-full editor">
+      <div className="flex flex-row flex-wrap w-full h-full py-2 my-4 justify-evenly editor">
         {journalList}
       </div>
     </div>

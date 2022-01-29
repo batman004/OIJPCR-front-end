@@ -1,12 +1,12 @@
 const LoadingCardFullWidth = (props) => {
     return (
-        <div className="bg-white rounded-md shadow-lg my-4 lg:h-auto md:col-span-full md:mx-6">
-            <div className="animate-pulse bg-gray-200 rounded-tr rounded-tl w-full h-64"></div>
-            <div className="mx-2 md:mx-6 my-4 border-gray-light">
-                <div className="font-bold rounded-md bg-gray-200 animate-pulse text-gray-100 text-xl md:text-4xl mb-8 text-center">
+        <div className="my-4 bg-white rounded-md shadow-lg lg:h-auto md:col-span-full md:mx-6">
+            <div className="w-full h-64 bg-gray-200 rounded-tl rounded-tr animate-pulse"></div>
+            <div className="mx-2 my-4 md:mx-6 border-gray-light">
+                <div className="mb-8 text-xl font-bold text-center text-gray-100 bg-gray-200 rounded-md animate-pulse md:text-4xl">
                     Loading...
                 </div>
-                <p className="font-normal bg-gray-200 animate-pulse text-gray-400 text-lg mb-8 p-4 rounded-md">
+                <p className="p-4 mb-8 text-lg font-normal text-gray-400 bg-gray-200 rounded-md animate-pulse">
                     Loading...
                 </p>
             </div>
@@ -16,13 +16,13 @@ const LoadingCardFullWidth = (props) => {
 
 const LoadingCard = (props) => {
     return (
-        <div className="bg-white rounded-md shadow-lg mx-6 my-4 border-gray-light">
-            <div className="animate-pulse bg-gray-200 rounded-tr rounded-tl w-full h-64"></div>
-            <div className="mx-2 md:mx-6 my-4 border-gray-light">
-                <div className="font-bold rounded-md bg-gray-200 animate-pulse text-gray-100 text-xl mb-4 text-center">
+        <div className="mx-6 my-4 bg-white rounded-md shadow-lg border-gray-light">
+            <div className="w-full h-64 bg-gray-200 rounded-tl rounded-tr animate-pulse"></div>
+            <div className="mx-2 my-4 md:mx-6 border-gray-light">
+                <div className="mb-4 text-xl font-bold text-center text-gray-100 bg-gray-200 rounded-md animate-pulse">
                     Loading...
                 </div>
-                <p className="font-normal bg-gray-200 animate-pulse text-gray-400 rounded-md text-lg md:text-sm mb-8 md:mb-0 px-2 md:pl-4">
+                <p className="px-2 mb-8 text-lg font-normal text-gray-400 bg-gray-200 rounded-md animate-pulse md:text-sm md:mb-0 md:pl-4">
                     Loading...
                 </p>
             </div>

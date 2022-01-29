@@ -1,32 +1,32 @@
-import React, { Component } from 'react'
 import axios from 'axios'
-import VolumeCard from '../Cards/VolumeCard'
+import { Component } from 'react'
+import { VolumeCard } from "../Cards";
 import config from '../../config/config'
 
 class VolumeList extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       volumes: [],
     }
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     const url = `${config.host}volume`
     const { data } = await axios.get(url)
     this.setState({ volumes: data })
   }
 
-  render () {
+  render() {
     return (
       <div className="flex-grow">
-        <Volumes volumes={this.state.volumes}/>
+        <Volumes volumes={this.state.volumes} />
       </div>
     )
   }
 }
 
-function Volumes ({ volumes }) {
+function Volumes({ volumes }) {
   let volumeList
   if (typeof volumes == 'undefined')
     volumeList = '...Loading'
@@ -35,9 +35,9 @@ function Volumes ({ volumes }) {
   else volumeList = createVolumeCards(volumes)
 
   return (
-    <div className="h-full lg:mx-0 mx-4">
-      <div className="flex flex-row flex-wrap h-full justify-evenly py-2 my-4 w-full editor">
-        <div className="flex flex-column md:flex-row flex-wrap justify-evenly">
+    <div className="h-full mx-4 lg:mx-0">
+      <div className="flex flex-row flex-wrap w-full h-full py-2 my-4 justify-evenly editor">
+        <div className="flex flex-wrap flex-column md:flex-row justify-evenly">
           {volumeList}
         </div>
       </div>
@@ -45,9 +45,9 @@ function Volumes ({ volumes }) {
   )
 }
 
-function createVolumeCards (volumes) {
+function createVolumeCards(volumes) {
   return volumes.map((volume, index) =>
-    <VolumeCard {...volume} key={index} isAdmin={true}/>)
+    <VolumeCard {...volume} key={index} isAdmin={true} />)
 }
 
 export default VolumeList

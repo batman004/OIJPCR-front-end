@@ -49,10 +49,10 @@ function CardContent ({ title, slug, id, path, cname }) {
 
   return (
     <div className="mx-6 my-4 border-gray-light">
-      <div className="font-bold text-2xl text-gray-600 mb-4 text-center">
+      <div className="mb-4 text-xl font-bold text-center text-gray-600 truncate whitespace-nowrap text-ellipsis">
         {title}
       </div>
-      <p className="font-normal text-gray-700 text-lg md:text-sm mb-8 md:mb-0 px-2 md:pl-4">
+      <p className="px-2 mb-8 text-lg font-normal text-gray-700 md:text-sm md:mb-0 md:pl-4">
         {aboutSlug}
       </p>
       <div>

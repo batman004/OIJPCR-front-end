@@ -1,17 +1,22 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import HTMLReactParser from 'html-react-parser'
 import UTCToFormalDate from '../../utils/DateTime'
-import female_avatar from '../../assets/teamMembers/female_avatar.svg'
-import twitter from '../../assets/shareIcons/twitter.svg'
-import linkedin from '../../assets/shareIcons/linkedin.svg'
-import shareIcon from '../../assets/shareIcons/shareLink.svg'
-import ArticleCardSmall from '../../components/Cards/ArticleCardSmall'
+
+// import ArticleHeader from '../../components/Article/ArticleHeader'
+// import ArticleCardSmall from '../../components/Cards/ArticleCardSmall'
 import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
 import config from '../../config/config'
-import { Link } from 'react-router-dom'
-import { CircularLoader } from '../../components/utils/Loaders'
+// import { CircularLoader } from '../../components/utils/Loaders'
 import { LoadingCardFullWidth } from '../../components/Cards/LoadingCards'
+import PrintButton from '../../components/utils/PrintButton'
+import {
+  ArticleHeader,
+  ArticleContainer,
+  MoreArticles,
+  ShareArticleOnSocialMedia
+} from "../../components/Article";
 
 class ReadArticle extends Component {
   constructor(props) {
@@ -20,7 +25,7 @@ class ReadArticle extends Component {
       journal: "",
       moreJournals: [],
     }
-    this.journalHasLoaded = this.journalHasLoaded.bind(this)
+    this.articleHasLoaded = this.articleHasLoaded.bind(this)
     this.handleClickOtherArticle = this.handleClickOtherArticle.bind(this)
   }
 
@@ -28,13 +33,15 @@ class ReadArticle extends Component {
     try {
       const { urlSlug, id } = this.props
       const url = `${config.host}journals/${urlSlug}/${id}`
-      const { data: journal } = await axios.get(url)
-      const volume = journal.volume
-      const moreJournalsUrl = `${config.host}journals/limit/${volume}/${3}`
-      const { data: moreJournals } = await axios.get(moreJournalsUrl)
+      const { data: article } = await axios.get(url);
+
+      const volume = article.volume
+      const MoreArticlesURL = `${config.host}journals/limit/${volume}/${3}`
+      const { data: moreArticles } = await axios.get(MoreArticlesURL)
+
       this.setState({
-        journal: journal,
-        moreJournals: moreJournals,
+        article: article,
+        moreArticles: moreArticles,
       })
     } catch (e) {
       throw new Error(e.message)
@@ -44,10 +51,10 @@ class ReadArticle extends Component {
   async handleClickOtherArticle(url) {
     const { urlSlug, id } = url
     const articleURL = `${config.host}journals/${urlSlug}/${id}`
-    const { data: journal } = await axios.get(articleURL)
-    this.setState({
-      journal: journal,
-    })
+
+    const { data: article } = await axios.get(articleURL)
+
+    this.setState({ article: article })
 
     try {
       window.scroll({
@@ -61,17 +68,17 @@ class ReadArticle extends Component {
     }
   }
 
-  journalHasLoaded() {
-    const journal = this.state.journal
-    return !(journal === 'undefined' || Object.keys(journal).length === 0)
+  articleHasLoaded() {
+    const article = this.state.article
+    return !(article === 'undefined' || Object.keys(article).length === 0)
   }
 
   render() {
-    const journal = this.state.journal
-    const author = journal.author
-    const content = this.journalHasLoaded() ? journal.content : ''
+    const article = this.state.article
+    const author = article.author
+    const content = this.articleHasLoaded() ? article.content : ''
     // convert createdAt into formal Date
-    const date = UTCToFormalDate(journal.createdAt)
+    const date = UTCToFormalDate(article.createdAt)
     // format date
     const publishedDate = (
       <span className="text-sm leading-3 text-gray-700">
@@ -82,103 +89,42 @@ class ReadArticle extends Component {
     )
 
     return (
-      <ReadContainer>
+      <ArticleContainer>
         {
-          journal ?
-            <>
-              <h1 className="mb-4 font-black text-center">
-                <span className="text-3xl md:text-5xl">
-                  {journal?.title || 'title'}
-                </span>
-              </h1>
-
-              <div className="flex flex-row justify-center py-1">
-                <img src={journal?.authorPhoto || female_avatar}
-                  className="inline object-cover w-16 h-16 rounded-full"
-                  alt="Author"
-                />
-                <h2 className="inline py-4 ml-4 text-base font-semibold text-center">
-                  <span className="block text-base leading-3">
-                    by {author ?? 'author'}
-                  </span>
-                  {publishedDate}
-                </h2>
-              </div>
-
-              <div className="flex flex-row justify-center my-4">
-                <img src={journal.cover}
-                  className="w-full rounded-lg md:w-3/4 h-98"
-                  alt="Article Cover"
-                />
-              </div>
-            </>
+          article ? <ArticleHeader
+            article={article}
+            author={author}
+            publishedDate={publishedDate}
+          />
             : <LoadingCardFullWidth />
         }
-        <ShareArticleLinks />
+
+        <ShareArticleOnSocialMedia />
+        
         <div className="mt-16 lg:mx-4">
           {HTMLReactParser(content.toString())}
         </div>
 
-        <Tags tags={journal.tags} />
+        <Tags tags={article.tags} />
+
+        <PrintButton />
+        <h1 className='hidden print:block'>Print me Baby!</h1>
+
         <MoreArticles
-          journals={this.state.moreJournals}
+          articles={this.state.moreArticles}
           handleClick={this.handleClickOtherArticle}
           path={this.props.path}
         />
         <SubmitArticleFormFullWidth />
-      </ReadContainer>
+      </ArticleContainer>
     )
   }
 }
 
-function ReadContainer(props) {
-  return (
-    <div className="relative h-full mx-4 md:mx-16">
-      <div className="flex flex-col h-full py-2 my-4 md:w-full editor">
-        {props.children}
-      </div>
-    </div>
-  )
-}
-
-function ShareArticleLinks() {
-  const links = [
-    {
-      url: 'https://www.twitter.com/intent/tweet?url=' + window.location.href,
-      img: twitter,
-      alt: 'Twitter',
-    },
-    {
-      url: 'https://www.linkedin.com/sharing/share-offsite/?url=' + window.location.href,
-      img: linkedin,
-      alt: 'LinkedIn',
-    },
-    {
-      url: window.location.href,
-      img: shareIcon,
-      alt: 'shareable link',
-    },
-  ]
-  return (
-    <div className="fixed right-0 z-50 p-1 bg-white rounded-sm shadow-xl top-1/2">
-      <div className="flex flex-col">
-        {links.map((link, index) => {
-          return (
-            <a href={link.url} className="block mx-2 my-2" key={index}
-              onClick={navigator.clipboard.writeText(link.url)}
-            >
-              <img src={link.img} className="w-6 h-6" alt={link.alt} />
-            </a>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
 
 function Tags({ tags }) {
   return (
-    <div className="flex flex-row flex-wrap my-10">
+    <div className="flex flex-row flex-wrap my-10 print:hidden">
       {
         tags?.split(', ').map(
           (tag, index) => {
@@ -217,47 +163,5 @@ function TagBlock(props) {
   )
 }
 
-function MoreArticles({ journals, path, handleClick }) {
-  if (journals?.length < 1) {
-    return (
-      <CircularLoader height="h-16" width="w-16" />
-    )
-  }
-
-  return (
-    <div className="my-4">
-      <h1 className="text-2xl font-bold border-b-2 border-gray-900 primary-color">
-        More from this volume
-      </h1>
-      <div className="flex flex-col my-4 md:flex-row justify-evenly">
-        {
-          journals && journals.length > 1 ?
-            journals.map(
-              journal => {
-                const journalProps = {
-                  id: journal._id,
-                  coverPhoto: journal.cover,
-                  cname: {
-                    container: '',
-                    button: 'mt-10 flex flex-wrap',
-                  },
-                  ...journal,
-                }
-
-                return (
-                  <ArticleCardSmall
-                    {...journalProps}
-                    handleClick={handleClick}
-                    key={journal._id}
-                    path={path}
-                  />
-                )
-              }) :
-            <CircularLoader height="h-16" width="w-16" />
-        }
-      </div>
-    </div>
-  )
-}
 
 export default ReadArticle

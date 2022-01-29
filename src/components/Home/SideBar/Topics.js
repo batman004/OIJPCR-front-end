@@ -2,7 +2,7 @@ import { NavLink } from '../../utils/LinkItems'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import config from '../../../config/config'
-import { CircularLoader } from '../../utils/Loaders'
+import { CircularLoader } from "../../Loaders";
 
 const Topics = () => {
   const [topics, setTopics] = useState([])
@@ -23,11 +23,11 @@ const Topics = () => {
   }
 
   return (
-    <div className="p-2 mx-1 mb-6 md:mb-0 rounded-lg shadow-xl border">
-      <p className="text-3xl text-gray-900 text-center font-bold my-4 mx-2">
+    <div className="p-2 mx-1 mb-6 border rounded-lg shadow-xl md:mb-0">
+      <p className="mx-2 my-4 text-3xl font-bold text-center text-gray-900">
         Explore Topics
       </p>
-      <ul className="text-center primary-color text-xl font-semibold">
+      <ul className="text-xl font-semibold text-center primary-color">
         {
           topics.length === 0 ?
             <CircularLoader height="h-16" width="w-16" />
