@@ -16,7 +16,7 @@ const NavController = () => {
 
         <Route exact path="/about" render={() => <About/>}/>
 
-        <Route exact path="/tags/:tag" render={(props) => <Tag {...props}/>}/>/>
+        <Route exact path="/tags/:tag" render={(props) => <Tag {...props}/>}/>
 
         <Route path="/archive"
                render={(props) => <Archive {...props}/>}

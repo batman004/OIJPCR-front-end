@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { LoadingCard, LoadingCardFullWidth } from '../Cards/LoadingCards'
-import ArticleCard from '../Cards/ArticleCard'
-import ArticleCardFullWidth from '../Cards/ArticleCardFullWidth'
+import { LoadingCard, LoadingCardFullWidth } from "../Loaders";
+import {ArticleCard, ArticleCardFullWidth} from "../Cards";
 import config from '../../config/config'
 
 function LeftGrid() {
@@ -36,16 +35,16 @@ function LeftGrid() {
     if (!card?.author) {
       return (
         index === 0 ?
-          <LoadingCardFullWidth />
+          <LoadingCardFullWidth key={index} />
           :
-          <LoadingCard />
+          <LoadingCard key={index} />
       )
     }
 
     return (
       index === 0 ?
         <ArticleCardFullWidth
-          key={index}
+          key={card._id}
           {...card}
           coverPhoto={card.cover}
           id={card._id}
@@ -54,7 +53,7 @@ function LeftGrid() {
         />
         :
         <ArticleCard
-          key={index}
+          key={card._id}
           {...card}
           coverPhoto={card.cover}
           id={card._id}

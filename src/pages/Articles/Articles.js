@@ -1,8 +1,8 @@
 import ArticleCard from '../../components/Cards/ArticleCard'
 import { CircularLoader } from '../../components/utils/Loaders'
 
-export default function Journals({ journals }) {
-  const journalList = createJournals(journals)
+export default function AllArticles({ journals }) {
+  const journalList = createArticles(journals)
   return (
     <div className="h-full mx-4 md:mx-16">
       <div className="flex flex-col flex-wrap items-center w-full h-full py-2 my-4 md:flex-row justify-evenly editor">
@@ -12,7 +12,7 @@ export default function Journals({ journals }) {
   )
 }
 
-function createJournals(journals) {
+function createArticles(journals) {
   if (!journals) return <CircularLoader />
   if (journals.length === 0) return 'No articles found'
 

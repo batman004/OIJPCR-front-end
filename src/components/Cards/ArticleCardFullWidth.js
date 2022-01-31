@@ -46,11 +46,11 @@ function CardContent ({ title, slug, id, path, cname }) {
   const urlSlug = slugify(title)
 
   return (
-    <div className="mx-2 md:mx-6 my-4 border-gray-light">
-      <div className="font-bold text-2xl md:text-4xl text-gray-600 mb-8 text-center">
+    <div className="mx-2 my-4 md:mx-6 border-gray-light">
+      <div className="mb-8 text-2xl font-bold text-left text-gray-600 truncate md:text-4xl whitespace-nowrap text-ellipsis">
         {title}
       </div>
-      <p className="font-normal text-gray-700 text-lg mb-8 px-2">
+      <p className="px-2 mb-8 text-lg font-normal text-gray-700">
         {aboutSlug}
       </p>
       <div>
@@ -72,17 +72,17 @@ function CardButton ({ slug, id, path }) {
     <>
       <Link
         to={`/archive/${slug}/${id}`}
-        className="my-4 sm:my-4 py-2 px-4 mr-4 max-w-max rounded-lg bg-black text-white"
+        className="px-4 py-2 my-4 mr-4 text-white bg-black rounded-lg sm:my-4 max-w-max"
       >
-        <img src={alertCircle} className="mr-2 mb-1 inline" alt="alert icon"/>
+        <img src={alertCircle} className="inline mb-1 mr-2" alt="alert icon"/>
         Read More
       </Link>
       {
         path && <Link
           to={`${pathUrl}/${slug}/${id}`}
-          className="my-4 sm:my-4 py-2 px-4 max-w-max rounded-lg bg-black text-white"
+          className="px-4 py-2 my-4 text-white bg-black rounded-lg sm:my-4 max-w-max"
         >
-          <img src={alertCircle} className="mr-2 mb-1 inline" alt="alert icon"/>
+          <img src={alertCircle} className="inline mb-1 mr-2" alt="alert icon"/>
           Edit
         </Link>
       }

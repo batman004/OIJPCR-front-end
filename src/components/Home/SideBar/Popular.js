@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { CircularLoader } from '../../utils/Loaders'
+import { CircularLoader } from "../../Loaders";
 import config from '../../../config/config'
 import slugify from 'slugify'
 
@@ -25,8 +25,8 @@ const Popular = () => {
   }
 
   return (
-    <div className="p-2 mx-1 mb-6 md:mb-0 mt-4 rounded-lg shadow-xl border">
-      <p className="text-3xl text-gray-900 text-center font-bold my-4 mx-2">Most Popular</p>
+    <div className="p-2 mx-1 mt-4 mb-6 border rounded-lg shadow-xl md:mb-0">
+      <p className="mx-2 my-4 text-3xl font-bold text-center text-gray-900">Most Popular</p>
       <div className="flex flex-col justify-center">
         {
           mostPopular.length === 0 ?
@@ -59,15 +59,15 @@ function NavLink(props) {
 
   const url = `/archive/${urlSlug}/${id}`
   return (
-    <div className="flex flex-row flex-1 my-2 mr-4 pb-2 border-b-2  border-transparent hover:border-indigo-400">
-      <div className="w-1/4 font-bold text-5xl text-right pr-2">
+    <div className="flex flex-row flex-1 pb-2 my-2 mr-4 border-b-2 border-transparent hover:border-indigo-400">
+      <div className="w-1/4 pr-2 text-5xl font-bold text-right">
         {index + 1}
       </div>
       <div className="flex-1 w-3/4">
         <p className="text-sm font-semibold text-gray-900">
           <Link to={url}> {title} </Link>
         </p>
-        <p className="text-gray-500 text-xs font-medium">By {author} {String.fromCharCode(183)} Vol {volume}</p>
+        <p className="text-xs font-medium text-gray-500">By {author} {String.fromCharCode(183)} Vol {volume}</p>
       </div>
     </div>
   )

@@ -1,30 +1,30 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import axios from 'axios'
 import {
   Switch,
   Route,
 } from 'react-router-dom'
-import ArticleCardAdmin from '../Admin/Cards/ArticleCardAdmin'
 import ReadArticle from '../../pages/Articles/ReadArticle'
 import config from '../../config/config'
 import { UserContext } from '../../UserContext'
+import { ArticleCardAdmin } from "../Admin/Cards";
 
 class ArticleList extends Component {
   static contextType = UserContext
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      journals: [],
+      articles: [],
       token: ''
     }
   }
 
-  async componentDidMount () {
-      const { data } = await axios.get(`${config.host}journals`)
-      this.setState({ journals: data, token: this.context?.token })
+  async componentDidMount() {
+    const { data } = await axios.get(`${config.host}journals`)
+    this.setState({ articles: data, token: this.context?.token })
   }
 
-  render () {
+  render() {
     const { path } = this.props.match
     return (
       <div className="flex-grow">
@@ -33,7 +33,7 @@ class ArticleList extends Component {
             <ReadArticle {...props} />}
           />
           <Route path={path} render={() =>
-            <Journals journals={this.state.journals}/>}
+            <Articles articles={this.state.articles} />}
           />
         </Switch>
       </div>
@@ -41,25 +41,26 @@ class ArticleList extends Component {
   }
 }
 
-function Journals ({ journals }) {
-  let journalList
-  if (typeof journals == 'undefined')
-    journalList = '...Loading'
-  else if (journals.length === 0)
-    journalList = 'No Articles Found'
-  else journalList = createJournals(journals)
+function Articles({ articles }) {
+  let articlesList;
+  
+  if (typeof articles == 'undefined')
+    articlesList = '...Loading'
+  else if (articles.length === 0)
+    articlesList = 'No Articles Found'
+  else articlesList = createArticles(articles)
 
   return (
     <div className="h-full md:mx-4">
-      <div className="flex flex-row flex-wrap h-full justify-evenly py-2 my-4 w-full editor">
-        {journalList}
+      <div className="flex flex-row flex-wrap w-full h-full py-2 my-4 justify-evenly editor">
+        {articlesList}
       </div>
     </div>
   )
 }
 
-function createJournals (journals) {
-  return journals.map((article) => {
+function createArticles(articles) {
+  return articles.map((article) => {
     const articleProps = {
       id: article._id,
       coverPhoto: article.cover,
@@ -70,7 +71,7 @@ function createJournals (journals) {
       path: '/admin',
       ...article,
     }
-    return <ArticleCardAdmin {...articleProps} key={article._id}/>
+    return <ArticleCardAdmin {...articleProps} key={article._id} />
   })
 }
 

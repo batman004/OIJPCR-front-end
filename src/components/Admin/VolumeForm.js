@@ -1,8 +1,11 @@
 import { Component } from 'react'
-import FormContainer from './Form/FormContainer'
-import FormField from './Form/FormField'
-import UploadFile from './Form/UploadFile'
-import { Button, ButtonGroup } from './Form/FormButtons'
+import {
+  FormField,
+  FormContainer,
+  UploadFile,
+  Button,
+  ButtonGroup
+} from "./Form";
 
 class VolumeForm extends Component {
   constructor (props) {

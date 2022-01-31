@@ -1,6 +1,6 @@
 const config = {
-
-  host: 'https://oijpcrapi.live/'
+host: 'http://localhost:5000/'
+  // host: 'https://oijpcrapi.live/'
 }
 
 export default config

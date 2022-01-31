@@ -3,18 +3,18 @@ import CardButton from '../utils/CardButton'
 import CardCover from './CardCover'
 import slugify from 'slugify'
 
-export default function ArticleCard (props) {
+const ArticleCard = (props) => {
   const {
-          coverPhoto,
-          author,
-          volume,
-          title,
-          slug,
-        } = props
+    coverPhoto,
+    author,
+    volume,
+    title,
+    slug,
+  } = props
 
   const { cname, id, path } = props
   const authorText =
-          `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
+    `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
   const defaultPhoto = coverPhoto ? coverPhoto : dollar
   return (
     <div className={
@@ -23,7 +23,7 @@ export default function ArticleCard (props) {
        min-40`
     }
     >
-      <CardCover coverPhoto={defaultPhoto} authorText={authorText}/>
+      <CardCover coverPhoto={defaultPhoto} authorText={authorText} />
       <CardContent
         title={title}
         slug={slug}
@@ -35,9 +35,9 @@ export default function ArticleCard (props) {
   )
 }
 
-function CardContent ({ title, slug, id, path, cname }) {
+function CardContent({ title, slug, id, path, cname }) {
   const start = 0,
-        end   = slug.length >= 250 ? 250 : slug.length
+    end = slug.length >= 250 ? 250 : slug.length
   /**
    * slug length limit is 250 for optimal viewing.
    * url slug limit will be enforced later
@@ -49,10 +49,10 @@ function CardContent ({ title, slug, id, path, cname }) {
 
   return (
     <div className="mx-6 my-4 border-gray-light">
-      <div className="font-bold text-2xl text-gray-600 mb-4 text-center">
+      <div className="mb-4 text-xl font-bold text-center text-gray-600 truncate whitespace-nowrap text-ellipsis">
         {title}
       </div>
-      <p className="font-normal text-gray-700 text-lg md:text-sm mb-8 md:mb-0 px-2 md:pl-4">
+      <p className="px-2 mb-8 text-lg font-normal text-gray-700 md:text-sm md:mb-0 md:pl-4">
         {aboutSlug}
       </p>
       <div>
@@ -69,3 +69,4 @@ function CardContent ({ title, slug, id, path, cname }) {
 }
 
 
+export default ArticleCard;

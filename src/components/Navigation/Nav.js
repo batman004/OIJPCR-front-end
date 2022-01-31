@@ -1,7 +1,7 @@
-import { Component } from 'react'
+import { useEffect, useState } from 'react'
 import logo from '../../assets/brandIcons/logo.svg'
 import logo_mobile from '../../assets/brandIcons/logo_mobile.svg'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 export const urlLinks = [
   { url: '/', value: 'Home' },
@@ -10,38 +10,33 @@ export const urlLinks = [
   { url: '/submitArticle', value: 'Submit Article' },
 ]
 
-class Nav extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      isHidden: true,
-    }
-    this.handleMenuClick = this.handleMenuClick.bind(this)
+
+const Nav = (props) => {
+  const [isNavOpen, setIsNavOpen] = useState(false)
+
+  useEffect(() => {
+    props.history.listen(() => setIsNavOpen(!isNavOpen))
+    console.log("I just ran!")
+  })
+
+  const handleMenuClick = () => {
+    setIsNavOpen(prevState => !prevState)
   }
 
-  handleMenuClick () {
-    this.setState((prevState) => ({
-      isHidden: !prevState.isHidden,
-    }))
-  }
 
-  render () {
-    let toggleClass = this.state.isHidden ? 'hidden' : ''
-    toggleClass += ' lg:flex lg:items-center lg:w-auto w-full'
-
-    return (
-      <Header cname="header-nav">
-        <Brand logo={logo} logo_mobile={logo_mobile} brandName="OIJPCR"/>
-        <MenuToggle MenuClick={this.handleMenuClick}/>
-        <NavMenu cname={toggleClass}>
-          <NavLinks navItems={urlLinks}/>
-        </NavMenu>
-      </Header>
-    )
-  }
+  return (
+    <Header cname="header-nav noprint">
+      <Brand logo={logo} logo_mobile={logo_mobile} brandName="OIJPCR" />
+      <MenuToggle MenuClick={handleMenuClick} />
+      <NavMenu cname={`lg:flex lg:items-center lg:w-auto w-full ${isNavOpen ? '' : 'hidden'}`}>
+        <NavLinks navItems={urlLinks} />
+      </NavMenu>
+    </Header>
+  )
 }
 
-function Header (props) {
+
+function Header(props) {
   return (
     <header className={props.cname}>
       {props.children}
@@ -50,7 +45,7 @@ function Header (props) {
 }
 
 // id="menu"
-function NavMenu (props) {
+function NavMenu(props) {
   return (
     <div className={props.cname}>
       {props.children}
@@ -58,25 +53,25 @@ function NavMenu (props) {
   )
 }
 
-function NavLinks ({ navItems }) {
+function NavLinks({ navItems }) {
   return (
     <nav>
       <ul className="nav-link-ul">
         {
-		  navItems.map((item, index) => {
-			return <NavLink key={index} {...item}/>
-		  })
-		}
+          navItems.map((item, index) => {
+            return <NavLink key={index} {...item} />
+          })
+        }
       </ul>
     </nav>
   )
 }
 
-function NavLink ({ url, value }) {
+function NavLink({ url, value }) {
   return (
     <li className="list-none">
       <Link
-        className="nav-link text-black no-underline"
+        className="text-black no-underline nav-link"
         to={url}
       >
         {value}
@@ -85,7 +80,7 @@ function NavLink ({ url, value }) {
   )
 }
 
-function MenuToggle ({ MenuClick }) {
+function MenuToggle({ MenuClick }) {
   const svg = {
     path: 'M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z',
     xmlns: 'http://www.w3.org/2000/svg',
@@ -97,45 +92,45 @@ function MenuToggle ({ MenuClick }) {
   return (
     <label
       htmlFor="menu-toggle"
-      className=" lg:hidden block cursor-pointer"
+      className="block cursor-pointer lg:hidden"
     >
-      <svg className="fill-current text-gray-900 "
-           xmlns={svg.xmlns}
-           width={svg.width}
-           height={svg.height}
-           viewBox={svg.viewBox}
+      <svg className="text-gray-900 fill-current "
+        xmlns={svg.xmlns}
+        width={svg.width}
+        height={svg.height}
+        viewBox={svg.viewBox}
       >
         <title>menu</title>
-        <path d={svg.path}/>
+        <path d={svg.path} />
       </svg>
-      <input className="hidden" type="button" id="menu-toggle" onClick={MenuClick}/>
+      <input className="hidden" type="button" id="menu-toggle" onClick={MenuClick} />
     </label>
   )
 }
 
-function Brand ({ logo, logo_mobile, brandName }) {
+function Brand({ logo, logo_mobile, brandName }) {
   const BrandProps = {
     altText: `${brandName} logo`,
     brandLogoCN: 'sm:w-14 sm:h-14 w-16 h-16 mr-2',
   }
   return (
-    <div className="flex-1 flex justify-between items-center md:mt-2">
+    <div className="flex items-center justify-between flex-1 md:mt-2">
       <Link to="/">
         <BrandLogo {...BrandProps} logo={logo} hidden={true} />
         <BrandLogo {...BrandProps} logo={logo_mobile} hidden={false} />
-        <label className="sm:hidden font-black text-lg">{brandName}</label>
+        <label className="text-lg font-black sm:hidden">{brandName}</label>
       </Link>
     </div>
   )
 }
 
-function BrandLogo (props) {
+function BrandLogo(props) {
   const { brandLogoCN, logo, altText, hidden } = props
   let cname = brandLogoCN
   cname += hidden ? ' hidden sm:inline' : ' inline sm:hidden'
   return (
-    <img className={cname} src={logo} alt={altText}/>
+    <img className={cname} src={logo} alt={altText} />
   )
 }
 
-export default Nav
+export default withRouter(Nav)

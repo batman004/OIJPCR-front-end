@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Volume from './Volume'
-import VolumeCard from '../../components/Cards/VolumeCard'
 import axios from 'axios'
+import Volume from './Volume'
+import { VolumeCard } from "../../components/Cards";
 import FlexContainer from '../../components/utils/FlexContainer'
 import ReadArticle from '../Articles/ReadArticle'
 import SubmitArticleFormFullWidth from './SubmitArticleFormFullWidth'
 import config from '../../config/config'
-import { CircularLoader } from '../../components/utils/Loaders'
+import { CircularLoader } from "../../components/Loaders";
 
 class Archive extends Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class Archive extends Component {
 function Home(props) {
   return (
     <>
-      <div className="flex md:flex-row flex-column flex-wrap justify-evenly">
+      <div className="flex flex-wrap md:flex-row flex-column justify-evenly">
         {
           props?.archives?.length > 0 ?
             props.archives.map((archive, index) =>
@@ -77,7 +77,7 @@ function Home(props) {
             <CircularLoader height="h-16" width="w-16" />
         }
       </div>
-      <div className="mx-12">
+      <div className="mx-2 md:mx-12">
         <SubmitArticleFormFullWidth />
       </div>
     </>
