@@ -1,5 +1,5 @@
 const LoadingCard = () => (
-    <div className="mx-6 my-4 bg-white rounded-md shadow-lg border-gray-light">
+    <div className="my-4 bg-white rounded-md shadow-lg md:max-w-md md:mx-4 border-gray-light">
         <div className="w-full h-64 bg-gray-200 rounded-tl rounded-tr animate-pulse"></div>
         <div className="mx-2 my-4 md:mx-6 border-gray-light">
             <div className="mb-4 text-xl font-bold text-center text-gray-100 bg-gray-200 rounded-md animate-pulse">

@@ -77,7 +77,7 @@ function Home(props) {
             <CircularLoader height="h-16" width="w-16" />
         }
       </div>
-      <div className="mx-12">
+      <div className="mx-2 md:mx-12">
         <SubmitArticleFormFullWidth />
       </div>
     </>
