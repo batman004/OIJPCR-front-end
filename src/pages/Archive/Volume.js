@@ -4,14 +4,14 @@ import ArticleList from './ArticleList'
 import config from '../../config/config'
 
 class Volume extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       journals: null,
     }
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     try {
       const { volume } = this.props
 
@@ -25,22 +25,22 @@ class Volume extends Component {
     }
   }
 
-  render () {
+  render() {
     const { path, volume, archive: volumeInfo } = this.props
     const about = volumeInfo ? volumeInfo.about : ''
     return (
       <div className="flex-grow">
         <div className="px-4 py-6 mx-12 my-6">
-          <h1 className="text-gray-900 font-black text-5xl">Volume {volume}</h1>
+          <h1 className="text-5xl font-black text-gray-900">Volume {volume}</h1>
           <p className="max-w-4xl mt-4 text-lg">{about}</p>
         </div>
-        <div>
-          <ArticleList
-            journals={this.state.journals}
-            path={path}
-            volume={volume}
-          />
-        </div>
+        {/* <div> */}
+        <ArticleList
+          journals={this.state.journals}
+          path={path}
+          volume={volume}
+        />
+        {/* </div> */}
       </div>
     )
   }

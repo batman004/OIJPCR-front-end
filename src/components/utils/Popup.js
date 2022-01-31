@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 const SVG = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg"
-         className="w-12 h-12 p-3 md:w-16 md:h-16 rounded-2xl md:p-3 border border-blue-100 text-blue-400 bg-blue-50"
+         className="w-12 h-12 p-3 text-blue-400 border border-blue-100 md:w-16 md:h-16 rounded-2xl md:p-3 bg-blue-50"
          fill="none"
          viewBox="0 0 24 24" stroke="currentColor"
     >
@@ -24,15 +24,15 @@ const PopUp = (props) => {
 
   return (
     <div
-      className={`${!isOpen ? 'hidden' : 'block'} flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-900 bg-opacity-30`}
+      className={`${!isOpen ? 'hidden' : 'block'} flex flex-col space-y-4 min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-gray-900 bg-opacity-30`}
     >
-      <div className="flex flex-col md:p-8 p-2 bg-white shadow-md hover:shadow-lg rounded-2xl">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+      <div className="flex flex-col p-2 bg-white shadow-md md:p-8 hover:shadow-lg rounded-2xl">
+        <div className="flex flex-col items-center justify-between md:flex-row">
           <div className="flex items-center mt-4 md:mt-0">
             <SVG/>
             <div className="flex flex-col ml-3">
               <div className="font-medium leading-none">{heading || 'Notification'}</div>
-              <p className="text-sm text-gray-600 leading-none mt-1">
+              <p className="mt-1 text-sm leading-none text-gray-600">
                 {text || "This is an auto-generated message"}
               </p>
             </div>

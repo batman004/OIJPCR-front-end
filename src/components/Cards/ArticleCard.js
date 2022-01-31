@@ -1,7 +1,9 @@
-import dollar from '../../assets/stockPhotos/r1_c1.jpg'
-import CardButton from '../utils/CardButton'
-import CardCover from './CardCover'
 import slugify from 'slugify'
+import CardButton from './CardButton'
+import CardCover from './CardCover'
+import { textClip } from "../../utils";
+import dollar from '../../assets/stockPhotos/r1_c1.jpg'
+
 
 const ArticleCard = (props) => {
   const {
@@ -19,50 +21,29 @@ const ArticleCard = (props) => {
   return (
     <div className={
       `rounded-md overflow-hidden shadow-lg my-4 md:m-4
-       md:max-w-md lg:h-auto
-       min-40`
+       md:max-w-md lg:h-auto min-40 ${cname.container}`
     }
     >
       <CardCover coverPhoto={defaultPhoto} authorText={authorText} />
-      <CardContent
-        title={title}
-        slug={slug}
-        id={id}
-        path={path}
-        cname={cname}
-      />
+      <CardContent title={title} slug={slug} id={id} path={path} cname={cname} />
     </div>
   )
 }
 
 function CardContent({ title, slug, id, path, cname }) {
-  const start = 0,
-    end = slug.length >= 250 ? 250 : slug.length
-  /**
-   * slug length limit is 250 for optimal viewing.
-   * url slug limit will be enforced later
-   * changing urls may cause problems (-_-).
-   */
-  const aboutSlug = slug.slice(start, end) + '...'
-  // const urlSlug = slugify(slug.slice(start, urlLength))
+  const aboutSlug = textClip(slug, 250)
   const urlSlug = slugify(title)
 
   return (
-    <div className="mx-6 my-4 border-gray-light">
-      <div className="mb-4 text-xl font-bold text-center text-gray-600 truncate whitespace-nowrap text-ellipsis">
+    <div className="mx-6 my-4 text-justify border-gray-light">
+      <div className="h-10 text-lg font-bold text-left text-gray-600 truncate whitespace-nowrap">
         {title}
       </div>
-      <p className="px-2 mb-8 text-lg font-normal text-gray-700 md:text-sm md:mb-0 md:pl-4">
+      <p className="px-1 mb-8 font-normal text-gray-700 break-words text-md md:text-sm md:mb-12 lg:h-28">
         {aboutSlug}
       </p>
       <div>
-        <CardButton
-          text="Read More"
-          slug={urlSlug}
-          id={id}
-          path={path}
-          cname={cname.button}
-        />
+        <CardButton text="Read More" slug={urlSlug} id={id} path={path} cname={cname.button} />
       </div>
     </div>
   )

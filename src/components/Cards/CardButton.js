@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom'
 import alertCircle from '../../assets/alert-circle.svg'
 
-function CardButton (props) {
-  const { slug, id, path, cname } = props
+const CardButton = ({
+  slug,
+  id,
+  path,
+  cname
+}) => {
   const pathUrl = path ? path : '/archive'
   return (
     <div className={cname}>
       <Link
         to={`/archive/${slug}/${id}`}
-        className="my-4 sm:my-2 py-2 px-4 mr-4 max-w-max rounded-lg bg-black text-white"
+        className="px-4 py-2 my-4 mr-4 text-white bg-black rounded-lg sm:my-2 max-w-max"
       >
-        <img src={alertCircle} className="mr-2 mb-1 inline" alt="alert icon"/>
+        <img src={alertCircle} className="inline mb-1 mr-2" alt="alert icon" />
         Read More
       </Link>
       {
@@ -18,9 +22,9 @@ function CardButton (props) {
         &&
         <Link
           to={`${pathUrl}/${slug}/${id}`}
-          className="my-4 sm:my-4 py-2 px-4 max-w-max rounded-lg bg-black text-white"
+          className="px-4 py-2 my-4 text-white bg-black rounded-lg sm:my-4 max-w-max"
         >
-          <img src={alertCircle} className="mr-2 mb-1 inline" alt="alert icon"/>
+          <img src={alertCircle} className="inline mb-1 mr-2" alt="alert icon" />
           Edit
         </Link>
       }

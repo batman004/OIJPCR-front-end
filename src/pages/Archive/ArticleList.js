@@ -32,7 +32,7 @@ function Journals({ journals }) {
   else journalList = createJournals(journals)
 
   return (
-    <div className="h-full mx-2 md:mx-4">
+    <div className="h-full mx-0 md:mx-4">
       <div className="flex flex-row flex-wrap w-full h-full py-2 my-4 justify-evenly editor">
         {journalList}
       </div>
@@ -46,7 +46,7 @@ function createJournals(journals = []) {
       id: article._id,
       coverPhoto: article.cover,
       cname: {
-        container: '',
+        container: 'w-5/6 sm:w-2/3',
         button: 'mt-6 flex flex-wrap',
       },
       ...article,

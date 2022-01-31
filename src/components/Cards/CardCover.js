@@ -1,11 +1,11 @@
 const CardCover = ({ coverPhoto, authorText }) => {
   return (
     <>
-      <img className="h-64 w-full object-cover hover:bg-gray"
-           src={coverPhoto}
-           alt="Article-List cover"
+      <img className="object-cover w-full h-64 hover:bg-gray"
+        src={coverPhoto}
+        alt="Article-List cover"
       />
-      <p className="text-gray-500 font-medium text-sm text-center mt-2">{authorText}</p>
+      <p className="mt-2 text-xs font-medium text-center text-gray-500">{authorText}</p>
     </>
   )
 }

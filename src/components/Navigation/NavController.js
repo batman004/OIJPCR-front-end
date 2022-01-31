@@ -10,7 +10,7 @@ import Tag from '../../pages/Topic/Tag'
 
 const NavController = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col items-center h-screen">
       <Nav/>
       <Switch>
 

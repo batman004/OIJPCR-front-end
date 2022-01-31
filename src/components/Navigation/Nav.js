@@ -15,8 +15,7 @@ const Nav = (props) => {
   const [isNavOpen, setIsNavOpen] = useState(false)
 
   useEffect(() => {
-    props.history.listen(() => setIsNavOpen(!isNavOpen))
-    console.log("I just ran!")
+    props.history.listen(() => setIsNavOpen(false))
   })
 
   const handleMenuClick = () => {

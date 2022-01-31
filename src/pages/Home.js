@@ -10,7 +10,7 @@ import Podcast from '../components/Home/Podcast/Podcast'
 class Home extends Component {
   render () {
     return (
-      <div className="flex-grow">
+      <div className="flex-grow max-w-7xl">
         <Header/>
         <Main/>
         <div className="mx-2 md:mx-8">
@@ -23,7 +23,7 @@ class Home extends Component {
 
 function Main () {
   return (
-    <div className="flex flex-col md:flex-row px-2 md:px-4 md:mx-4">
+    <div className="flex flex-col px-2 md:flex-row md:px-4 md:mx-4">
       <LeftGrid/>
       <SideBar/>
     </div>
@@ -32,7 +32,7 @@ function Main () {
 
 function SideBar () {
   return (
-    <div className="flex flex-col lg:w-1/4 md:w-1/3 w-full mt-4">
+    <div className="flex flex-col w-full mt-4 lg:w-1/4 md:w-1/3">
       <Topics/>
       <Popular/>
       <SubmitArticleForm/>

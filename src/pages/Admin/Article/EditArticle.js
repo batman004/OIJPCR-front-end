@@ -5,7 +5,7 @@ import { Editor } from '@tinymce/tinymce-react'
 import { initEditor } from '../../../components/Admin/Config/TinyMCEConfig'
 import EditorForm from '../../../components/Admin/EditorForm'
 import config from '../../../config/config'
-import PopUp from '../../../components/utils/Popup'
+import { PopUp } from '../../../components/utils'
 import { UserContext } from '../../../UserContext'
 import { deleteOldImage, uploadMultipart } from '../utils'
 

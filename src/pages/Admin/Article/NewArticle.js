@@ -4,14 +4,14 @@ import axios from 'axios'
 import EditorForm from '../../../components/Admin/EditorForm'
 import { initEditor } from '../../../components/Admin/Config/TinyMCEConfig'
 import config from '../../../config/config'
-import PopUp from '../../../components/utils/Popup'
+import { PopUp } from "../../../components/utils";
 import { UserContext } from '../../../UserContext'
-import { uploadMultipart} from '../utils'
+import { uploadMultipart } from '../utils'
 
 class NewArticle extends Component {
   static contextType = UserContext
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       editorRef: {},
@@ -33,7 +33,7 @@ class NewArticle extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setState({ token: this.context?.token })
   }
 
@@ -107,13 +107,13 @@ class NewArticle extends Component {
     })
   }
 
-  render () {
+  render() {
     const {
-            content,
-            articleCoverImage,
-            authorImage,
-            ...formState
-          } = this.state
+      content,
+      articleCoverImage,
+      authorImage,
+      ...formState
+    } = this.state
 
     return (
       <>
@@ -160,11 +160,11 @@ class NewArticle extends Component {
   PostData = async () => {
     try {
       const {
-              editorRef,
-              articleCoverImage,
-              authorImage,
-              ...data
-            } = this.state
+        editorRef,
+        articleCoverImage,
+        authorImage,
+        ...data
+      } = this.state
 
       const url = `${config.host}admin/editor/`
 

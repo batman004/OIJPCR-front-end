@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { UserContext } from '../../../UserContext'
 import config from '../../../config/config'
 import VolumeForm from '../../../components/Admin/VolumeForm'
-import PopUp from '../../../components/utils/Popup'
+import { PopUp } from '../../../components/utils'
 import { deleteOldImage, uploadMultipart } from '../utils'
 
 class EditVolume extends Component {

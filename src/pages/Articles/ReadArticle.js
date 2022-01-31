@@ -98,14 +98,16 @@ class ReadArticle extends Component {
         }
 
 
-        <div className="mt-16 lg:mx-4">
+        <div className="max-w-full mt-16 text-justify lg:mx-4">
           {HTMLReactParser(content.toString())}
-          <ShareArticleOnSocialMedia />
+
+          <div className="flex flex-wrap mt-2 mb-6 noprint">
+            <ShareArticleOnSocialMedia />
+            <PrintButton />
+          </div>
         </div>
 
-        <PrintButton />
         <Tags tags={article.tags} />
-
 
         <MoreArticles
           articles={this.state.moreArticles}
