@@ -5,7 +5,7 @@ import {
 } from "../components/About";
 
 const About = () => (
-  <div className="flex-grow">
+  <div className="flex-grow max-w-7xl">
     <AboutContainer>
       <Heading>
         {HeadingText}
@@ -15,7 +15,9 @@ const About = () => (
         {AboutText}
       </Description>
 
-      <Podcast />
+      <div className="mx-4">
+        <Podcast />
+      </div>
     </AboutContainer>
   </div>
 )
@@ -31,7 +33,7 @@ function AboutContainer(props) {
 
 function Heading(props) {
   return (
-    <h1 className="text-3xl font-bold text-left md:text-6xl primary-color">
+    <h1 className="text-3xl font-bold md:text-6xl primary-color">
       {props.children}
     </h1>
   )
@@ -39,7 +41,7 @@ function Heading(props) {
 
 function Description(props) {
   return (
-    <p className="mt-8">
+    <p className="mt-8 text-justify">
       {props.children}
     </p>
   )

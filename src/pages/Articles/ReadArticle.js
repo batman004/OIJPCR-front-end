@@ -12,7 +12,8 @@ import {
   MoreArticles,
   ShareArticleOnSocialMedia
 } from "../../components/Article";
-import PrintButton from '../../components/utils/PrintButton'
+import { PrintButton } from '../../components/utils'
+import { textClip } from '../../utils'
 import { LoadingCardFullWidth } from '../../components/Loaders'
 
 class ReadArticle extends Component {
@@ -73,7 +74,7 @@ class ReadArticle extends Component {
 
   render() {
     const article = this.articleHasLoaded() ? this.state.article : false
-    const author = article?.author
+    const author = textClip(article?.author, 60)
     const content = this.articleHasLoaded() ? article.content : ''
     // convert createdAt into formal Date
     const date = UTCToFormalDate(article.createdAt)

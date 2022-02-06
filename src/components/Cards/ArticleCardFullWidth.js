@@ -16,7 +16,7 @@ function ArticleCardFullWidth(props) {
 
   const { cname, id, path } = props
   const authorText =
-    `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
+    `BY ${textClip(author.toUpperCase(), 65)} ${String.fromCharCode(183)} VOLUME ${volume}`
   const defaultPhoto = coverPhoto ? coverPhoto : dollar
   return (
     <div className={
@@ -46,10 +46,10 @@ function CardContent({ title, slug, id, path, cname }) {
 
   return (
     <div className="mx-2 my-4 text-justify md:mx-6 border-gray-light">
-      <div className="h-10 mb-8 text-2xl font-bold text-left text-gray-600 truncate md:text-4xl whitespace-nowrap text-ellipsis">
+      <div className="h-10 text-lg font-bold text-left text-gray-600 truncate md:mb-4 md:text-2xl whitespace-nowrap text-ellipsis">
         {title}
       </div>
-      <p className="px-2 mb-8 text-lg font-normal text-gray-700 break-words lg:mb-12 lg:h-28">
+      <p className="px-2 mb-8 font-normal text-gray-700 break-words text-md lg:mb-0 lg:h-28">
         {aboutSlug}
       </p>
       <div>

@@ -9,7 +9,7 @@ const VolumeCard = ({
   date,
   isAdmin,
 }) => (
-  <div className="h-auto max-w-sm m-4 overflow-hidden rounded-md shadow-lg min-40 md:max-w-md lg:h-auto">
+  <div className="h-auto max-w-sm m-4 overflow-hidden text-justify rounded-md shadow-lg min-40 md:max-w-md lg:h-auto">
     <CardCover volumeCover={cover || fallback} volume={volume} date={date} />
     <CardContent volume={volume} about={about} isAdmin={isAdmin} />
   </div>
@@ -39,11 +39,11 @@ function CardContent({ about, volume, isAdmin }) {
   const volumeSlug = about.slice(start, end)
 
   return (
-    <div className="mx-6 my-4 border-gray-light">
+    <div className="mx-6 my-4 text-justify border-gray-light">
       <div className="mb-4 text-4xl font-bold text-center text-gray-900">
         Volume {volume}
       </div>
-      <p className="mb-6 text-sm font-normal text-center text-gray-700">
+      <p className="mb-6 text-sm font-normal text-justify text-gray-700 md:text-md">
         {volumeSlug}
       </p>
       <div>

@@ -4,6 +4,7 @@ import axios from 'axios'
 import { CircularLoader } from "../../Loaders";
 import config from '../../../config/config'
 import slugify from 'slugify'
+import { textClip } from '../../../utils';
 
 
 const Popular = () => {
@@ -58,6 +59,7 @@ function NavLink(props) {
   const urlSlug = slugify(title)
 
   const url = `/archive/${urlSlug}/${id}`
+  const authorText = `By ${author} ${String.fromCharCode(183)}`
   return (
     <div className="flex flex-row flex-1 pb-2 my-2 mr-4 border-b-2 border-transparent hover:border-indigo-400">
       <div className="w-1/4 pr-2 text-5xl font-bold text-right">
@@ -67,7 +69,7 @@ function NavLink(props) {
         <p className="text-sm font-semibold text-gray-900">
           <Link to={url}> {title} </Link>
         </p>
-        <p className="text-xs font-medium text-gray-500">By {author} {String.fromCharCode(183)} Vol {volume}</p>
+        <p className="text-xs font-medium text-gray-500">{`${textClip(authorText, 75)} Vol ${volume}`}</p>
       </div>
     </div>
   )

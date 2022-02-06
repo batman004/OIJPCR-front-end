@@ -1,4 +1,4 @@
-const textClip = (text, length) => text.length > length
+const textClip = (text, length) => text?.length > length
     ? text.slice(0, length) + "..."
     : text
 

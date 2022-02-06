@@ -30,17 +30,16 @@ class Volume extends Component {
     const about = volumeInfo ? volumeInfo.about : ''
     return (
       <div className="flex-grow">
-        <div className="px-4 py-6 mx-12 my-6">
+        <div className="py-6 mx-4 my-6 md:mx-12 md:px-4">
           <h1 className="text-5xl font-black text-gray-900">Volume {volume}</h1>
-          <p className="max-w-4xl mt-4 text-lg">{about}</p>
+          <h5 className="my-2 text-xl font-black text-gray-900">Editor's Note</h5>
+          <p className="max-w-4xl mt-4 text-lg text-justify">{about}</p>
         </div>
-        {/* <div> */}
         <ArticleList
           journals={this.state.journals}
           path={path}
           volume={volume}
         />
-        {/* </div> */}
       </div>
     )
   }

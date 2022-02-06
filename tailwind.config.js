@@ -8,7 +8,10 @@ module.exports = {
     extend: {
       colors: {
         'oijpcr-blue': '#2B2BD6',
-      }
+      },
+      height: {
+        '8xl': '90rem'
+      },
     }
   }
 }

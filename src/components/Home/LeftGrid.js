@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { LoadingCard, LoadingCardFullWidth } from "../Loaders";
-import {ArticleCard, ArticleCardFullWidth} from "../Cards";
+import { ArticleCard, ArticleCardFullWidth } from "../Cards";
 import config from '../../config/config'
 
 function LeftGrid() {

@@ -30,7 +30,7 @@ class Archive extends Component {
     const { path } = this.props.match
 
     return (
-      <FlexContainer>
+      <FlexContainer cname="max-w-7xl">
         <Switch>
           <Route exact path="/archive"
             render={(props) => <Home {...props} archives={this.state.archives} />}

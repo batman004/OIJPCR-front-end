@@ -16,7 +16,7 @@ const ArticleCard = (props) => {
 
   const { cname, id, path } = props
   const authorText =
-    `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
+    `BY ${textClip(author.toUpperCase(), 25)} ${String.fromCharCode(183)} VOLUME ${volume}`
   const defaultPhoto = coverPhoto ? coverPhoto : dollar
   return (
     <div className={
@@ -35,11 +35,11 @@ function CardContent({ title, slug, id, path, cname }) {
   const urlSlug = slugify(title)
 
   return (
-    <div className="mx-6 my-4 text-justify border-gray-light">
-      <div className="h-10 text-lg font-bold text-left text-gray-600 truncate whitespace-nowrap">
+    <div className="mx-2 my-4 text-justify border-gray-light">
+      <div className="h-10 mx-4 text-lg font-bold text-left text-gray-600 truncate whitespace-nowrap">
         {title}
       </div>
-      <p className="px-1 mb-8 font-normal text-gray-700 break-words text-md md:text-sm md:mb-12 lg:h-28">
+      <p className="px-1 mx-4 mb-8 font-normal text-gray-700 break-words text-md lg:text-sm md:mb-2 lg:h-26">
         {aboutSlug}
       </p>
       <div>
