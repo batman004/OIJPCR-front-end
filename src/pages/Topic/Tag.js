@@ -7,22 +7,22 @@ import { useParams, useRouteMatch } from 'react-router-dom'
 
 const Tag = () => {
   const [journals, setJournals] = useState([])
-  const {tag} = useParams()
-  const {path, url} = useRouteMatch()
+  const { tag } = useParams()
+  const { path, url } = useRouteMatch()
 
   useEffect(() => {
     async function getJournals(tag) {
       const url = `${config.host}journals/tags/${tag}`
-      const {data: journals} = await axios.get(url)
+      const { data: journals } = await axios.get(url)
       setJournals(journals)
     }
     return getJournals(tag)
-  }, )
+  })
 
   return (
     <div className="flex-grow">
       <div className="px-4 py-6 mx-12 my-6">
-        <h1 className="text-gray-900 font-black text-5xl">{tag}</h1>
+        <h1 className="text-5xl font-black text-gray-900">{tag}</h1>
       </div>
       <div>
         <ArticleList

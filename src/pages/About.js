@@ -11,13 +11,13 @@ const About = () => (
         {HeadingText}
       </Heading>
 
-      <EditorialBoardMembers />
-
       <Description>
         {AboutText}
       </Description>
 
-      <div className="mx-4">
+      <EditorialBoardMembers />
+
+      <div className="sm:mx-4">
         <Podcast />
       </div>
     </AboutContainer>
@@ -35,7 +35,7 @@ function AboutContainer(props) {
 
 function Heading(props) {
   return (
-    <h1 className="text-3xl font-bold md:text-6xl primary-color">
+    <h1 className="text-3xl font-bold text-justify md:text-left md:text-6xl primary-color">
       {props.children}
     </h1>
   )
@@ -43,7 +43,7 @@ function Heading(props) {
 
 function Description(props) {
   return (
-    <p className="mt-8 text-justify">
+    <p className="mt-8 text-justify lg:text-lg">
       {props.children}
     </p>
   )
@@ -80,28 +80,45 @@ const boardMembers = [
 
 function EditorialBoardMembers() {
   return (
-    <>
-      <div className='mt-6 mb-4'>
-        <h2 className='text-xl font-bold text-black md:text-2xl'>
+    <div className='mt-6 mb-8 lg:mt-12 lg:mb-16'>
+      <div className='mb-4 lg:mb-8'>
+        <h2 className='text-xl font-bold text-black md:text-2xl lg:text-3xl'>
           Editorial Board Members
         </h2>
       </div>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 grid-flow-auto md:grid-flow-row'>
         {
           boardMembers.map((member, index) => {
             return (
-              <div className='px-2 py-4 mx-4 my-6 rounded-md shadow-lg lg:h-48'>
-                <h3 className='my-2 text-xl font-medium text-gray-900 md:text-2xl'>{member.name}</h3>
-                <p className='my-2 font-normal text-gray-800 text-md md:text-lg'>{member.university}</p>
-                <p className='text-sm font-light text-gray-700 md:text-md'>Email: {member.email}</p>
-              </div>
+              <BoardMemberCard
+                key={index}
+                name={member.name}
+                university={member.university}
+                email={member.email}
+              />
             )
           })
         }
       </div>
-    </>
+    </div>
   )
 }
 
+
+function BoardMemberCard({
+  name,
+  university,
+  email
+}) {
+  return (
+    <div className='grid grid-cols-1 gap-2 p-4 rounded-md shadow-lg lg:gap-4'>
+      <h3 className='text-xl font-medium text-black md:text-2xl'>{name}</h3>
+      <p className='font-normal text-gray-900 text-md md:text-lg'>{university}</p>
+      <p className='text-sm font-light text-gray-800 md:text-md'>
+        <a href={`mailto:${email}`} className='hover:text-blue-800 hover:underline'>{email}</a>
+      </p>
+    </div>
+  )
+}
 
 export default About

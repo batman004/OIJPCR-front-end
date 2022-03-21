@@ -8,34 +8,34 @@ import Podcast from '../components/Home/Podcast/Podcast'
 
 
 class Home extends Component {
-  render () {
+  render() {
     return (
       <div className="flex-grow max-w-7xl">
-        <Header/>
-        <Main/>
+        <Header />
+        <Main />
         <div className="mx-2 md:mx-8">
-          <Podcast/>
+          <Podcast />
         </div>
       </div>
     )
   }
 }
 
-function Main () {
+function Main() {
   return (
     <div className="flex flex-col px-2 md:flex-row md:px-4 md:mx-4">
-      <LeftGrid/>
-      <SideBar/>
+      <LeftGrid />
+      <SideBar />
     </div>
   )
 }
 
-function SideBar () {
+function SideBar() {
   return (
     <div className="flex flex-col w-full mt-4 lg:w-1/4 md:w-1/3">
-      <Topics/>
-      <Popular/>
-      <SubmitArticleForm/>
+      <Topics />
+      <Popular />
+      <SubmitArticleForm />
     </div>
   )
 }

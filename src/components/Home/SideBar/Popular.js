@@ -23,6 +23,7 @@ const Popular = () => {
     const url = `${config.host}journals/home/5`
     const res = await axios.get(url)
     return res?.data
+
   }
 
   return (
