@@ -5,16 +5,20 @@ import HTMLReactParser from 'html-react-parser'
 import UTCToFormalDate from '../../utils/DateTime'
 import config from '../../config/config'
 
-import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
 import {
   ArticleHeader,
   ArticleContainer,
   MoreArticles,
+  MoreArticlesContainer,
   ShareArticleOnSocialMedia
 } from "../../components/Article";
+
 import { PrintButton } from '../../components/utils'
 import { textClip } from '../../utils'
 import { LoadingCardFullWidth } from '../../components/Loaders'
+
+import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
+
 
 class ReadArticle extends Component {
   constructor(props) {
@@ -22,13 +26,20 @@ class ReadArticle extends Component {
     this.state = {
       journal: "",
       moreJournals: [],
+      timer: true,
+      isLoadingOtherArticles: true,
+      otherArticlesLoaderMsg: "Loading Articles..."
     }
+    this.startTimer = this.startTimer.bind(this)
+    this.stopTimer = this.stopTimer.bind(this)
     this.articleHasLoaded = this.articleHasLoaded.bind(this)
     this.handleClickOtherArticle = this.handleClickOtherArticle.bind(this)
   }
 
   async componentDidMount() {
     try {
+      this.startTimer()
+
       const { urlSlug, id } = this.props
       const url = `${config.host}journals/${urlSlug}/${id}`
       const { data: article } = await axios.get(url);
@@ -37,12 +48,39 @@ class ReadArticle extends Component {
       const MoreArticlesURL = `${config.host}journals/limit/${volume}/${3}`
       const { data: moreArticles } = await axios.get(MoreArticlesURL)
 
+      if (moreArticles && moreArticles.length > 1)
+        this.stopTimer()
+
       this.setState({
         article: article,
         moreArticles: moreArticles,
       })
     } catch (e) {
       throw new Error(e.message)
+    }
+  }
+
+  startTimer() {
+    const timer = setTimeout(() => {
+      this.setState(prevState => ({
+        isLoadingOtherArticles: !prevState.isLoadingOtherArticles,
+        otherArticlesLoaderMsg: "No other articles found."
+      }))
+    }, config.timeoutValue)
+
+    this.setState({
+      timer: timer
+    })
+  }
+
+  stopTimer() {
+    if (this.state.timer) {
+      clearTimeout(this.state.timer)
+      
+      this.setState(prevState => ({
+        isLoadingOtherArticles: !prevState.isLoadingOtherArticles,
+        otherArticlesLoaderMsg: ""
+      }))
     }
   }
 
@@ -110,11 +148,16 @@ class ReadArticle extends Component {
 
         <Tags tags={article.tags} />
 
-        <MoreArticles
-          articles={this.state.moreArticles}
-          handleClick={this.handleClickOtherArticle}
-          path={this.props.path}
-        />
+        <MoreArticlesContainer>
+          <MoreArticles
+            articles={this.state.moreArticles}
+            handleClick={this.handleClickOtherArticle}
+            path={this.props.path}
+            isLoading={this.state.isLoadingOtherArticles}
+            loaderMsg={this.state.otherArticlesLoaderMsg}
+          />
+        </MoreArticlesContainer>
+
         <SubmitArticleFormFullWidth />
       </ArticleContainer>
     )
