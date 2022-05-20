@@ -25,7 +25,11 @@ function CopyrightLeftPanel({ logo }) {
     <div className="flex-1 w-full py-2 pl-4 pr-2 md:w-1/2 md:p-2 noprint">
       <img src={logo} alt="OIJPCR logo" className="w-14 h-14 md:w-20 md:h-20" />
       <p className="mt-2 md:mt-6">&copy; Copyright 2016-2021</p>
-      <p>Online Indian Journal of Peace and Conflict Resolution</p>
+      <p className='mb-4'>Online Indian Journal of Peace and Conflict Resolution</p>
+      <p>Developed and Maintained by
+        <a href='kabirsingh.super.site' className='underline text-gray-50 hover:cursor-pointer'> Kabir Singh Shekhawat</a> and
+        <a href="yuvraj.super.site" className='underline text-gray-50 hover:cursor-pointer'> Yuvraj Singh Pathania</a>
+      </p>
     </div>
   )
 }
