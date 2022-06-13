@@ -12,7 +12,7 @@ const About = () => (
       </Heading>
 
       <Description>
-        {AboutText}
+        {<AboutText />}
       </Description>
 
       <EditorialBoardMembers />
