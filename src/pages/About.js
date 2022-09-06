@@ -62,6 +62,11 @@ const boardMembers = [
     email: "drsudhakhokate@gmail.com"
   },
   {
+    name: "Shomaila Tahzib",
+    university: "Social activist, research scholar and gold Medalist from St.Xavier’s College, Ranchi",
+    email: "managing.editor@oijpcr.org"
+  },
+  {
     name: "Dr.Shruti Singh",
     university: "Associate Professor, Amity Institute of Social Sciences(AISS)",
     email: "ssingh31@amity.edu"
