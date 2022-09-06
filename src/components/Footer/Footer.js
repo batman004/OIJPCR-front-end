@@ -29,10 +29,6 @@ function CopyrightLeftPanel({ logo }) {
       <br></br>
       Sector-37, Noida, UP, India - 201303
       </p>
-      <p>Developed and Maintained by
-        <a href='https://kabirsingh.super.site' className='underline text-gray-50 hover:cursor-pointer'> Kabir Singh Shekhawat</a> and
-        <a href="https://yuvraj.super.site" className='underline text-gray-50 hover:cursor-pointer'> Yuvraj Singh Pathania</a>
-      </p>
     </div>
   )
 }
