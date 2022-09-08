@@ -6,6 +6,7 @@ import { Link, withRouter } from 'react-router-dom'
 export const urlLinks = [
   { url: '/', value: 'Home' },
   { url: '/about', value: 'About' },
+  { url: '/editorialBoard', value: 'Editorial Board' },
   { url: '/archive', value: 'Archive' },
   { url: '/submitArticle', value: 'Submit Article' },
 ]
