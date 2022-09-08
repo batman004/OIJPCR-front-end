@@ -81,7 +81,7 @@ class EditVolume extends Component {
     }
 
     uploadNewCoverImage = async () => {
-        const imgPath = await FileUploadHandler.uploadFile(this.state.file, this.state.authToken)
+        const imgPath = await FileUploadHandler.uploadFile(this.state.file, this.state.token)
         await this.deletePreviousCoverImage(this.state.cover)
         this.setState({cover: imgPath})
     }

@@ -60,7 +60,7 @@ class EditorForm extends Component {
                 />
                 {/* PDF Upload*/}
                 <UploadFile
-                    name="pdf"
+                    name="pdfFile"
                     label="PDF Upload"
                     onFileChange={this.onFileChange}
                 />

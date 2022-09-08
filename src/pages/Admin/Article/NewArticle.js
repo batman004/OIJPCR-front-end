@@ -106,6 +106,9 @@ class NewArticle extends Component {
         const authorPhoto = await this.fileUpload(this.state.authorImage)
         const pdfFilePath = await this.fileUpload(this.state.pdf, 'pdf')
 
+        console.log('pdf file path')
+        console.log(pdfFilePath)
+
         this.setState({
             cover: cover,
             authorPhoto: authorPhoto,
@@ -171,6 +174,7 @@ class NewArticle extends Component {
                 editorRef,
                 articleCoverImage,
                 authorImage,
+                pdf,
                 ...data
             } = this.state
 

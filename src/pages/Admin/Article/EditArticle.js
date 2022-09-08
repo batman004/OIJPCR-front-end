@@ -28,10 +28,10 @@ class EditArticle extends Component {
             tags: this.props.tags || '',
             cover: this.props.cover || `${config.host}editor/images/article_cover_fallback.jpg`,
             authorPhoto: this.props.authorPhoto || '',
-            pdfFilePath: this.props.pdfFilePath || '',
+            pdfFilePath: this.props.pdf || '',
             articleCoverImage: null,
             authorImage: null,
-            pdf: null,
+            pdfFile: null,
             id: '',
             redirect: null,
             postDataFlag: true,
@@ -50,6 +50,7 @@ class EditArticle extends Component {
             const {content: initialValue} = data
             this.setState({
                 ...data,
+                pdfFilePath: data.pdf,
                 id,
                 initialValue,
                 token: this.context?.token,
@@ -83,7 +84,7 @@ class EditArticle extends Component {
                 pdfFilePath: this.state.pdfFilePath
             }
 
-            await ArticleHandler.editArticle(this.state.id, paths)
+            await ArticleHandler.deleteArticle(this.state.id, paths, this.state.token)
 
             this.setState({
                 redirect: '/admin/list',
@@ -128,7 +129,7 @@ class EditArticle extends Component {
             await this.editAuthorProfileImage()
         }
 
-        if (this.state.pdf) {
+        if (this.state.pdfFile) {
             await this.editPDF()
         }
 
@@ -159,7 +160,7 @@ class EditArticle extends Component {
 
     editPDF = async () => {
         const authToken = this.state.token
-        const pdfPath = await FileUploadHandler.uploadFile(this.state.pdf, authToken)
+        const pdfPath = await FileUploadHandler.uploadFile(this.state.pdfFile, authToken, 'pdf')
         // before sending delete request, check if pdf exists on server
         if (this.state.pdfFilePath) await this.deletePreviousFile(this.state.pdfFilePath)
         this.setState({pdfFilePath: pdfPath})
@@ -214,25 +215,8 @@ class EditArticle extends Component {
         try {
             if (!this.state.postDataFlag) return
 
-            const {
-                editorRef,
-                initialValue,
-                redirect,
-                articleCoverImage,
-                authorImage,
-                ...data
-            } = this.state
-
-            const url = `${config.host}admin/editor`
-
-            const headerConfig = {
-                withCredentials: true, headers: {
-                    'Authorization': `Bearer ${this.state.token}`,
-                    'Content-Type': 'application/json',
-                },
-            }
-
-            await axios.patch(url, {...data}, {...headerConfig})
+            const authToken = this.state.token
+            await ArticleHandler.editArticle(this.state, authToken)
 
             this.setState({
                 notification: {

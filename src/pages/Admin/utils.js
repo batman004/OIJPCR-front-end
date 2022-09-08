@@ -47,18 +47,35 @@ class FileUploadHandler {
 class ArticleHandler {
     static baseRoute = `${config.host}admin/editor`
 
-    static async createNewArticle(articleData = {}, authToken = '') {
+    static async createNewArticle(articleData, authToken = '') {
 
         const headerConfig = AuthUtils.setAuthHeader(authToken)
 
         await axios.post(ArticleHandler.baseRoute, {...articleData}, {...headerConfig})
     }
 
-    static async editArticle(id = '', {
+    static async editArticle(articleState, authToken) {
+        // remove all these fields otherwise data won't be validated
+        const {
+            editorRef,
+            initialValue,
+            redirect,
+            articleCoverImage,
+            authorImage,
+            pdfFile,
+            ...data
+        } = articleState
+
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+
+        await axios.patch(ArticleHandler.baseRoute, {...data}, {...headerConfig})
+    }
+
+    static async deleteArticle(id = '', {
         coverPath = '',
         authorProfileImagePath = '',
         pdfFilePath = ''
-    }) {
+    }, authToken) {
         const articleCover = coverPath.split('/').pop()
         const authorPhoto = authorProfileImagePath.split('/').pop()
         const pdf = pdfFilePath.split('/').pop()
@@ -67,8 +84,8 @@ class ArticleHandler {
             id: id, articleCover, authorPhoto, pdf
         }
 
-        const headerConfig = AuthUtils.setAuthHeader()
-
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        console.log(pdf, authorPhoto, articleCover)
         await axios.delete(ArticleHandler.baseRoute, {
             ...headerConfig, data: {...data},
         })
