@@ -1,2 +1,3 @@
-export { default as PrintButton } from "./PrintButton";
-export { default as PopUp } from "./PopUp";
+export {default as PrintButton} from "./PrintButton";
+export {default as PDFButton} from "./PDFButton";
+export {default as PopUp} from "./PopUp";
