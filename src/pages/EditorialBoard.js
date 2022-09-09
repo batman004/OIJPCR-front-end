@@ -67,16 +67,20 @@ function EditorialBoardMembers() {
         </div>
         <div
             className='grid grid-cols-1 gap-4 md:grid-cols-2 grid-flow-auto md:grid-flow-row'>
-            {boardMembers.map((member, index) => {
-                return (<BoardMemberCard
-                    key={index}
-                    name={member.name}
-                    designation={member.designation}
-                    university={member.university}
-                    email={member.email}
-                    website={member.website}
-                />)
-            })}
+            {
+                boardMembers.map((member, index) => {
+                    return (
+                        <BoardMemberCard
+                            key={index}
+                            name={member.name}
+                            designation={member.designation}
+                            university={member.university}
+                            email={member.email}
+                            website={member.website}
+                        />
+                    )
+                })
+            }
         </div>
     </div>)
 }

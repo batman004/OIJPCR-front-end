@@ -26,7 +26,7 @@ class NewArticle extends Component {
             authorPhoto: this.props.authorPhoto || '',
             pdfFilePath: this.props.pdfFilePath || '',
             articleCoverImage: null,
-            pdf: null,
+            pdfFile: null,
             authorImage: null,
             notification: {
                 show: false, msg: '',
@@ -83,7 +83,7 @@ class NewArticle extends Component {
             return
         }
 
-        if (!this.state.pdf) {
+        if (!this.state.pdfFile) {
             this.setState({
                 notification: {
                     show: true,
@@ -104,10 +104,7 @@ class NewArticle extends Component {
 
         const cover = await this.fileUpload(this.state.articleCoverImage)
         const authorPhoto = await this.fileUpload(this.state.authorImage)
-        const pdfFilePath = await this.fileUpload(this.state.pdf, 'pdf')
-
-        console.log('pdf file path')
-        console.log(pdfFilePath)
+        const pdfFilePath = await this.fileUpload(this.state.pdfFile, 'pdf')
 
         this.setState({
             cover: cover,
@@ -174,7 +171,7 @@ class NewArticle extends Component {
                 editorRef,
                 articleCoverImage,
                 authorImage,
-                pdf,
+                pdfFile,
                 ...data
             } = this.state
 
