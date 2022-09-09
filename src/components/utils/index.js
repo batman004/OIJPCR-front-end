@@ -1,3 +1,3 @@
 export {default as PrintButton} from "./PrintButton";
-export {default as PDFButton} from "./PDFButton";
+export {PDFButton, PDFButtonSmall} from "./PDFButton";
 export {default as PopUp} from "./PopUp";
