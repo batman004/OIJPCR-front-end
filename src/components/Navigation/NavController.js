@@ -1,6 +1,7 @@
 import { Redirect, Route, Switch } from 'react-router-dom'
 import Home from '../../pages/Home'
 import About from '../../pages/About'
+import EditorialBoard from '../../pages/EditorialBoard'
 import Archive from '../../pages/Archive/Archive'
 import SubmitArticle from '../../pages/SubmitArticle'
 import React from 'react'
@@ -15,6 +16,8 @@ const NavController = () => {
       <Switch>
 
         <Route exact path="/about" render={() => <About/>}/>
+
+        <Route exact path="/editorialBoard" render={() => <EditorialBoard/>}/>
 
         <Route exact path="/tags/:tag" render={(props) => <Tag {...props}/>}/>
 
