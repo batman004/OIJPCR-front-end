@@ -10,52 +10,56 @@ const EditorialBoard = () => (
             <Podcast/>
         </div>
     </div>)
-const boardMembers = [{
+const boardMembers = [
+    {
+        name: "Dr. Jyoti M. Pathania",
+        designation: "Founder and Chief Editor",
+        university: "Online indian Journal of Peace and Conflict Resolution, Sector 37, Noida, U.P-201301",
+        email: "editor@oijpcr.org",
+        website: "https://oijpcr.org"
+    },
+    {
     name: "Dr. Sudha Khokate",
     designation: "Assistant Professor",
-    university: "Department of Sociology, Manasa Bhavana Jnanabharathi Campus, Bangalore University",
+    university: "Department of Sociology, Manasa Bhavana, Jnanabharathi Campus, Bangalore University, Bangalore-560056",
     email: "drsudhakhokate@bub.ernet.in",
     website: "http://eng.bangaloreuniversity.ac.in"
 }, {
     name: "Dr. Shruti Singh",
     designation: "Professor",
-    university: "Amity Institute of Social Sciences (AISS), Noida",
+    university: "Amity Institute of Social Sciences (AISS), K-3 Block ,Amity University, Sector-125 Campus-Noida, Uttar Pradesh-201313",
     email: "ssingh@amity.edu",
     website: "https://www.amity.edu/faculty-detail.aspx?facultyID=3246"
 }, {
     name: "Prof Sangeeta Thapliyal",
     designation: "Professor & Head Center for Inner Asian Studies",
-    university: "Centre for Inner Asian Studies, Jawaharlal Nehru University",
+    university: "School of International Studies,Room No-101, Jawaharlal Nehru University, New Delhi-110067",
     email: "sthapliyal@mail.jnu.ac.in",
     website: "https://jnu.ac.in/Faculty/sthapliyal"
 }, {
     name: "Dr. Nagalaxmi M Raman",
     designation: "Professor & Director",
-    university: "Amity Institute of International Studies (AIIS), Noida",
+    university: "Amity University, Sector 125 Campus Noida-201313",
     email: "niraman@amity.edu",
     website: "https://www.amity.edu/faculty-detail.aspx?facultyID=1530"
 }, {
     name: "Dr. Mallika Joseph",
     designation: "Adjunct Professor",
-    university: "National Institute of Advanced Studies Indian Institute of science Campus,Bengaluru",
+    university: "National Institute of Advanced Studies, Indian Institute of science Campus, Bengaluru-560012",
     email: "mallikajoseph@nias.res.in",
     website: "https://www.nias.res.in/People/facility-member-info/People/Mallika%20Joseph%20A"
 }, {
     name: "Rashmi Thakur",
     designation: "PGT Political Science",
-    university: "Mayo College Girls School, Mayo Link Road",
+    university: "Mayo College Girls School, Mayo Link Road, Ajmer-305001, Rajasthan",
     email: "rthakur@mcgs.ac.in",
-    website: "https://www.mcgs.ac.in/our_team/rashmi-thakur/"
-}, {
-    name: "Prof Deepsheekha Kotwal",
-    designation: "Professor",
-    university: "Central University of Jammu",
-    email: "d.kotwal@oijpcr.org"
-}, {
+    website: "https://www.mcgs.ac.in/our_team/rashmi-thakur-2/"
+},{
     name: "Shomaila Tahzib",
-    designation: "Social activist, research scholar and gold Medalist",
-    university: "St.Xavier’s College, Ranchi",
-    email: "s.tahzib@oijpcr.org"
+    designation: "Managing editor",
+    university: "Online indian Journal of Peace and Conflict Resolution, Sector 37, Noida, U.P-201301",
+    email: "s.tahzib@oijpcr.org",
+    website: "https://oijpcr.org"
 },]
 
 function EditorialBoardMembers() {

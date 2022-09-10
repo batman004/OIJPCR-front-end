@@ -1,18 +1,17 @@
 const particulars = [
     {Title: 'Online Indian Journal of Peace and Conflict Resolution'},
-    {Frequency: 'Biannnual'},
+    {Frequency: 'Annual'},
     {Publisher: 'Dr.Jyoti M.Pathania'},
     {'Chief Editor': 'Dr.Jyoti M. Pathania'},
-    {Copyright: 'Editor@oijpcr.org Dr. Jyoti M. Pathania@ oijpcr, 531, Sector 37, Noida-201301'},
+    {Copyright: 'editor@oijpcr.org Dr.Jyoti M.Pathania, OIJPCR, 531, Sector 37, Noida-201301'},
     {'Starting Year': 2016},
     {Subjects: 'Social sciences'},
     {Language: 'English'},
     {'Publication Format': 'Online'},
     {'Phone No': '7042660900'},
-    {'Email Id': 'Editor@oijpcr.org'},
-    {'Mobile No': '7042660900'},
+    {'Email Id': 'contact.us@oijpcr.org'},
     {Website: 'https://oijpcr.org'},
-    {Address: '531/Sector-37, Noida 201301, Uttar-Pradesh'}
+    {Address: 'Sector-37, Noida, UP, India - 201303'}
 ]
 
 const JournalParticularsContainer = ({children}) => {
