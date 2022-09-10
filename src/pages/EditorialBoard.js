@@ -45,17 +45,13 @@ const boardMembers = [{
     designation: "PGT Political Science",
     university: "Mayo College Girls School, Mayo Link Road",
     email: "rthakur@mcgs.ac.in",
-    website: "https://www.mcgs.ac.in/our_team/rashmi-thakur/"
-}, {
-    name: "Prof Deepsheekha Kotwal",
-    designation: "Professor",
-    university: "Central University of Jammu",
-    email: "d.kotwal@oijpcr.org"
-}, {
+    website: "https://www.mcgs.ac.in/our_team/rashmi-thakur-2/"
+},{
     name: "Shomaila Tahzib",
-    designation: "Social activist, research scholar and gold Medalist",
+    designation: "Managing editor, OIJPCR",
     university: "St.Xavier’s College, Ranchi",
-    email: "s.tahzib@oijpcr.org"
+    email: "s.tahzib@oijpcr.org",
+    website: "https://oijpcr.org"
 },]
 
 function EditorialBoardMembers() {
