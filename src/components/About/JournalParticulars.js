@@ -1,14 +1,14 @@
 const particulars = [
-    {Title: 'Online Indian Journal of Peace and Conflict Resolution'},
+    {Title: 'Online Indian Journal of Peace and Conflict Resolution(OIJPCR)'},
     {Frequency: 'Annual'},
-    {Publisher: 'Dr.Jyoti M.Pathania'},
+    {Publisher: 'Dr.Jyoti M. Pathania'},
     {'Chief Editor': 'Dr.Jyoti M. Pathania'},
-    {Copyright: 'editor@oijpcr.org Dr.Jyoti M.Pathania, OIJPCR, 531, Sector 37, Noida-201301'},
+    {Copyright: 'Online Indian Journal of Peace and Conflict Resolution, Sector 37, Noida, UP'},
     {'Starting Year': 2016},
     {Subjects: 'Social sciences'},
     {Language: 'English'},
     {'Publication Format': 'Online'},
-    {'Phone No': '7042660900'},
+    {'Phone No': '+91 7042660900'},
     {'Email Id': 'contact.us@oijpcr.org'},
     {Website: 'https://oijpcr.org'},
     {Address: 'Sector-37, Noida, UP, India - 201303'}
