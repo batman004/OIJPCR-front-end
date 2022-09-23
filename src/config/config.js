@@ -28,4 +28,4 @@ if (ENV === "dev") {
   };
 }
 
-export default config;
+export default config
