@@ -20,7 +20,7 @@ class ArticleList extends Component {
   }
 
   async componentDidMount() {
-    const { data } = await axios.get(`${config.host}journals`)
+    const { data } = await axios.get(`${config.host}/journals`)
     this.setState({ articles: data, token: this.context?.token })
   }
 

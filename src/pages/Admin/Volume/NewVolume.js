@@ -14,7 +14,7 @@ class NewVolume extends Component {
         this.state = {
             volume: '',
             about: 'This is a volume',
-            cover: `${config.host}editor/images/volume_cover_fallback.jpeg`,
+            cover: `${config.host}/editor/images/volume_cover_fallback.jpeg`,
             date: 'January 2021',
             isEdit: false,
             file: null,

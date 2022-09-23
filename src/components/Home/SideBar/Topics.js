@@ -17,7 +17,7 @@ const Topics = () => {
   }, [])
 
   const fetchTopics = async () => {
-    const url = `${config.host}journals/tags`
+    const url = `${config.host}/journals/tags`
     const res = await axios.get(url)
     return res?.data
   }

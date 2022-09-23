@@ -12,7 +12,7 @@ class VolumeList extends Component {
   }
 
   async componentDidMount() {
-    const url = `${config.host}volume`
+    const url = `${config.host}/volume`
     const { data } = await axios.get(url)
     this.setState({ volumes: data })
   }

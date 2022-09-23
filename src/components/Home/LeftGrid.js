@@ -22,7 +22,7 @@ function LeftGrid() {
   }, [])
 
   const fetchJournals = async () => {
-    const res = await axios.get(`${config.host}journals/home/5`)
+    const res = await axios.get(`${config.host}/journals/home/5`)
     return res?.data
   }
 

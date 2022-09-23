@@ -16,7 +16,7 @@ class Volume extends Component {
       const { volume } = this.props
 
       const { data: journals } = await axios.get(
-        `${config.host}journals/all/${volume}/info`,
+        `${config.host}/journals/all/${volume}/info`,
       )
 
       this.setState({ journals: journals })
