@@ -13,8 +13,8 @@ class AuthUtils {
 }
 
 class FileUploadHandler {
-    static url = `${config.host}admin/editor/upload`;
-    static deleteFileRoutePrefix = `${config.host}admin/editor/file`;
+    static url = `${config.host}/admin/editor/upload`;
+    static deleteFileRoutePrefix = `${config.host}/admin/editor/file`;
 
     static async uploadFile(file, authToken = '', fieldName = 'image') {
         const url = `${FileUploadHandler.url}/${fieldName}`
@@ -45,7 +45,7 @@ class FileUploadHandler {
 
 
 class ArticleHandler {
-    static baseRoute = `${config.host}admin/editor`
+    static baseRoute = `${config.host}/admin/editor`
 
     static async createNewArticle(articleData, authToken = '') {
 
@@ -94,7 +94,7 @@ class ArticleHandler {
 
 
 class VolumeHandler {
-    static baseRoute = `${config.host}admin/volume`;
+    static baseRoute = `${config.host}/admin/volume`;
 
     static async createNewVolume(volumeData = {}, authToken = '') {
         const headerConfig = AuthUtils.setAuthHeader(authToken)

@@ -19,7 +19,7 @@ class Archive extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await axios.get(`${config.host}journals/archive`)
+      const { data } = await axios.get(`${config.host}/journals/archive`)
       this.setState({ archives: data })
     } catch (e) {
       throw new Error(e.message)

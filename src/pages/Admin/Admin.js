@@ -31,7 +31,7 @@ const Admin = (props) => {
       'Content-Type': 'application/json',
     }
 
-    const { data } = await axios.get(`${config.host}admin/logout`,  {
+    const { data } = await axios.get(`${config.host}/admin/logout`,  {
       withCredentials: true,
       headers: headers,
     })

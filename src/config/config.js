@@ -3,8 +3,9 @@ const ENV = 'prod'
 let config = {
     protocol: 'https',
     domain: 'oijpcr.org',
-    host: 'https://oijpcrapi.live/',
+    host: 'https://oijpcrapi.live',
     timeoutValue: 6000,
+    s3Host: 'media.oijpcr.org'
 }
 
 if (ENV === 'dev') {
@@ -12,7 +13,7 @@ if (ENV === 'dev') {
         ...config,
         protocol: 'http',
         domain: 'localhost:3000',
-        host: 'http://localhost:8080/',
+        host: 'http://localhost:8080',
     }
 }
 

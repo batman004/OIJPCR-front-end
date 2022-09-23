@@ -21,7 +21,7 @@ const Login = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
-    const url = `${config.host}admin/login`
+    const url = `${config.host}/admin/login`
 
     const formData = {
       username: fields.username,
