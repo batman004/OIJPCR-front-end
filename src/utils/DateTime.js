@@ -5,7 +5,7 @@ const months = [
 
 function monthName(monthNumber) {
     if (monthNumber < 1 || monthNumber > 12) return "Not a month"
-    return months[monthNumber]
+    return months[monthNumber - 1]
 }
 
 /**
