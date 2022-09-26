@@ -12,7 +12,7 @@ const Tag = () => {
 
   useEffect(() => {
     async function getJournals(tag) {
-      const url = `${config.host}journals/tags/${tag}`
+      const url = `${config.host}/journals/tags/${tag}`
       const { data: journals } = await axios.get(url)
       setJournals(journals)
     }

@@ -22,7 +22,7 @@ const SignUp = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
-    const url = `${config.host}admin/signup`
+    const url = `${config.host}/admin/signup`
 
     const formData = {
       username: fields.username,

@@ -46,11 +46,11 @@ class ReadArticle extends Component {
             this.startTimer()
 
             const {urlSlug, id} = this.props
-            const url = `${config.host}journals/${urlSlug}/${id}`
+            const url = `${config.host}/journals/${urlSlug}/${id}`
             const {data: article} = await axios.get(url);
 
             const volume = article.volume
-            const MoreArticlesURL = `${config.host}journals/limit/${volume}/${3}`
+            const MoreArticlesURL = `${config.host}/journals/limit/${volume}/${3}`
             const {data: moreArticles} = await axios.get(MoreArticlesURL)
 
             if (moreArticles && moreArticles.length > 1) this.stopTimer()
@@ -90,7 +90,7 @@ class ReadArticle extends Component {
 
     async handleClickOtherArticle(url) {
         const {urlSlug, id} = url
-        const articleURL = `${config.host}journals/${urlSlug}/${id}`
+        const articleURL = `${config.host}/journals/${urlSlug}/${id}`
 
         const {data: article} = await axios.get(articleURL)
 

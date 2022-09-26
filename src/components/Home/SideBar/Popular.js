@@ -20,7 +20,7 @@ const Popular = () => {
   }, [])
 
   const fetchPopular = async () => {
-    const url = `${config.host}journals/home/5`
+    const url = `${config.host}/journals/home/5`
     const res = await axios.get(url)
     return res?.data
 

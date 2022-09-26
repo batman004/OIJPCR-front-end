@@ -26,7 +26,7 @@ class EditArticle extends Component {
             slug: this.props.slug || '',
             volume: this.props.volume || '',
             tags: this.props.tags || '',
-            cover: this.props.cover || `${config.host}editor/images/article_cover_fallback.jpg`,
+            cover: this.props.cover || `${config.host}/editor/images/article_cover_fallback.jpg`,
             authorPhoto: this.props.authorPhoto || '',
             pdfFilePath: this.props.pdf || '',
             articleCoverImage: null,
@@ -45,7 +45,7 @@ class EditArticle extends Component {
     async componentDidMount() {
         try {
             const {urlSlug, id} = this.props.match.params
-            const url = `${config.host}journals/${urlSlug}/${id}`
+            const url = `${config.host}/journals/${urlSlug}/${id}`
             const {data} = await axios.get(url)
             const {content: initialValue} = data
             this.setState({

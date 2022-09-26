@@ -39,7 +39,7 @@ class EditVolume extends Component {
 
         const headerConfig = AuthUtils.setAuthHeader(this.state.token)
         const {volume} = this.props.match.params
-        const url = `${config.host}volume/${volume}`
+        const url = `${config.host}/volume/${volume}`
 
         const {data} = await axios.get(url, {...headerConfig})
 
