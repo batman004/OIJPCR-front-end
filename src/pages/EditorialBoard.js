@@ -14,7 +14,7 @@ const boardMembers = [
     {
         name: "Dr. Jyoti M. Pathania",
         designation: "Founder and Chief Editor",
-        university: "Online indian Journal of Peace and Conflict Resolution, Sector 37, Noida, U.P-201301",
+        university: "Online Indian Journal of Peace and Conflict Resolution, Sector 37, Noida, U.P-201301",
         email: "editor@oijpcr.org",
         website: "https://oijpcr.org"
     },
