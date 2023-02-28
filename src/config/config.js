@@ -3,7 +3,7 @@ const ENV = process.env.REACT_APP_ENV;
 let config = {
   protocol: "https",
   domain: "oijpcr.org",
-  host: "https://oijpcrapi.live",
+  host: "https://oijpcrapi.site",
   timeoutValue: 6000,
   s3Host: "media.oijpcr.org",
 };
@@ -22,7 +22,7 @@ if (ENV === "dev") {
     ...config,
     protocol: "https",
     domain: "dev.oijpcr-front-end.pages.dev",
-    host: "https://dev.oijpcrapi.live",
+    host: "https://dev.oijpcrapi.site",
     timeoutValue: 6000,
     s3Host: "media-oijpcr",
   };
