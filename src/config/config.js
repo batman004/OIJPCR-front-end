@@ -1,20 +1,31 @@
-const ENV = 'prod'
+const ENV = process.env.ENV;
 
 let config = {
-    protocol: 'https',
-    domain: 'oijpcr.org',
-    host: 'https://oijpcrapi.live',
+  protocol: "https",
+  domain: "oijpcr.org",
+  host: "https://oijpcrapi.live",
+  timeoutValue: 6000,
+  s3Host: "media.oijpcr.org",
+};
+
+if (ENV === "local") {
+  config = {
+    ...config,
+    protocol: "http",
+    domain: "localhost:3000",
+    host: "http://localhost:8080",
+  };
+}
+
+if (ENV === "dev") {
+  config = {
+    ...config,
+    protocol: "https",
+    domain: "dev.oijpcr-front-end.pages.dev",
+    host: "https://dev.oijpcrapi.live",
     timeoutValue: 6000,
-    s3Host: 'media.oijpcr.org'
+    s3Host: "media-oijpcr",
+  };
 }
 
-if (ENV === 'dev') {
-    config = {
-        ...config,
-        protocol: 'http',
-        domain: 'localhost:3000',
-        host: 'http://localhost:8080',
-    }
-}
-
-export default config
+export default config;
