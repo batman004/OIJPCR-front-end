@@ -42,7 +42,7 @@ function CardContent({title, slug, id, path, cname, pdf}) {
             <div className="h-10 mx-4 text-lg font-bold text-left text-gray-600 truncate whitespace-nowrap">
                 {title}
             </div>
-            <p className="px-1 mx-4 mb-8 font-normal text-gray-700 break-words text-md lg:text-sm md:mb-2 lg:h-26">
+            <p className="px-1 mx-4 mb-8 h-32 font-normal text-gray-700 break-words text-md lg:text-sm md:mb-2">
                 {aboutSlug}
             </p>
             <div className="flex flex-wrap content-evenly">

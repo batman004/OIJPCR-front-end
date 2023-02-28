@@ -16,7 +16,7 @@ function LeftGrid() {
       })
       setCardData(newCardData)
     }
-
+    console.log("left grid render");
     getCardData()
     // eslint-disable-next-line
   }, [])
@@ -24,6 +24,11 @@ function LeftGrid() {
   const fetchJournals = async () => {
     const res = await axios.get(`${config.host}/journals/home/5`)
     return res?.data
+  }
+
+  const cnameFullWidthCard = {
+    container: '',
+    button: 'ml-4 mt-8',
   }
 
   const cname = {
@@ -49,7 +54,7 @@ function LeftGrid() {
           coverPhoto={card.cover}
           id={card._id}
           volume={card.volume}
-          cname={cname}
+          cname={cnameFullWidthCard}
         />
         :
         <ArticleCard
@@ -71,4 +76,3 @@ function LeftGrid() {
 }
 
 export default LeftGrid
-

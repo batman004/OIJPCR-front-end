@@ -1,4 +1,4 @@
-const ENV = process.env.ENV;
+const ENV = process.env.REACT_APP_ENV;
 
 let config = {
   protocol: "https",
@@ -28,4 +28,4 @@ if (ENV === "dev") {
   };
 }
 
-export default config
+export default config;

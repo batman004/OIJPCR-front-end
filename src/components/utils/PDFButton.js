@@ -12,7 +12,7 @@ function PDFButton({pdfLink}) {
 
 function PDFButtonSmall({pdfLink}) {
     return (
-        <div className="flex flex-row noprint mt-8">
+        <div className="flex flex-row noprint mt-6">
             <a className="w-32 h-10 px-4 py-2 cursor-pointer text-lg font-medium text-center text-white border-0 border-indigo-400 rounded sm:max-w-sm max-h-12 noprint bg-oijpcr-blue focus:outline-none"
                href={pdfLink} target="_blank"
                rel="noreferrer"
