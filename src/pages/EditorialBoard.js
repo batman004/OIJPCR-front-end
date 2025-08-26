@@ -22,37 +22,6 @@ const boardMembers = [
     website: "https://oijpcr.org",
   },
   {
-    name: "Dr. Sudha Khokate",
-    designation: "Assistant Professor",
-    university:
-      "Department of Sociology, Manasa Bhavana, Jnanabharathi Campus, Bangalore University, Bangalore-560056",
-    email: "drsudhakhokate@bub.ernet.in",
-    website: "http://eng.bangaloreuniversity.ac.in",
-  },
-  {
-    name: "Dr. Shruti Singh",
-    designation: "Professor",
-    university:
-      "Amity Institute of Social Sciences (AISS), K-3 Block ,Amity University, Sector-125 Campus-Noida, Uttar Pradesh-201313",
-    email: "ssingh@amity.edu",
-    website: "https://www.amity.edu/faculty-detail.aspx?facultyID=3246",
-  },
-  {
-    name: "Prof Sangeeta Thapliyal",
-    designation: "Professor & Head Center for Inner Asian Studies",
-    university:
-      "School of International Studies,Room No-101, Jawaharlal Nehru University, New Delhi-110067",
-    email: "sthapliyal@mail.jnu.ac.in",
-    website: "https://jnu.ac.in/Faculty/sthapliyal",
-  },
-  {
-    name: "Dr. Nagalaxmi M Raman",
-    designation: "Professor & Director",
-    university: "Amity University, Sector 125 Campus Noida-201313",
-    email: "niraman@amity.edu",
-    website: "https://www.amity.edu/faculty-detail.aspx?facultyID=1530",
-  },
-  {
     name: "Dr. Mallika Joseph",
     designation: "Adjunct Professor",
     university:
@@ -62,20 +31,36 @@ const boardMembers = [
       "https://www.nias.res.in/People/facility-member-info/People/Mallika%20Joseph%20A",
   },
   {
-    name: "Rashmi Thakur",
-    designation: "PGT Political Science",
+    name: "Dr. Sudha Khokate",
+    designation: "Assistant Professor",
     university:
-      "Mayo College Girls School, Mayo Link Road, Ajmer-305001, Rajasthan",
-    email: "rthakur@mcgs.ac.in",
-    website: "https://www.mcgs.ac.in/our_team/rashmi-thakur-2/",
+      "Department of Sociology, Manasa Bhavana, Jnanabharathi Campus, Bangalore University, Bangalore-560056",
+    email: "drsudhakhokate@bub.ernet.in",
+    website: "https://bangaloreuniversity.irins.org/profile/208251",
   },
   {
-    name: "Shomaila Tahzib",
-    designation: "Managing editor",
+    name: "Priti Singh",
+    designation: "Professor",
     university:
-      "Online indian Journal of Peace and Conflict Resolution, Sector 37, Noida, U.P-201301",
-    email: "s.tahzib@oijpcr.org",
-    website: "https://oijpcr.org",
+      "Centre for the Study of the Americas, School of International Studies, Jawaharlal Nehru University, New Delhi-110067",
+    email: "pritisingh@mail.jnu.ac.in",
+    website: "https://www.jnu.ac.in/content/pritisingh",
+  },
+  {
+    name: "Dr. Reshmi Kazi",
+    designation: "Professor",
+    university:
+      "Department of Political Science, Jamia Millia Islamia, New Delhi-110025",
+    email: "rkazi@jmi.ac.in",
+    website: "https://jmi.ac.in/Nelson-Mandela-Centre-For-Peace-And-Conflict-Resolution/Faculty-Members/3606/Reshmi_Kazi",
+  },
+  {
+    name: "Prof Sangeeta Thapliyal",
+    designation: "Professor & Head Center for Inner Asian Studies",
+    university:
+      "School of International Studies,Room No-101, Jawaharlal Nehru University, New Delhi-110067",
+    email: "sthapliyal@mail.jnu.ac.in",
+    website: "https://jnu.ac.in/Faculty/sthapliyal",
   },
 ];
 
