@@ -39,13 +39,21 @@ function CardContent({title, slug, id, path, cname, pdf}) {
 
     return (
         <div className="mx-2 my-4 text-justify border-gray-light">
-            <div className="h-10 mx-4 text-lg font-bold text-left text-gray-600 truncate whitespace-nowrap">
+            <div
+                className="h-14 mx-4 text-lg font-bold text-left text-gray-600 overflow-hidden"
+                style={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 2,
+                }}
+                title={title}
+            >
                 {title}
             </div>
             <p className="px-1 mx-4 mb-8 h-32 font-normal text-gray-700 break-words text-md lg:text-sm md:mb-2">
                 {aboutSlug}
             </p>
-            <div className="flex flex-wrap content-evenly">
+            <div className="flex flex-wrap items-center content-evenly">
                 <CardButton text="Read More" slug={urlSlug} id={id} path={path} cname={cname.button}/>
                 <PDFButtonSmall pdfLink={pdf}/>
             </div>
