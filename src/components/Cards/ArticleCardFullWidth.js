@@ -40,7 +40,7 @@ function CardContent({ title, slug, id, path, cname, pdf }) {
   return (
     <div className="mx-2 my-4 text-justify md:mx-6 border-gray-light">
       <div
-        className="h-16 text-lg font-bold text-left text-gray-600 overflow-hidden md:mb-4 md:text-2xl"
+        className="h-16 text-lg font-bold font-serif text-left text-gray-700 overflow-hidden md:mb-4 md:text-2xl"
         style={{
           display: '-webkit-box',
           WebkitBoxOrient: 'vertical',

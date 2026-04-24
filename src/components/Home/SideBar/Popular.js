@@ -28,7 +28,7 @@ const Popular = () => {
 
   return (
     <div className="p-2 mx-1 mt-4 mb-6 border rounded-lg shadow-xl md:mb-0">
-      <p className="mx-2 my-4 text-3xl font-bold text-center text-gray-900">Most Popular</p>
+      <h2 className="mx-2 mt-4 mb-3 text-lg font-bold font-serif text-center text-gray-800 pb-2 border-b border-gray-200">Most Popular</h2>
       <div className="flex flex-col justify-center">
         {
           mostPopular.length === 0 ?

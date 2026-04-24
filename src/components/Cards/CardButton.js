@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import alertCircle from '../../assets/alert-circle.svg'
 
 const CardButton = ({
   slug,
@@ -12,19 +11,17 @@ const CardButton = ({
     <div className={cname}>
       <Link
         to={`/archive/${slug}/${id}`}
-        className="inline-flex items-center px-4 py-2.5 my-4 mr-4 text-white bg-black rounded-lg sm:my-2 max-w-max"
+        className="inline-flex items-center px-4 py-2 my-4 mr-3 text-sm font-medium text-oijpcr-blue border border-oijpcr-blue rounded sm:my-2 max-w-max hover:bg-oijpcr-blue hover:text-white transition-colors duration-150"
       >
-        <img src={alertCircle} className="w-4 h-4 mr-2" alt="alert icon" />
-        Read More
+        Read Article
       </Link>
       {
         path
         &&
         <Link
           to={`${pathUrl}/${slug}/${id}`}
-          className="inline-flex items-center px-4 py-2.5 my-4 mr-4 text-white bg-black rounded-lg sm:my-2 max-w-max"
+          className="inline-flex items-center px-4 py-2 my-4 mr-3 text-sm font-medium text-gray-600 border border-gray-400 rounded sm:my-2 max-w-max hover:bg-gray-600 hover:text-white transition-colors duration-150"
         >
-          <img src={alertCircle} className="w-4 h-4 mr-2" alt="alert icon" />
           Edit
         </Link>
       }

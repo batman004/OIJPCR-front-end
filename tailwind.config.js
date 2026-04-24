@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         "oijpcr-blue": "#2B2BD6",
       },
+      fontFamily: {
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+      },
       height: {
         "8xl": "90rem",
       },
