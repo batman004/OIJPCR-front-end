@@ -8,6 +8,10 @@ const SocialMedia = [
   {
     url: Links.Twitter,
     value: 'Twitter',
+  },
+  {
+    url: Links.Instagram,
+    value: 'Instagram',
   }
 ];
 
