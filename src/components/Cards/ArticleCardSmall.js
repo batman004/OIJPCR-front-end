@@ -29,8 +29,8 @@ export default function ArticleCardSmall (props) {
   const defaultPhoto = coverPhoto ? coverPhoto : dollar
 
   return (
-    <div className={`md:max-w-xs h-auto rounded-md
-                     overflow-hidden shadow-lg my-4
+    <div className={`card-surface md:max-w-xs h-auto
+                     overflow-hidden my-4
                      md:m-4 lg:h-auto`}
     >
       <CardCover coverPhoto={defaultPhoto} authorText={authorText}/>
@@ -47,11 +47,14 @@ export default function ArticleCardSmall (props) {
 function CardCover ({ coverPhoto, authorText }) {
   return (
     <>
-      <img className="h-48 w-full object-cover hover:bg-gray"
+      <img className="h-48 w-full object-cover"
            src={coverPhoto}
            alt="ArticleList cover"
       />
-      <p className="text-gray-500 font-medium text-xs text-center mt-2">{authorText}</p>
+      <p
+        className="font-medium text-xs text-center mt-3 tracking-widest uppercase"
+        style={{ color: 'var(--color-text-muted)' }}
+      >{authorText}</p>
     </>
   )
 }
@@ -68,16 +71,20 @@ function CardContent ({ title, slug, id, handleClick }) {
   const urlSlug = slugify(title)
 
   return (
-    <div className="mx-6 my-4 border-gray-light">
-      <div className="font-bold text-gray-600 mb-4 text-center">
+    <div className="mx-6 my-4">
+      <div className="mb-3 text-center">
         <Link to={`/archive/${urlSlug}/${id}`}
-              className="text-xl"
+              className="text-lg font-serif font-bold leading-snug"
+              style={{ color: 'var(--color-primary)' }}
               onClick={handleClick}
         >
           {title}
         </Link>
       </div>
-      <p className="font-normal text-gray-700 text-sm mb-4 text-center"> {aboutSlug} </p>
+      <p
+        className="font-normal text-sm mb-4 text-center leading-relaxed"
+        style={{ color: 'var(--color-text-muted)' }}
+      > {aboutSlug} </p>
     </div>
   )
 }

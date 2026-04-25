@@ -7,12 +7,23 @@ const podcastDescription =
 export default function Description () {
   return (
     <>
-      <p className="text-3xl md:text-4xl xl:text-5xl font-bold">OIJPCR - The Podcast</p>
+      <p
+        className="text-xs uppercase tracking-widest mb-2"
+        style={{ color: 'var(--color-text-muted)', letterSpacing: '0.12em' }}
+      >Audio Series</p>
+      <p
+        className="text-2xl md:text-3xl xl:text-4xl font-serif font-bold leading-tight"
+        style={{ color: 'var(--color-primary)' }}
+      >OIJPCR &mdash; The Podcast</p>
       <div
-        className="text-xl md:text-2xl lg:text-lg xl:text-2xl text-gray-900 text-left pt-4 mb-6 md:mb-4 tracking-tighter lg:leading-relaxed"
+        className="text-base md:text-lg pt-4 mb-4 leading-relaxed"
+        style={{ color: 'var(--color-text)', fontFamily: 'var(--font-body)' }}
       >
         {podcastDescription}
-        <p>'Now streaming on all major podcast streaming platforms!'</p>
+        <p
+          className="mt-3 italic text-sm"
+          style={{ color: 'var(--color-text-muted)' }}
+        >Now streaming on all major podcast platforms.</p>
       </div>
     </>
   )

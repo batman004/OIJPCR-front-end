@@ -1,6 +1,6 @@
 function Container(props) {
   return (
-    <div className="flex flex-col p-6 my-8 border rounded-md shadow-xl lg:flex-row md:mx-4 sm:mx-2 md:p-10">
+    <div className="card-surface flex flex-col p-6 my-10 lg:flex-row md:mx-4 sm:mx-2 md:p-10">
       {props.children}
     </div>
   )
@@ -8,7 +8,7 @@ function Container(props) {
 
 function Body(props) {
   return (
-    <div className="lg:w-2/3">
+    <div className="lg:w-2/3 md:pl-6">
       {props.children}
     </div>
   )

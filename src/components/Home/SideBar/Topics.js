@@ -23,18 +23,27 @@ const Topics = () => {
   }
 
   return (
-    <div className="p-2 mx-1 mb-6 border rounded-lg shadow-xl md:mb-0">
-      <h2 className="mx-2 mt-4 mb-3 text-lg font-bold font-serif text-center text-gray-800 pb-2 border-b border-gray-200">
+    <div
+      className="p-4 mx-1 mb-6 md:mb-0 card-surface"
+    >
+      <h2
+        className="mx-2 mt-2 mb-4 text-base font-bold font-serif text-center pb-2 tracking-wider uppercase"
+        style={{
+          color: 'var(--color-primary)',
+          borderBottom: '1px solid var(--color-border)',
+          letterSpacing: '0.06em',
+        }}
+      >
         Explore Topics
       </h2>
-      <ul className="text-sm font-medium text-center primary-color">
+      <ul className="text-sm font-medium text-center list-none p-0">
         {
           topics.length === 0 ?
             <CircularLoader height="h-16" width="w-16" />
             :
             <LinkItems
               links={topics}
-              cname="my-1.5 py-1 border-b border-transparent hover:text-indigo-700 transition-colors duration-150"
+              cname="topic-link my-1.5 py-1 transition-colors duration-150"
             />
         }
       </ul>

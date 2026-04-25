@@ -66,13 +66,19 @@ const boardMembers = [
 
 function EditorialBoardMembers() {
   return (
-    <div className="mt-6 mb-8 lg:mt-12 lg:mb-16">
-      <div className="mb-4 lg:mb-8">
-        <h2 className="text-center sm:text-left text-xl font-bold text-black md:text-2xl lg:text-3xl">
-          Editorial Board Members
+    <div className="mt-8 mb-8 lg:mt-12 lg:mb-16">
+      <div className="mb-6 lg:mb-10">
+        <h2
+          className="text-center sm:text-left text-2xl md:text-3xl lg:text-4xl font-serif font-bold pb-3"
+          style={{
+            color: 'var(--color-primary)',
+            borderBottom: '1px solid var(--color-border)',
+          }}
+        >
+          Editorial Board
         </h2>
       </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 grid-flow-auto md:grid-flow-row">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {boardMembers.map((member, index) => {
           return (
             <BoardMemberCard
@@ -92,27 +98,18 @@ function EditorialBoardMembers() {
 
 function BoardMemberCard({ name, designation, university, email, website }) {
   return (
-    <div className="grid grid-cols-1 gap-2 p-4 rounded-md shadow-lg lg:gap-4">
-      <h3 className="text-xl font-medium text-black md:text-2xl">{name}</h3>
-      <p className="font-normal text-gray-900 text-md md:text-lg">
+    <div className="board-card grid grid-cols-1 gap-2 p-6">
+      <h3 className="board-name text-xl md:text-2xl font-bold leading-snug">{name}</h3>
+      <p className="board-role text-base md:text-lg">
         {designation}
       </p>
-      <p className="font-normal text-gray-900 text-md md:text-lg">
+      <p className="board-institution text-sm md:text-base leading-relaxed">
         {university}
       </p>
-      <p className="text-sm font-light text-gray-800 md:text-md">
-        <a
-          href={`mailto:${email}`}
-          className="hover:text-blue-800 hover:underline"
-        >
-          {email}
-        </a>
-      </p>
-      <p className="text-sm font-light text-gray-800 md:text-md">
-        <a href={`${website}`} className="hover:text-blue-800 hover:underline">
-          website
-        </a>
-      </p>
+      <div className="mt-2 text-sm flex flex-col gap-1">
+        <a href={`mailto:${email}`}>{email}</a>
+        <a href={`${website}`} target="_blank" rel="noreferrer">Profile &rarr;</a>
+      </div>
     </div>
   );
 }

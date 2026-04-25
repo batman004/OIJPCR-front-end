@@ -121,7 +121,8 @@ class ReadArticle extends Component {
         const date = UTCToFormalDate(article.createdAt)
         // format date
         const publishedDate = (<span
-            className="text-sm leading-3 text-gray-700">
+            className="text-sm leading-snug"
+            style={{ color: 'var(--color-text-muted)' }}>
         Published {`${date?.month || ""} ${date?.day || ""}`}
             <sup>{date?.superScript} </sup>
             {date?.year}
@@ -136,11 +137,11 @@ class ReadArticle extends Component {
 
 
             <div
-                className="max-w-full mt-16 text-justify lg:mx-4">
+                className="max-w-full mt-16 text-justify lg:mx-4 article-body">
                 {HTMLReactParser(content.toString())}
 
                 <div
-                    className="flex flex-wrap mt-2 mb-6 noprint">
+                    className="flex flex-row flex-wrap items-center gap-4 mt-6 mb-6 noprint">
                     <ShareArticleOnSocialMedia/>
                     <PrintButton/>
                     <PDFButton pdfLink={pdfLink}/>
@@ -182,7 +183,7 @@ function Tags({tags}) {
 }
 
 function TagBlock(props) {
-    const cname = "mx-2 my-2 px-4 py-2 block font-semibold text-center text-white border-0 border-indigo-400 rounded bg-oijpcr-blue focus:outline-none"
+    const cname = "badge-academic mx-1 my-1 focus:outline-none list-none"
     const {url, value, index, newTab} = props
 
     return (<li className={cname} key={index}>

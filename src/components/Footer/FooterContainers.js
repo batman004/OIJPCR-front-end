@@ -1,6 +1,6 @@
 function FooterContainer (props) {
   return (
-    <footer className="flex flex-col-reverse w-full p-4 text-gray-400 bg-black max-w-7xl md:flex-row">
+    <footer className="footer-academic flex flex-col-reverse w-full p-6 max-w-7xl md:flex-row md:p-8">
       {props.children}
     </footer>
   )

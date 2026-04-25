@@ -31,11 +31,17 @@ const JournalParticularsContainer = ({ children }) => {
 
 const TableRow = ({ fieldName, value }) => {
   return (
-    <tr className="border-b">
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+    <tr>
+      <td
+        className="text-sm font-medium px-4 md:px-6 py-3 whitespace-nowrap uppercase tracking-wider"
+        style={{ color: 'var(--color-text-muted)', fontSize: '13px', letterSpacing: '0.04em' }}
+      >
         {fieldName}
       </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+      <td
+        className="text-sm px-4 md:px-6 py-3"
+        style={{ color: 'var(--color-text)', fontFamily: 'var(--font-body)' }}
+      >
         {value}
       </td>
     </tr>
@@ -44,7 +50,7 @@ const TableRow = ({ fieldName, value }) => {
 
 const JournalParticulars = () => (
   <JournalParticularsContainer>
-    <table className="min-w-full">
+    <table className="table-academic min-w-full">
       <tbody>
         {particulars.map((particular, index) => {
           const fieldName = Object.keys(particular);

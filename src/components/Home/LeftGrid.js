@@ -27,12 +27,12 @@ function LeftGrid() {
 
   const cnameFullWidthCard = {
     container: "",
-    button: "ml-4 mt-8",
+    button: "",
   };
 
   const cname = {
     container: "",
-    button: "ml-4 mt-8",
+    button: "",
   };
 
   const cardGrid = cardData?.map((card, index) => {

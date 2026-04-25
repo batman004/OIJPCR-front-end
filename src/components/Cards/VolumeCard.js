@@ -9,7 +9,7 @@ const VolumeCard = ({
   date,
   isAdmin,
 }) => (
-  <div className="h-auto max-w-sm m-4 overflow-hidden text-justify rounded-md shadow-lg min-40 md:max-w-md lg:h-auto">
+  <div className="card-surface flex flex-col max-w-sm m-4 overflow-hidden text-left min-40 md:max-w-md">
     <CardCover volumeCover={cover || fallback} volume={volume} date={date} />
     <CardContent volume={volume} about={about} isAdmin={isAdmin} />
   </div>
@@ -19,11 +19,14 @@ const VolumeCard = ({
 function CardCover({ volumeCover, volume, date }) {
   return (
     <>
-      <img className="object-cover w-full h-98 md:h-64 hover:bg-gray"
+      <img className="object-cover w-full h-98 md:h-64"
         src={volumeCover}
         alt={`volume ${volume}`}
       />
-      <p className="mt-2 text-sm font-medium text-center text-gray-500">{date}</p>
+      <p
+        className="mt-3 text-xs font-medium text-center tracking-widest uppercase"
+        style={{ color: 'var(--color-text-muted)' }}
+      >{date}</p>
     </>
   )
 }
@@ -39,13 +42,20 @@ function CardContent({ about, volume, isAdmin }) {
   const volumeSlug = about.slice(start, end)
 
   return (
-    <div className="mx-6 my-4 text-justify border-gray-light">
-      <div className="mb-4 text-4xl font-bold text-center text-gray-900">
+    <div className="mx-6 my-5 text-left flex flex-col flex-1">
+      <div
+        className="mb-3 text-3xl font-bold text-center font-serif"
+        style={{ color: 'var(--color-primary)' }}
+      >
         Volume {volume}
       </div>
-      <p className="mb-6 text-sm font-normal text-justify text-gray-700 md:text-md">
+      <p
+        className="mb-6 text-sm font-normal leading-relaxed md:text-base"
+        style={{ color: 'var(--color-text-muted)' }}
+      >
         {volumeSlug}
       </p>
+      <div className="flex-1" />
       <div>
         <CardButton text={`Explore Vol. ${volume}`} volume={volume} />
         {
@@ -65,7 +75,7 @@ function CardButton({ text, volume, isAdmin }) {
   return (
     <Link
       to={link}
-      className="px-4 py-2 my-4 mr-4 text-white bg-black rounded-lg sm:my-4 max-w-max"
+      className="btn-academic mr-3 my-3 max-w-max"
     >
       {text}
     </Link>

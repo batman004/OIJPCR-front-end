@@ -23,7 +23,7 @@ const ArticleCard = (props) => {
 
     return (
         <div className={
-            `rounded-md overflow-hidden shadow-lg my-4 md:m-4
+            `card-surface overflow-hidden my-4 md:m-4
              md:max-w-md lg:h-auto min-40 ${cname.container}`
         }
         >
@@ -38,22 +38,29 @@ function CardContent({title, slug, id, path, cname, pdf}) {
     const urlSlug = slugify(title)
 
     return (
-        <div className="mx-2 my-4 text-justify border-gray-light">
+        <div className="mx-2 my-4 text-left">
             <div
-                className="h-14 mx-4 text-lg font-bold font-serif text-left text-gray-700 overflow-hidden"
+                className="h-14 mx-4 text-lg font-bold font-serif text-left overflow-hidden"
                 style={{
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
                     WebkitLineClamp: 2,
+                    color: 'var(--color-primary)',
                 }}
                 title={title}
             >
                 {title}
             </div>
-            <p className="px-1 mx-4 mb-8 h-32 font-normal text-gray-700 break-words text-md lg:text-sm md:mb-2">
+            <p className="px-1 mx-4 mb-6 h-32 font-normal break-words text-sm leading-relaxed md:mb-2 overflow-hidden"
+               style={{
+                   color: 'var(--color-text-muted)',
+                   display: '-webkit-box',
+                   WebkitBoxOrient: 'vertical',
+                   WebkitLineClamp: 5,
+               }}>
                 {aboutSlug}
             </p>
-            <div className="flex flex-wrap items-center content-evenly">
+            <div className="flex flex-row flex-wrap items-center gap-3 mx-4 mt-4 mb-2">
                 <CardButton text="Read More" slug={urlSlug} id={id} path={path} cname={cname.button}/>
                 <PDFButtonSmall pdfLink={pdf}/>
             </div>

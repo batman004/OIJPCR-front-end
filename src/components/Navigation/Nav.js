@@ -85,8 +85,8 @@ function MenuToggle({MenuClick}) {
     const svg = {
         path: 'M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z',
         xmlns: 'http://www.w3.org/2000/svg',
-        height: 30,
-        width: 30,
+        height: 28,
+        width: 28,
         viewBox: '0 0 20 20',
     }
 
@@ -95,7 +95,8 @@ function MenuToggle({MenuClick}) {
             htmlFor="menu-toggle"
             className="block cursor-pointer lg:hidden"
         >
-            <svg className="text-gray-900 fill-current "
+            <svg className="fill-current"
+                 style={{ color: 'var(--color-primary)' }}
                  xmlns={svg.xmlns}
                  width={svg.width}
                  height={svg.height}
@@ -112,14 +113,23 @@ function MenuToggle({MenuClick}) {
 function Brand({logo, logo_mobile, brandName}) {
     const BrandProps = {
         altText: `${brandName} logo`,
-        brandLogoCN: 'sm:w-14 sm:h-14 w-16 h-16 mr-2',
+        brandLogoCN: 'sm:w-12 sm:h-12 w-14 h-14 mr-3',
     }
     return (
-        <div className="flex items-center justify-between flex-1 md:mt-2">
-            <Link to="/">
+        <div className="flex items-center justify-between flex-1">
+            <Link to="/" className="flex items-center" style={{ textDecoration: 'none' }}>
                 <BrandLogo {...BrandProps} logo={logo} hidden={true}/>
                 <BrandLogo {...BrandProps} logo={logo_mobile} hidden={false}/>
-                <label className="text-lg font-black sm:hidden">{brandName}</label>
+                <label
+                    className="sm:hidden cursor-pointer"
+                    style={{
+                        color: 'var(--color-primary)',
+                        fontFamily: 'var(--font-display)',
+                        fontSize: '18px',
+                        fontWeight: 700,
+                        letterSpacing: '0.02em',
+                    }}
+                >{brandName}</label>
             </Link>
         </div>
     )

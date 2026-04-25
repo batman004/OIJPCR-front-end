@@ -16,9 +16,8 @@ function ArticleCardFullWidth(props) {
   const defaultPhoto = coverPhoto ? coverPhoto : dollar;
   return (
     <div
-      className={`rounded-md overflow-hidden
-       shadow-lg my-4 md:m-4 lg:h-auto
-       md:col-span-full`}
+      className={`card-surface overflow-hidden
+       my-4 md:m-4 lg:h-auto md:col-span-full`}
     >
       <CardCover coverPhoto={defaultPhoto} authorText={authorText} />
       <CardContent
@@ -38,22 +37,29 @@ function CardContent({ title, slug, id, path, cname, pdf }) {
   const urlSlug = slugify(title);
 
   return (
-    <div className="mx-2 my-4 text-justify md:mx-6 border-gray-light">
+    <div className="mx-2 my-4 text-left md:mx-6">
       <div
-        className="h-16 text-lg font-bold font-serif text-left text-gray-700 overflow-hidden md:mb-4 md:text-2xl"
+        className="h-16 text-xl font-bold font-serif text-left overflow-hidden md:mb-4 md:text-2xl"
         style={{
           display: '-webkit-box',
           WebkitBoxOrient: 'vertical',
           WebkitLineClamp: 2,
+          color: 'var(--color-primary)',
         }}
         title={title}
       >
         {title}
       </div>
-      <p className="px-2 mb-8 font-normal text-gray-700 break-words text-md lg:mb-0 lg:h-28">
+      <p className="px-2 mb-6 font-normal break-words text-base leading-relaxed lg:mb-0 lg:h-28 overflow-hidden"
+         style={{
+           color: 'var(--color-text-muted)',
+           display: '-webkit-box',
+           WebkitBoxOrient: 'vertical',
+           WebkitLineClamp: 4,
+         }}>
         {aboutSlug}
       </p>
-      <div className="flex flex-wrap items-center content-evenly">
+      <div className="flex flex-row flex-wrap items-center gap-3 px-2 mt-4 mb-2">
         <CardButton
           text="Read More"
           slug={urlSlug}

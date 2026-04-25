@@ -12,7 +12,13 @@ const About = () => (
 
       <Description>{<AboutText />}</Description>
 
-      <h2 className="text-black text-center text-2xl my-4">
+      <h2
+        className="text-center md:text-left text-2xl md:text-3xl my-8 font-serif font-bold pb-3"
+        style={{
+          color: 'var(--color-primary)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
         Journal Particulars
       </h2>
       <JournalParticulars />
@@ -26,7 +32,7 @@ const About = () => (
 
 function AboutContainer(props) {
   return (
-    <div className="mx-4 mt-8 mb-4 sm:mx-8 md:mx-8 md:mt-8 md:mb-6">
+    <div className="mx-4 mt-10 mb-8 sm:mx-8 md:mx-12 md:mt-12 md:mb-10">
       {props.children}
     </div>
   );
@@ -34,14 +40,29 @@ function AboutContainer(props) {
 
 function Heading(props) {
   return (
-    <h1 className="text-3xl font-bold text-justify md:text-left md:text-6xl primary-color">
+    <h1
+      className="text-2xl md:text-4xl lg:text-5xl text-left font-serif font-bold leading-tight w-full"
+      style={{ color: 'var(--color-primary)' }}
+    >
       {props.children}
     </h1>
   );
 }
 
 function Description(props) {
-  return <p className="mt-8 text-justify lg:text-lg">{props.children}</p>;
+  return (
+    <div
+      className="mt-8 text-justify w-full prose-academic-body"
+      style={{
+        fontFamily: 'var(--font-body)',
+        fontSize: '1.0625rem',
+        lineHeight: 1.8,
+        color: 'var(--color-text)',
+      }}
+    >
+      {props.children}
+    </div>
+  );
 }
 
 export default About;

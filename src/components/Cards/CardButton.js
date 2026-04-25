@@ -4,27 +4,30 @@ const CardButton = ({
   slug,
   id,
   path,
-  cname
+  cname,
 }) => {
   const pathUrl = path ? path : '/archive'
   return (
-    <div className={cname}>
+    <div className={`inline-flex items-center ${cname || ''}`}>
       <Link
         to={`/archive/${slug}/${id}`}
-        className="inline-flex items-center px-4 py-2 my-4 mr-3 text-sm font-medium text-oijpcr-blue border border-oijpcr-blue rounded sm:my-2 max-w-max hover:bg-oijpcr-blue hover:text-white transition-colors duration-150"
+        className="btn-academic-ghost"
       >
         Read Article
       </Link>
-      {
-        path
-        &&
+      {path && (
         <Link
           to={`${pathUrl}/${slug}/${id}`}
-          className="inline-flex items-center px-4 py-2 my-4 mr-3 text-sm font-medium text-gray-600 border border-gray-400 rounded sm:my-2 max-w-max hover:bg-gray-600 hover:text-white transition-colors duration-150"
+          className="ml-3 inline-block px-5 py-2 text-sm font-medium rounded-sm border max-w-max transition-colors duration-150"
+          style={{
+            color: 'var(--color-text-muted)',
+            borderColor: 'var(--color-border)',
+            background: 'transparent',
+          }}
         >
           Edit
         </Link>
-      }
+      )}
     </div>
   )
 }

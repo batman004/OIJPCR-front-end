@@ -1,19 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
-
-* {
-    font-family: 'Inter', sans-serif;
-}
-
-:root {
-    --primary-blue: #2B2BD6;
-}
-
+/* Brand color helpers (kept for compatibility — components reference these names) */
 .primary-color {
-    color: var(--primary-blue);
+    color: var(--color-primary);
 }
 
 .primary-color-bg {
-    background-color: var(--primary-blue);
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.primary-color-bg:hover {
+    background-color: var(--color-primary-hover);
 }
 
 .min-40 {
@@ -23,11 +19,324 @@
     min-width: 50%;
 }
 
+/* Generic article-card surface used via Tailwind utility patterns.
+   We add a subtle border + small shadow whenever the legacy
+   `rounded-md overflow-hidden shadow-lg` pattern is used in cards. */
+.card-surface {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* Academic article body */
+.prose-academic {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.prose-academic p + p {
+    margin-top: 1.25em;
+}
+
+.prose-academic h2 {
+    font-family: var(--font-display);
+    color: var(--color-primary);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.4em;
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+}
+
+/* Inline links inside body content */
+.prose-academic a,
+.editor a:not(.btn-academic):not(.btn-academic-ghost):not(.btn-academic-on-dark) {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms ease;
+}
+
+.prose-academic a:hover,
+.editor a:not(.btn-academic):not(.btn-academic-ghost):not(.btn-academic-on-dark):hover {
+    border-bottom-color: var(--color-primary);
+}
+
+/* Sharp, restrained academic buttons */
+.btn-academic {
+    display: inline-block;
+    padding: 10px 22px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border-radius: 3px;
+    background-color: var(--color-primary);
+    color: #ffffff !important;
+    border: 1px solid var(--color-primary);
+    text-decoration: none;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    cursor: pointer;
+}
+
+.btn-academic:hover {
+    background-color: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+}
+
+.btn-academic-ghost {
+    display: inline-block;
+    padding: 9px 21px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border-radius: 3px;
+    background-color: transparent;
+    color: var(--color-primary) !important;
+    border: 1px solid var(--color-primary);
+    text-decoration: none;
+    transition: background-color 150ms ease, color 150ms ease;
+    cursor: pointer;
+}
+
+.btn-academic-ghost:hover {
+    background-color: var(--color-primary);
+    color: #ffffff !important;
+}
+
+/* Ghost button intended for placement on the navy hero background */
+.btn-academic-on-dark {
+    display: inline-block;
+    padding: 9px 21px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    border-radius: 3px;
+    background-color: transparent;
+    color: #ffffff !important;
+    border: 1px solid #ffffff;
+    text-decoration: none;
+    transition: background-color 150ms ease, color 150ms ease;
+    cursor: pointer;
+}
+
+.btn-academic-on-dark:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff !important;
+}
+
+/* Restrained academic badge for tags */
+.badge-academic {
+    display: inline-block;
+    padding: 4px 10px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background-color: var(--color-accent-light);
+    color: var(--color-accent);
+    border: 1px solid rgba(138, 106, 43, 0.25);
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.badge-academic:hover {
+    background-color: var(--color-accent);
+    color: #ffffff;
+}
+
+/* Academic footer */
+.footer-academic {
+    background-color: var(--color-footer-bg);
+    color: var(--color-footer-text);
+    border-top: 3px solid var(--color-accent);
+    font-family: var(--font-body);
+    font-size: 13px;
+}
+
+.footer-academic a {
+    color: var(--color-footer-link);
+    text-decoration: none;
+}
+
+.footer-academic a:hover {
+    text-decoration: underline;
+    color: var(--color-footer-link);
+}
+
+.footer-academic h4 {
+    font-family: var(--font-display);
+    color: #ffffff;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.footer-academic .footer-col {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-academic .footer-col:first-of-type {
+    border-left: none;
+}
+
+/* Editorial Board card */
+.board-card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.board-card:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-color: rgba(30, 28, 20, 0.2);
+}
+
+.board-card .board-name {
+    font-family: var(--font-display);
+    color: var(--color-primary);
+}
+
+.board-card .board-role {
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.board-card .board-institution {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    font-weight: 400;
+}
+
+.board-card a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 150ms ease;
+}
+
+.board-card a:hover {
+    border-bottom-color: var(--color-primary);
+}
+
+/* Tables (e.g. Journal Particulars) */
+.table-academic thead {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.table-academic thead th {
+    font-family: var(--font-body);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.table-academic tbody tr {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table-academic tbody tr:nth-child(odd) {
+    background-color: var(--color-bg);
+}
+
+.table-academic tbody tr:nth-child(even) {
+    background-color: var(--color-surface);
+}
+
+.table-academic tbody td {
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    color: var(--color-text);
+}
+
+/* Sidebar topic links */
+.topic-link {
+    color: var(--color-primary);
+    border-bottom: 1px solid transparent;
+    transition: color 150ms ease, border-color 150ms ease;
+}
+
+.topic-link:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+}
+
+/* Forms */
+.input-academic {
+    width: 100%;
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+.input-academic:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 0;
+    border-color: var(--color-primary);
+}
+
+/* Article cover image — fixed aspect ratio so every article page looks
+   visually consistent regardless of the original cover dimensions. */
+.article-cover-image {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 3px;
+    border: 1px solid var(--color-border);
+    margin: 0 auto;
+}
+
+/* Inline images embedded in article body. Force a uniform display size
+   regardless of the original asset dimensions. */
+.article-body img {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
+    margin: 1.75rem auto;
+    border-radius: 3px;
+    border: 1px solid var(--color-border);
+}
+
+/* Print styles preserved */
 @media print {
     header, footer, aside, form {
         display: none;
     }
-   .noprint {
-      display: none;
-   }
+    .noprint {
+        display: none;
+    }
+    .article-cover-image,
+    .article-body img {
+        max-width: 100%;
+        aspect-ratio: auto;
+        object-fit: contain;
+        height: auto;
+        border: none;
+    }
 }

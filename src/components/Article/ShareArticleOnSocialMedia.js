@@ -28,17 +28,17 @@ const ShareArticleOnSocialMedia = (props) => {
     }
 
     return (
-        <div className="flex items-center p-1 mt-2 mb-2 rounded-sm noprint">
+        <div className="inline-flex items-center gap-3 noprint">
             {
                 SocialMediaLinks.map((link, index) => (
-                    <a href={link.url} className="inline-block mx-2" key={index}>
+                    <a href={link.url} className="inline-block" key={index}>
                         <img src={link.img} className="w-6 h-6" alt={link.alt} />
                     </a>
                 ))
             }
 
             <button
-                className="block mx-2"
+                className="inline-block"
                 onClick={() => copyURLToClipBoard(shareLink.path)}
             >
                 <img src={shareLink.img} className="w-6 h-6" alt={shareLink.alt} />

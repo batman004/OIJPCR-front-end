@@ -13,7 +13,8 @@ if (ENV === "local") {
     ...config,
     protocol: "http",
     domain: "localhost:3000",
-    host: "http://localhost:8080",
+    // Hits the dev-only proxy (src/setupProxy.js) which forwards to api.oijpcr.org
+    host: "/_api",
   };
 }
 
@@ -22,7 +23,7 @@ if (ENV === "dev") {
     ...config,
     protocol: "https",
     domain: "dev.oijpcr-front-end.pages.dev",
-    host: "https://dev.oijpcrapi.site",
+    host: "https://api.oijpcr.org",
     timeoutValue: 6000,
     s3Host: "media-oijpcr",
   };

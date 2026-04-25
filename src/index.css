@@ -1,6 +1,59 @@
 @tailwind base;
 
 @layer base {
+    :root {
+        --font-display: 'Libre Baskerville', Georgia, serif;
+        --font-body: 'Source Sans 3', 'Helvetica Neue', Arial, sans-serif;
+
+        --color-bg: #f8f7f4;
+        --color-surface: #ffffff;
+        --color-surface-2: #f2f1ee;
+        --color-border: rgba(30, 28, 20, 0.12);
+        --color-text: #1a1916;
+        --color-text-muted: #5a5854;
+        --color-primary: #1b3a5c;
+        --color-primary-hover: #142d48;
+        --color-accent: #8a6a2b;
+        --color-accent-light: #f5edd8;
+        --color-footer-bg: #1b3a5c;
+        --color-footer-text: #d6d3cd;
+        --color-footer-link: #c9b88a;
+    }
+
+    html {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+    }
+
+    body {
+        font-family: var(--font-body);
+        font-size: 1.0625rem;
+        line-height: 1.6;
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: var(--font-display);
+        color: var(--color-text);
+        letter-spacing: 0;
+        font-weight: 700;
+    }
+
+    h3, h4 {
+        letter-spacing: 0.04em;
+    }
+
+    p {
+        font-family: var(--font-body);
+    }
+
+    a {
+        color: inherit;
+    }
+
     .editor h1 {
         @apply text-4xl;
     }
@@ -20,60 +73,115 @@
         @apply text-sm;
     }
 
+    .editor h1, .editor h2, .editor h3 {
+        font-family: var(--font-display);
+        color: var(--color-primary);
+    }
+
+    .editor p, .editor li, .editor blockquote {
+        font-family: var(--font-body);
+        font-size: 1.0625rem;
+        line-height: 1.8;
+    }
 }
 
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
-    /* utils */
+    /* Top navigation: clean white bar so the brand logo reads at full strength */
     .header-nav {
         @apply w-full sm:px-6;
-        @apply px-4 py-2 bg-white shadow-sm md:shadow-none border-b border-gray-200;
+        @apply px-4 py-3 max-w-7xl;
         @apply flex flex-wrap items-center;
-        @apply lg:px-16 lg:py-1 max-w-7xl;
+        @apply lg:px-16 lg:py-2;
+        background-color: #ffffff;
+        border-bottom: 1px solid var(--color-border);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+        color: var(--color-text);
     }
 
-    .header-home {
-        @apply sm:mx-8 sm:rounded-md;
-        @apply flex flex-col flex-wrap;
-        @apply p-2 mx-2 mt-8 mb-4 text-white rounded-lg;
-        @apply md:flex-row md:p-12 md:mx-12 md:mt-8 md:mb-6;
-    }
-
-    .nav-link-ul {
-        @apply items-center justify-between pt-4 text-base lg:pt-0;
+    .header-nav .nav-link-ul {
+        @apply items-center justify-between pt-4 text-sm lg:pt-0;
         @apply lg:flex;
     }
 
-    .nav-link {
+    .header-nav .nav-link {
         @apply block px-0 py-2 lg:p-3;
-        @apply text-sm font-medium tracking-wide;
-        @apply text-gray-700 hover:text-oijpcr-blue transition-colors duration-150;
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--color-primary) !important;
+        text-decoration: none !important;
+        border-bottom: 2px solid transparent;
+        transition: border-color 150ms ease, color 150ms ease;
     }
 
-    /* Card */
+    .header-nav .nav-link:hover {
+        color: var(--color-primary) !important;
+        border-bottom-color: var(--color-accent);
+    }
+
+    /* Hero / journal masthead */
+    .header-home {
+        @apply sm:mx-8 sm:rounded-sm;
+        @apply flex flex-col flex-wrap;
+        @apply p-6 mx-2 mt-8 mb-6 text-white rounded-sm;
+        @apply md:flex-row md:p-12 md:mx-12 md:mt-8 md:mb-8;
+        background-color: var(--color-primary) !important;
+        background-image: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0) 0,
+            rgba(255, 255, 255, 0) 100%
+        );
+        border-bottom: 2px solid var(--color-accent);
+    }
+
+    .header-home h1 {
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0;
+    }
+
+    .header-home p {
+        font-family: var(--font-body);
+        color: rgba(255, 255, 255, 0.85);
+        max-width: 60ch;
+    }
+
+    /* Article listing card surfaces */
     .article-card-container {
         @apply md:max-w-md;
-        @apply my-4 overflow-hidden rounded-md shadow-lg md:m-4;
+        @apply my-4 overflow-hidden rounded-sm md:m-4;
         @apply md:h-auto lg:h-auto;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
     .article-card-title {
-        @apply mb-4 text-2xl font-bold text-center text-gray-600;
+        @apply mb-4 text-2xl font-bold text-center;
+        font-family: var(--font-display);
+        color: var(--color-primary);
     }
     .article-card-slug {
-        @apply mb-6 text-sm font-normal text-center text-gray-700;
+        @apply mb-6 text-sm font-normal text-center;
+        font-family: var(--font-body);
+        color: var(--color-text-muted);
     }
     .article-card-author {
-        @apply mt-2 text-xs font-medium text-center text-gray-500 tracking-widest uppercase;
+        @apply mt-2 text-xs font-medium text-center tracking-widest uppercase;
+        font-family: var(--font-body);
+        color: var(--color-text-muted);
     }
 
-    /* cards grid left pane home */
+    /* Home grid layout */
     .card-grid-home {
         @apply grid grid-flow-row grid-cols-1 grid-rows-5;
         @apply lg:grid-cols-2 lg:grid-rows-3;
-        /*@apply border-2 lg:w-3/5 md:mx-8;*/
         @apply w-full lg:w-3/4 md:w-2/3;
     }
 }
