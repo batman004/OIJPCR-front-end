@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import india from '../../assets/india.svg'
 import pen from '../../assets/pen.svg'
-import alertCircle from '../../assets/alert-circle.svg'
 
 export default function Header() {
   const headerText = (
@@ -26,10 +25,9 @@ export default function Header() {
           {aboutJournal}
         </p>
         <Link
-          className="relative z-50 px-4 py-2 bg-black rounded-lg max-w-max"
+          className="relative z-50 inline-block px-4 py-2 bg-black rounded-lg max-w-max text-white"
           to="/about"
         >
-          <img src={alertCircle} className="inline mb-1 mr-2" alt="alert icon" />
           Learn More
         </Link>
       </div>

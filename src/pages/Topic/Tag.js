@@ -14,7 +14,7 @@ const Tag = () => {
     async function getJournals(tag) {
       const url = `${config.host}/journals/tags/${tag}`
       const { data: journals } = await axios.get(url)
-      setJournals(journals)
+      setJournals(newestFirst(journals))
     }
     return getJournals(tag)
   }, [tag])
@@ -33,6 +33,13 @@ const Tag = () => {
       </div>
     </div>
   )
+}
+
+
+function newestFirst(journals) {
+  if (!Array.isArray(journals)) return journals
+  const postedAt = (journal) => Date.parse(journal?.createdAt) || 0
+  return [...journals].sort((a, b) => postedAt(b) - postedAt(a))
 }
 
 

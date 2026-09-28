@@ -53,13 +53,12 @@ function CardContent({ title, slug, id, path, cname, pdf }) {
       <p className="px-2 mb-8 font-normal text-gray-700 break-words text-md lg:mb-0 lg:h-28">
         {aboutSlug}
       </p>
-      <div className="flex flex-wrap items-center content-evenly">
+      <div className={`flex flex-wrap items-center content-evenly ${cname.button || ''}`}>
         <CardButton
           text="Read More"
           slug={urlSlug}
           id={id}
           path={path}
-          cname={cname.button}
         />
         <PDFButtonSmall pdfLink={pdf} />
       </div>
