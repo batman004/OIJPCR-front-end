@@ -3,11 +3,12 @@ import {Editor} from '@tinymce/tinymce-react'
 import EditorForm
     from '../../../components/Admin/EditorForm'
 import {
-    initEditor
+    createEditorInit
 } from '../../../components/Admin/Config/TinyMCEConfig'
+import ArticlePreview from '../../../components/Admin/ArticlePreview'
 import {PopUp} from "../../../components/utils";
 import {UserContext} from '../../../UserContext'
-import {ArticleHandler, FileUploadHandler} from '../utils'
+import {ArticleHandler, FileUploadHandler, readEditorContent, previewFromDraft} from '../utils'
 
 class NewArticle extends Component {
     static contextType = UserContext
@@ -32,7 +33,9 @@ class NewArticle extends Component {
                 show: false, msg: '',
             },
             token: '',
+            preview: null,
         }
+        this.editorInit = createEditorInit({uploadImage: file => this.fileUpload(file)})
     }
 
     componentDidMount() {
@@ -93,7 +96,19 @@ class NewArticle extends Component {
             return
         }
 
-        if (this.state.content.length === 0) {
+        let content
+        try {
+            content = await readEditorContent(this.state.editorRef)
+        } catch (err) {
+            this.setState({
+                notification: {
+                    show: true, msg: err.message,
+                },
+            })
+            return
+        }
+
+        if (content.length === 0) {
             this.setState({
                 notification: {
                     show: true, msg: 'Empty Article',
@@ -101,6 +116,8 @@ class NewArticle extends Component {
             })
             return
         }
+
+        this.setState({content})
 
         const cover = await this.fileUpload(this.state.articleCoverImage)
         const authorPhoto = await this.fileUpload(this.state.authorImage)
@@ -121,11 +138,20 @@ class NewArticle extends Component {
         })
     }
 
+    openPreview = () => {
+        this.setState({preview: previewFromDraft(this.state)})
+    }
+
+    closePreview = () => {
+        this.setState({preview: null})
+    }
+
     render() {
         const {
             content,
             articleCoverImage,
             authorImage,
+            preview,
             ...formState
         } = this.state
 
@@ -133,6 +159,7 @@ class NewArticle extends Component {
             <EditorForm
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
+                handlePreview={this.openPreview}
                 onFileChange={this.onFileChange}
                 isEdit={false}
                 heading={'New Article'}
@@ -141,9 +168,10 @@ class NewArticle extends Component {
                 <Editor
                     onInit={this.onInit}
                     onChange={this.handleEditorChange}
-                    init={{...initEditor}}
+                    init={this.editorInit}
                 />
             </EditorForm>
+            {preview && <ArticlePreview {...preview} onClose={this.closePreview}/>}
             {(this.state.notification.show) ? <PopUp
                 heading={this.state.notification.msg}
                 handlePopUp={this.handlePopUp}

@@ -44,6 +44,39 @@ class FileUploadHandler {
 }
 
 
+const BROWSER_LOCAL_IMAGE = /<img\b[^>]*\ssrc="blob:/i
+
+// Waits for inline image uploads to finish; a blob: URL only exists in the author's browser.
+async function readEditorContent(editor) {
+    if (!editor?.getContent) throw new Error('The editor has not finished loading yet')
+    await editor.uploadImages()
+    const content = editor.getContent()
+    if (BROWSER_LOCAL_IMAGE.test(content)) {
+        throw new Error('Some inline images were not uploaded. Remove them and insert them again.')
+    }
+    return content
+}
+
+function previewFromDraft(draft) {
+    const editor = draft.editorRef
+    return {
+        article: {
+            title: draft.title,
+            author: draft.author,
+            tags: draft.tags,
+            cover: draft.cover,
+            authorPhoto: draft.authorPhoto,
+            pdf: draft.pdfFilePath,
+            createdAt: draft.createdAt,
+            content: editor?.getContent ? editor.getContent() : draft.content,
+        },
+        coverFile: draft.articleCoverImage,
+        authorPhotoFile: draft.authorImage,
+        pdfFile: draft.pdfFile,
+    }
+}
+
+
 class ArticleHandler {
     static baseRoute = `${config.host}/admin/editor`
 
@@ -129,5 +162,7 @@ export {
     AuthUtils,
     FileUploadHandler,
     ArticleHandler,
-    VolumeHandler
+    VolumeHandler,
+    readEditorContent,
+    previewFromDraft,
 }
