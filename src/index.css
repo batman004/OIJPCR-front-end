@@ -20,6 +20,16 @@
         @apply text-sm;
     }
 
+    .article-content ul {
+        @apply pl-6 list-disc;
+    }
+    .article-content ol {
+        @apply pl-6 list-decimal;
+    }
+    .article-content iframe,
+    .article-content video {
+        @apply max-w-full;
+    }
 }
 
 @tailwind components;

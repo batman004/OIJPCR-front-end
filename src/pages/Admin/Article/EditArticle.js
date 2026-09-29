@@ -3,14 +3,15 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import {Editor} from '@tinymce/tinymce-react'
 import {
-    initEditor
+    createEditorInit
 } from '../../../components/Admin/Config/TinyMCEConfig'
 import EditorForm
     from '../../../components/Admin/EditorForm'
+import ArticlePreview from '../../../components/Admin/ArticlePreview'
 import config from '../../../config/config'
 import {PopUp} from '../../../components/utils'
 import {UserContext} from '../../../UserContext'
-import {ArticleHandler, FileUploadHandler} from '../utils'
+import {ArticleHandler, FileUploadHandler, readEditorContent, previewFromDraft} from '../utils'
 
 class EditArticle extends Component {
     static contextType = UserContext
@@ -39,7 +40,11 @@ class EditArticle extends Component {
                 show: false, msg: '',
             },
             token: '',
+            preview: null,
         }
+        this.editorInit = createEditorInit({
+            uploadImage: file => FileUploadHandler.uploadFile(file, this.state.token),
+        })
     }
 
     async componentDidMount() {
@@ -121,6 +126,17 @@ class EditArticle extends Component {
 
         if (!this.state.postDataFlag) return
 
+        try {
+            this.setState({content: await readEditorContent(this.state.editorRef)})
+        } catch (err) {
+            this.setState({
+                notification: {
+                    show: true, msg: err.message,
+                },
+            })
+            return
+        }
+
         if (this.state.articleCoverImage) {
             await this.editArticleCoverImage()
         }
@@ -166,12 +182,21 @@ class EditArticle extends Component {
         this.setState({pdfFilePath: pdfPath})
     }
 
+    openPreview = () => {
+        this.setState({preview: previewFromDraft(this.state)})
+    }
+
+    closePreview = () => {
+        this.setState({preview: null})
+    }
+
     render() {
         const {
             content,
             redirect,
             articleCoverImage,
             authorImage,
+            preview,
             ...formState
         } = this.state
 
@@ -183,6 +208,7 @@ class EditArticle extends Component {
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
                 handleDelete={this.deleteArticle}
+                handlePreview={this.openPreview}
                 onFileChange={this.onFileChange}
                 {...formState}
                 isEdit={true}
@@ -192,9 +218,10 @@ class EditArticle extends Component {
                     onInit={this.onInit}
                     onChange={this.handleEditorChange}
                     initialValue={this.state.initialValue}
-                    init={{...initEditor}}
+                    init={this.editorInit}
                 />
             </EditorForm>
+            {preview && <ArticlePreview {...preview} onClose={this.closePreview}/>}
             {(this.state.notification.show) ? <PopUp
                 heading={this.state.notification.msg}
                 handlePopUp={this.handlePopUp}

@@ -1,6 +1,6 @@
 import {Component} from 'react'
 import {
-    FormField, FormContainer, UploadFile, Button, ButtonGroup
+    FormField, FormContainer, UploadFile, Button
 } from "./Form";
 
 class EditorForm extends Component {
@@ -65,12 +65,18 @@ class EditorForm extends Component {
                     onFileChange={this.onFileChange}
                 />
                 {this.props.children}
-                {isEdit ? <ButtonGroup
-                    handleSubmit={this.handleSubmit}
-                    handleDelete={this.handleDelete}
-                /> : <Button handleClick={this.handleSubmit} cname="primary-color-bg text-white">
-                    Save Data
-                </Button>}
+                <div className="flex flex-row flex-wrap justify-center">
+                    <Button type="button" handleClick={this.props.handlePreview}
+                            cname="text-gray-900 bg-white border-2 border-gray-900">
+                        Preview
+                    </Button>
+                    <Button handleClick={this.handleSubmit} cname="primary-color-bg text-white">
+                        Save Data
+                    </Button>
+                    {isEdit && <Button type="button" handleClick={this.handleDelete} cname="bg-red-600 text-white">
+                        Delete Article
+                    </Button>}
+                </div>
             </FormContainer>)
     }
 }

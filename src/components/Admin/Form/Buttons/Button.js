@@ -1,6 +1,7 @@
 const Button = ({
     handleClick,
     cname,
+    type = 'submit',
     children
 }) => {
     const btnCN = cname +
@@ -8,7 +9,7 @@ const Button = ({
     return (
         <button
             className={btnCN}
-            type="submit"
+            type={type}
             onClick={handleClick}
         >
             {children}
