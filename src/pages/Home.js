@@ -5,13 +5,17 @@ import Topics from '../components/Home/SideBar/Topics'
 import Popular from '../components/Home/SideBar/Popular'
 import SubmitArticleForm from '../components/Home/SideBar/SubmitArticleForm'
 import Podcast from '../components/Home/Podcast/Podcast'
+import AnniversaryTicker from '../components/Home/Anniversary/AnniversaryTicker'
+import AnniversaryCarousel from '../components/Home/Anniversary/AnniversaryCarousel'
 
 
 class Home extends Component {
   render() {
     return (
-      <div className="flex-grow max-w-7xl">
+      <div className="flex-grow w-full max-w-7xl">
+        <AnniversaryTicker />
         <Header />
+        <AnniversaryCarousel />
         <Main />
         <div className="mx-2 md:mx-8">
           <Podcast />
