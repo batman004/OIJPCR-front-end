@@ -22,6 +22,8 @@ class EditVolume extends Component {
             about: 'loading...',
             cover: '',
             date: 'loading...',
+            issue: '',
+            year: '',
             id: '',
             isEdit: true,
             file: null,
@@ -49,12 +51,14 @@ class EditVolume extends Component {
 
         if (!data || data.length === 0) return
 
-        const {about, cover, date, _id: id} = data[0]
+        const {about, cover, date, issue, year, _id: id} = data[0]
         this.setState({
             volume: data[0].volume,
             about: about,
             cover: cover,
             date: date,
+            issue: issue,
+            year: year,
             id: id,
         })
     }

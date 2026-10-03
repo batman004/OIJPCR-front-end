@@ -7,6 +7,7 @@ import {
     ArticleContainer,
     ArticleBody,
     ArticleTags,
+    ArticleCitation,
     PublishedDate,
     MoreArticles,
     MoreArticlesContainer,
@@ -136,6 +137,8 @@ class ReadArticle extends Component {
             </ArticleBody>
 
             <ArticleTags tags={article.tags}/>
+
+            <ArticleCitation article={article || undefined}/>
 
             <MoreArticlesContainer>
                 <MoreArticles

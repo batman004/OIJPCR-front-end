@@ -16,6 +16,8 @@ class NewVolume extends Component {
             about: 'This is a volume',
             cover: `${config.host}/editor/images/volume_cover_fallback.jpeg`,
             date: 'January 2021',
+            issue: 1,
+            year: '',
             isEdit: false,
             file: null,
             notification: {
@@ -70,11 +72,11 @@ class NewVolume extends Component {
 
     createVolume = async () => {
         try {
-            const {volume, about, cover, date} = this.state
+            const {volume, about, cover, date, issue, year} = this.state
             const authToken = this.state.token
 
             await VolumeHandler.createNewVolume({
-                volume, about, cover, date
+                volume, about, cover, date, issue, year
             }, authToken)
 
             this.setState({

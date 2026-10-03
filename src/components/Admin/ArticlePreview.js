@@ -8,6 +8,7 @@ import {
     ArticleHeader,
     ArticleBody,
     ArticleTags,
+    ArticleCitation,
     PublishedDate,
     ShareArticleOnSocialMedia,
 } from '../Article'
@@ -85,6 +86,7 @@ const ArticlePreview = ({article, coverFile, authorPhotoFile, pdfFile, onClose})
                             </div>
                         </ArticleBody>
                         <ArticleTags tags={article.tags}/>
+                        <ArticleCitation article={previewArticle} publishMeta={false}/>
                     </ArticleContainer>
                 </FlexContainer>
                 <Footer/>

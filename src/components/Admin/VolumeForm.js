@@ -37,6 +37,8 @@ class VolumeForm extends Component {
             volume,
             about,
             date,
+            issue,
+            year,
             isEdit  = false,
             heading = 'Submit Form',
           } = this.props
@@ -47,8 +49,16 @@ class VolumeForm extends Component {
                    type="number"
                    min={0}
         />
-        {/* Title */}
-        <FormField name="date" value={date} label="Date" handleChange={this.handleChange}/>
+        {/* Bibliographic details: shown as "Volume N, Issue I, YYYY" */}
+        <FormField name="issue" value={issue} label="Issue" handleChange={this.handleChange}
+                   type="number"
+                   min={1}
+        />
+        <FormField name="year" value={year} label="Year" handleChange={this.handleChange}
+                   type="number"
+                   min={2016}
+        />
+        <FormField name="date" value={date} label="Date (display text)" handleChange={this.handleChange}/>
         {/*About*/}
         <FormField name="about" value={about} label="About" handleChange={this.handleChange}/>
 

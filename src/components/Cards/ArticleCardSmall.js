@@ -1,6 +1,7 @@
 import dollar from '../../assets/stockPhotos/r1_c1.jpg'
 import slugify from 'slugify'
 import { Link } from 'react-router-dom'
+import { useVolumeInfo, formatVolumeIssueShort } from '../../utils'
 
 export default function ArticleCardSmall (props) {
   const { slug, id } = props
@@ -24,8 +25,9 @@ export default function ArticleCardSmall (props) {
           title,
         } = props
 
+  const volumeInfo = useVolumeInfo(volume)
   const authorText =
-          `BY ${author.toUpperCase()} ${String.fromCharCode(183)} VOLUME ${volume}`
+          `BY ${author.toUpperCase()} ${String.fromCharCode(183)} ${formatVolumeIssueShort(volumeInfo).toUpperCase()}`
   const defaultPhoto = coverPhoto ? coverPhoto : dollar
 
   return (

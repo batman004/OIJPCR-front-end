@@ -135,11 +135,11 @@ class VolumeHandler {
     }
 
     static async editVolume(editData = {}, authToken = '') {
-        const {volume, about, date, id, cover} = editData
+        const {volume, about, date, id, cover, issue, year} = editData
         const headerConfig = AuthUtils.setAuthHeader(authToken)
 
         await axios.patch(VolumeHandler.baseRoute, {
-            volume, about, cover, date, id,
+            volume, about, cover, date, id, issue, year,
         }, {...headerConfig})
     }
 

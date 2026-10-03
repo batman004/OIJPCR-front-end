@@ -1,7 +1,7 @@
 import slugify from 'slugify'
 import CardButton from './CardButton'
 import CardCover from './CardCover'
-import {textClip} from "../../utils";
+import {textClip, useVolumeInfo, formatVolumeIssueShort} from "../../utils";
 import dollar from '../../assets/stockPhotos/r1_c1.jpg'
 import {PDFButtonSmall} from "../utils";
 
@@ -17,8 +17,9 @@ const ArticleCard = (props) => {
     } = props
 
     const {cname, id, path} = props
+    const volumeInfo = useVolumeInfo(volume)
     const authorText =
-        `BY ${textClip(author.toUpperCase(), 25)} ${String.fromCharCode(183)} VOLUME ${volume}`
+        `BY ${textClip(author.toUpperCase(), 25)} ${String.fromCharCode(183)} ${formatVolumeIssueShort(volumeInfo).toUpperCase()}`
     const defaultPhoto = coverPhoto ? coverPhoto : dollar
 
     return (
