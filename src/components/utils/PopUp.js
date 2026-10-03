@@ -14,7 +14,8 @@ const SVG = () => {
 }
 
 const PopUp = (props) => {
-  const { heading, text, buttonText, buttonColor } = props
+  const { heading, text, details, buttonText, buttonColor } = props
+  const detailList = Array.isArray(details) ? details.filter(Boolean) : []
   const [isOpen, setOpen] = useState(true)
 
   const handleClick = () => {
@@ -31,10 +32,16 @@ const PopUp = (props) => {
           <div className="flex items-center mt-4 md:mt-0">
             <SVG/>
             <div className="flex flex-col ml-3">
-              <div className="font-medium leading-none">{heading || 'Notification'}</div>
-              <p className="mt-1 text-sm leading-none text-gray-600">
-                {text || "This is an auto-generated message"}
-              </p>
+              <div className="font-medium leading-snug">{heading || 'Notification'}</div>
+              {detailList.length > 0 ? (
+                <ul className="mt-2 text-sm text-gray-700 list-disc list-inside">
+                  {detailList.map((item) => <li key={item} className="mt-1">{item}</li>)}
+                </ul>
+              ) : text ? (
+                <p className="mt-1 text-sm leading-snug text-gray-600">
+                  {text}
+                </p>
+              ) : null}
             </div>
           </div>
           <button

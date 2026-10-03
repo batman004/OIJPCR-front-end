@@ -15,15 +15,47 @@ import VolumeList from '../../components/Admin/VolumeList'
 import { UserContext } from '../../UserContext'
 import config from '../../config/config'
 import { NewArticleProps } from './Article/DefaultData'
+import Dashboard from './Metrics/Dashboard'
+import { AuthHandler } from './utils'
 
+function isJwtExpired(token) {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    return !payload.exp || payload.exp * 1000 <= Date.now()
+  } catch (e) {
+    return true
+  }
+}
 
 const Admin = (props) => {
-  const { token, setToken } = useContext(UserContext)
+  const { token, setToken, username, setUsername } = useContext(UserContext)
 
   useEffect(() => {
     const authToken = localStorage.getItem("jwt")
-    setToken(authToken)
+    if (!authToken || isJwtExpired(authToken)) {
+      localStorage.removeItem("jwt")
+      if (token) setToken('')
+      return
+    }
+    if (authToken !== token) setToken(authToken)
   }, [token, setToken])
+
+  // The JWT only carries an id, so look the name up once per session. This also
+  // covers sessions restored from localStorage after a page refresh.
+  useEffect(() => {
+    if (!token || username) return
+    let cancelled = false
+
+    AuthHandler.currentUser(token)
+      .then((name) => { if (!cancelled) setUsername(name) })
+      .catch((err) => {
+        if (cancelled || err.response?.status !== 401) return
+        localStorage.removeItem("jwt")
+        setToken('')
+      })
+
+    return () => { cancelled = true }
+  }, [token, username, setUsername, setToken])
 
   const Logout = async () => {
     const headers = {
@@ -39,6 +71,7 @@ const Admin = (props) => {
     if (data.status === 'success') {
       localStorage.setItem("jwt", "")
       setToken('')
+      setUsername('')
     }
   }
 
@@ -51,10 +84,15 @@ const Admin = (props) => {
     <>
       <AdminNav
         token={token}
+        username={username}
         Logout={Logout}
       />
       <FlexContainer cname="m-2">
         <Switch>
+          <Route exact path="/admin">
+            <Dashboard/>
+          </Route>
+
           <Route exact path="/admin/new/volume">
             <NewVolume/>
           </Route>

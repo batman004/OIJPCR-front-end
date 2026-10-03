@@ -8,10 +8,11 @@ import {
 import EditorForm
     from '../../../components/Admin/EditorForm'
 import ArticlePreview from '../../../components/Admin/ArticlePreview'
+import UploadScreen from '../../../components/Admin/UploadScreen'
 import config from '../../../config/config'
 import {PopUp} from '../../../components/utils'
 import {UserContext} from '../../../UserContext'
-import {ArticleHandler, FileUploadHandler, readEditorContent, previewFromDraft} from '../utils'
+import {ArticleHandler, FileUploadHandler, readEditorContent, previewFromDraft, apiErrorMessage} from '../utils'
 
 class EditArticle extends Component {
     static contextType = UserContext
@@ -27,7 +28,7 @@ class EditArticle extends Component {
             slug: this.props.slug || '',
             volume: this.props.volume || '',
             tags: this.props.tags || '',
-            cover: this.props.cover || `${config.host}/editor/images/article_cover_fallback.jpg`,
+            cover: this.props.cover || '',
             authorPhoto: this.props.authorPhoto || '',
             pdfFilePath: this.props.pdf || '',
             articleCoverImage: null,
@@ -41,6 +42,8 @@ class EditArticle extends Component {
             },
             token: '',
             preview: null,
+            uploading: false,
+            uploadStatus: '',
         }
         this.editorInit = createEditorInit({
             uploadImage: file => FileUploadHandler.uploadFile(file, this.state.token),
@@ -121,35 +124,47 @@ class EditArticle extends Component {
         }))
     }
 
+    setUploadStatus = (uploadStatus) => new Promise(resolve => {
+        this.setState({uploading: true, uploadStatus}, resolve)
+    })
+
     handleSubmit = async (evt) => {
         evt.preventDefault()
+        if (!this.state.postDataFlag || this.state.uploading) return
 
-        if (!this.state.postDataFlag) return
-
+        await this.setUploadStatus('Uploading images in the article…')
         try {
-            this.setState({content: await readEditorContent(this.state.editorRef)})
+            const content = await readEditorContent(this.state.editorRef)
+            let cover = this.state.cover
+            let authorPhoto = this.state.authorPhoto
+            let pdfFilePath = this.state.pdfFilePath
+
+            if (this.state.articleCoverImage) {
+                await this.setUploadStatus('Uploading the cover image…')
+                cover = await this.editArticleCoverImage()
+            }
+            if (this.state.authorImage) {
+                await this.setUploadStatus('Uploading the author photo…')
+                authorPhoto = await this.editAuthorProfileImage()
+            }
+            if (this.state.pdfFile) {
+                await this.setUploadStatus('Uploading the PDF…')
+                pdfFilePath = await this.editPDF()
+            }
+
+            await this.setUploadStatus('Saving the article…')
+            await this.editArticle({content, cover, authorPhoto, pdfFilePath})
         } catch (err) {
-            this.setState({
-                notification: {
-                    show: true, msg: err.message,
-                },
-            })
-            return
+            this.notify(apiErrorMessage(err, 'Could not save the article'))
+        } finally {
+            this.setState({uploading: false, uploadStatus: ''})
         }
+    }
 
-        if (this.state.articleCoverImage) {
-            await this.editArticleCoverImage()
-        }
-
-        if (this.state.authorImage) {
-            await this.editAuthorProfileImage()
-        }
-
-        if (this.state.pdfFile) {
-            await this.editPDF()
-        }
-
-        await this.editArticle()
+    notify = (msg) => {
+        this.setState({
+            notification: {show: true, msg},
+        })
     }
 
     handleEditorChange = () => {
@@ -164,6 +179,7 @@ class EditArticle extends Component {
         // before sending delete request, check if author photo exists on server
         if (this.state.authorPhoto) await this.deletePreviousFile(this.state.authorPhoto)
         this.setState({authorPhoto: imgPath})
+        return imgPath
     }
 
     editArticleCoverImage = async () => {
@@ -172,6 +188,7 @@ class EditArticle extends Component {
         // before sending delete request, check if cover exists on server
         if (this.state.cover) await this.deletePreviousFile(this.state.cover)
         this.setState({cover: imgPath})
+        return imgPath
     }
 
     editPDF = async () => {
@@ -180,6 +197,7 @@ class EditArticle extends Component {
         // before sending delete request, check if pdf exists on server
         if (this.state.pdfFilePath) await this.deletePreviousFile(this.state.pdfFilePath)
         this.setState({pdfFilePath: pdfPath})
+        return pdfPath
     }
 
     openPreview = () => {
@@ -222,6 +240,7 @@ class EditArticle extends Component {
                 />
             </EditorForm>
             {preview && <ArticlePreview {...preview} onClose={this.closePreview}/>}
+            {this.state.uploading && <UploadScreen message={this.state.uploadStatus}/>}
             {(this.state.notification.show) ? <PopUp
                 heading={this.state.notification.msg}
                 handlePopUp={this.handlePopUp}
@@ -238,12 +257,12 @@ class EditArticle extends Component {
         })
     }
 
-    editArticle = async () => {
+    editArticle = async (overrides = {}) => {
         try {
             if (!this.state.postDataFlag) return
 
             const authToken = this.state.token
-            await ArticleHandler.editArticle(this.state, authToken)
+            await ArticleHandler.editArticle({...this.state, ...overrides}, authToken)
 
             this.setState({
                 notification: {
@@ -252,12 +271,7 @@ class EditArticle extends Component {
             })
 
         } catch (err) {
-            this.setState({
-                notification: {
-                    show: true,
-                    msg: 'Error: could not edit article',
-                },
-            })
+            this.notify(apiErrorMessage(err, 'Could not save the article'))
         }
     }
 }

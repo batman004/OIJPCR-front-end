@@ -2,21 +2,34 @@ import {Component} from 'react'
 import {
     FormField, FormContainer, UploadFile, Button
 } from "./Form";
+import {ConfirmDelete} from "../utils";
 
 class EditorForm extends Component {
     constructor(props) {
         super(props)
+        this.state = {confirmDelete: false}
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onFileChange = this.onFileChange.bind(this)
-        this.handleDelete = this.handleDelete.bind(this)
+        this.openDeleteConfirm = this.openDeleteConfirm.bind(this)
+        this.closeDeleteConfirm = this.closeDeleteConfirm.bind(this)
+        this.confirmDelete = this.confirmDelete.bind(this)
     }
 
     onFileChange(evt) {
         this.props.onFileChange(evt)
     }
 
-    handleDelete() {
+    openDeleteConfirm() {
+        this.setState({confirmDelete: true})
+    }
+
+    closeDeleteConfirm() {
+        this.setState({confirmDelete: false})
+    }
+
+    confirmDelete() {
+        this.setState({confirmDelete: false})
         this.props.handleDelete()
     }
 
@@ -32,7 +45,8 @@ class EditorForm extends Component {
         const {
             author, title, slug, volume, tags, isEdit = false, heading = 'Submit Form',
         } = this.props
-        return (<FormContainer heading={heading} handleSubmit={this.handleSubmit}>
+        return (<>
+            <FormContainer heading={heading} handleSubmit={this.handleSubmit}>
                 {/* Author */}
                 <FormField name="author" value={author} label="Author" handleChange={this.handleChange}/>
                 {/* Title */}
@@ -50,18 +64,21 @@ class EditorForm extends Component {
                 <UploadFile
                     name="articleCoverImage"
                     label="Article Cover Image"
+                    accept="image/*"
                     onFileChange={this.onFileChange}
                 />
                 {/* Author Profile pic upload*/}
                 <UploadFile
                     name="authorImage"
                     label="Author Profile Pic"
+                    accept="image/*"
                     onFileChange={this.onFileChange}
                 />
                 {/* PDF Upload*/}
                 <UploadFile
                     name="pdfFile"
                     label="PDF Upload"
+                    accept="application/pdf,.pdf"
                     onFileChange={this.onFileChange}
                 />
                 {this.props.children}
@@ -73,11 +90,21 @@ class EditorForm extends Component {
                     <Button handleClick={this.handleSubmit} cname="primary-color-bg text-white">
                         Save Data
                     </Button>
-                    {isEdit && <Button type="button" handleClick={this.handleDelete} cname="bg-red-600 text-white">
+                    {isEdit && <Button type="button" handleClick={this.openDeleteConfirm} cname="bg-red-600 text-white">
                         Delete Article
                     </Button>}
                 </div>
-            </FormContainer>)
+            </FormContainer>
+            {this.state.confirmDelete && (
+                <ConfirmDelete
+                    title="Delete this article?"
+                    warning={`"${title || 'Untitled'}" will be removed from the website. Readers will no longer be able to open it.`}
+                    confirmLabel="Delete article"
+                    onCancel={this.closeDeleteConfirm}
+                    onConfirm={this.confirmDelete}
+                />
+            )}
+        </>)
     }
 }
 

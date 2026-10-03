@@ -1,14 +1,91 @@
 import axios from 'axios'
 import config from "../../config/config";
 
-class AuthUtils {
-    static setAuthHeader(token) {
-        return {
-            withCredentials: true, headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
+function apiErrorMessage(err, fallback = 'Something went wrong') {
+    if (!err) return fallback
+    if (typeof err === 'string') return err
+    return err.response?.data?.message || err.message || fallback
+}
+
+const isImageType = (type) => typeof type === 'string' && type.toLowerCase().startsWith('image/')
+const isPdfType = (type) => typeof type === 'string' && type.toLowerCase() === 'application/pdf'
+
+function imageTypeError(file, label) {
+    if (!file) return `${label} is missing.`
+    if (isImageType(file.type)) return null
+    const type = file.type || 'unknown type'
+    return `${label}: "${file.name}" is not an image (${type}). Use JPEG, PNG, GIF, or WebP.`
+}
+
+function pdfTypeError(file, label) {
+    if (!file) return `${label} is missing.`
+    if (isPdfType(file.type)) return null
+    const type = file.type || 'unknown type'
+    return `${label}: "${file.name}" is not a PDF (${type}).`
+}
+
+function inlineImageErrors(editor) {
+    if (!editor?.dom || !editor.editorUpload?.blobCache) return []
+    const errors = []
+    editor.dom.select('img').forEach((img) => {
+        const src = img.getAttribute('src') || ''
+        if (src.startsWith('blob:')) {
+            const info = editor.editorUpload.blobCache.getByUri(src)
+            const type = info?.blob()?.type || ''
+            const name = info?.filename() || 'inline image'
+            if (!isImageType(type)) {
+                errors.push(`Article image: "${name}" is not an image (${type || 'unknown type'}). Use JPEG, PNG, GIF, or WebP.`)
+            }
+        } else if (src.startsWith('data:')) {
+            const type = src.slice(5).split(/[;,]/)[0]
+            if (!isImageType(type)) {
+                errors.push(`Article image is not an image (${type || 'unknown type'}). Use JPEG, PNG, GIF, or WebP.`)
+            }
         }
+    })
+    return errors
+}
+
+// Every file the new-article form will upload, checked together before any request is sent.
+function validateNewArticleUploads({cover, authorPhoto, pdf, editor}) {
+    return [
+        imageTypeError(cover, 'Cover image'),
+        imageTypeError(authorPhoto, 'Author photo'),
+        pdfTypeError(pdf, 'PDF'),
+        ...inlineImageErrors(editor),
+    ].filter(Boolean)
+}
+
+class AuthUtils {
+    static setAuthHeader(token, {json = true} = {}) {
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+        }
+        // Let the browser set multipart boundaries. Forcing JSON here
+        // makes file uploads arrive as an empty body.
+        if (json) headers['Content-Type'] = 'application/json'
+        return {
+            withCredentials: true,
+            headers,
+        }
+    }
+}
+
+class AuthHandler {
+    static async currentUser(authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.get(`${config.host}/admin/me`, {...headerConfig})
+        return data?.username || ''
+    }
+}
+
+class MetricsHandler {
+    static async dashboard(days = 30, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.get(`${config.host}/admin/metrics`, {
+            ...headerConfig, params: {days},
+        })
+        return data
     }
 }
 
@@ -36,7 +113,7 @@ class FileUploadHandler {
 
         formData.append(fieldName, file)
 
-        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const headerConfig = AuthUtils.setAuthHeader(authToken, {json: false})
         const {data} = await axios.post(url, formData, {...headerConfig})
 
         return data?.file?.url
@@ -135,11 +212,11 @@ class VolumeHandler {
     }
 
     static async editVolume(editData = {}, authToken = '') {
-        const {volume, about, date, id, cover} = editData
+        const {volume, about, date, id, cover, issue, year} = editData
         const headerConfig = AuthUtils.setAuthHeader(authToken)
 
         await axios.patch(VolumeHandler.baseRoute, {
-            volume, about, cover, date, id,
+            volume, about, cover, date, id, issue, year,
         }, {...headerConfig})
     }
 
@@ -160,9 +237,13 @@ class VolumeHandler {
 
 export {
     AuthUtils,
+    AuthHandler,
+    MetricsHandler,
     FileUploadHandler,
     ArticleHandler,
     VolumeHandler,
     readEditorContent,
     previewFromDraft,
+    apiErrorMessage,
+    validateNewArticleUploads,
 }

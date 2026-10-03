@@ -30,6 +30,19 @@
     .article-content video {
         @apply max-w-full;
     }
+
+    /*
+     * Older articles were pasted from Word/Docs and carry inline font-family
+     * and font-size (Times New Roman, 8-14pt). Neutralise them at render time
+     * so every article uses the site font and size; the stored HTML is untouched.
+     */
+    .article-content :not(pre):not(code):not(kbd):not(samp):not(tt) {
+        font-family: inherit !important;
+    }
+    .article-content [style*='font-size']:not(sub):not(sup),
+    .article-content font[size] {
+        font-size: inherit !important;
+    }
 }
 
 @tailwind components;

@@ -1,6 +1,6 @@
 import slugify from "slugify";
 import dollar from "../../assets/stockPhotos/r1_c1.jpg";
-import { textClip } from "../../utils";
+import { textClip, useVolumeInfo, formatVolumeIssueShort } from "../../utils";
 import { PDFButtonSmall } from "../utils";
 import CardButton from "./CardButton";
 import CardCover from "./CardCover";
@@ -9,10 +9,11 @@ function ArticleCardFullWidth(props) {
   const { coverPhoto, author, volume, title, slug, pdf } = props;
 
   const { cname, id, path } = props;
+  const volumeInfo = useVolumeInfo(volume);
   const authorText = `BY ${textClip(
     author.toUpperCase(),
     65
-  )} ${String.fromCharCode(183)} VOLUME ${volume}`;
+  )} ${String.fromCharCode(183)} ${formatVolumeIssueShort(volumeInfo).toUpperCase()}`;
   const defaultPhoto = coverPhoto ? coverPhoto : dollar;
   return (
     <div
@@ -60,7 +61,7 @@ function CardContent({ title, slug, id, path, cname, pdf }) {
           id={id}
           path={path}
         />
-        <PDFButtonSmall pdfLink={pdf} />
+        <PDFButtonSmall pdfLink={pdf} articleId={id} />
       </div>
     </div>
   );

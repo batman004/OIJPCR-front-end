@@ -5,6 +5,7 @@ import { CircularLoader } from "../../Loaders";
 import config from '../../../config/config'
 import slugify from 'slugify'
 import { textClip } from '../../../utils';
+import { trackClick } from '../../../utils/trackEvent'
 
 
 const Popular = () => {
@@ -68,7 +69,7 @@ function NavLink(props) {
       </div>
       <div className="flex-1 w-3/4">
         <p className="text-sm font-semibold text-gray-900">
-          <Link to={url}> {title} </Link>
+          <Link to={url} onClick={() => trackClick(id, 'card')}> {title} </Link>
         </p>
         <p className="text-xs font-medium text-gray-500">{`${textClip(authorText, 75)} Vol ${volume}`}</p>
       </div>

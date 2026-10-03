@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import React from 'react'
 
 export const urlLinks = [
+  { url: '/admin', value: 'Dashboard' },
   { url: '/admin/new', value: 'New Article' },
   { url: '/admin/new/volume', value: 'New Volume' },
   { url: '/admin/list/volume', value: 'All Volumes' },
@@ -13,7 +14,7 @@ const AdminNav = (props) => {
     <div className="w-full bg-black">
       <div className="flex flex-row flex-wrap justify-evenly text-black text-lg">
         <LinkItems links={urlLinks}/>
-        <LogoutButton
+        <UserMenu
           {...props}
         />
       </div>
@@ -49,11 +50,12 @@ function NavLink ({ url, value, cname = '' }) {
   )
 }
 
-function LogoutButton (props) {
+function UserMenu (props) {
   return (
     <>
       {props.token &&
-      <div className="mt-2">
+      <div className="flex items-center mt-2 space-x-4">
+        {props.username && <UserBadge username={props.username}/>}
         <button
           className="rounded-lg bg-purple-700 text-lg md:text-2xl font-mono
            tracking-wide text-white px-4 py-2 w-24 md:w-32 md:h-12"
@@ -64,6 +66,26 @@ function LogoutButton (props) {
       </div>
       }
     </>
+  )
+}
+
+function UserBadge ({ username }) {
+  return (
+    <div
+      className="flex items-center min-w-0 text-gray-50"
+      title={`Signed in as ${username}`}
+    >
+      <span
+        className="flex items-center justify-center flex-shrink-0 w-9 h-9 mr-2 text-lg font-bold text-white uppercase rounded-full bg-oijpcr-blue"
+        aria-hidden="true"
+      >
+        {username.charAt(0)}
+      </span>
+      <span className="leading-tight">
+        <span className="block text-xs tracking-wide text-gray-400 uppercase">Signed in as</span>
+        <span className="block font-semibold truncate max-w-xs">{username}</span>
+      </span>
+    </div>
   )
 }
 

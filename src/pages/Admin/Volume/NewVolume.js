@@ -4,7 +4,7 @@ import VolumeForm
 import {PopUp} from '../../../components/utils'
 import config from '../../../config/config'
 import {UserContext} from '../../../UserContext'
-import {FileUploadHandler, VolumeHandler} from '../utils'
+import {FileUploadHandler, VolumeHandler, apiErrorMessage} from '../utils'
 
 class NewVolume extends Component {
     static contextType = UserContext
@@ -16,6 +16,8 @@ class NewVolume extends Component {
             about: 'This is a volume',
             cover: `${config.host}/editor/images/volume_cover_fallback.jpeg`,
             date: 'January 2021',
+            issue: 1,
+            year: '',
             isEdit: false,
             file: null,
             notification: {
@@ -63,18 +65,26 @@ class NewVolume extends Component {
             return
         }
 
-        const imgPath = await this.uploadFile(this.state.file)
-        this.setState({cover: imgPath})
-        await this.createVolume()
+        try {
+            const imgPath = await this.uploadFile(this.state.file)
+            this.setState({cover: imgPath}, () => this.createVolume())
+        } catch (err) {
+            this.setState({
+                notification: {
+                    show: true,
+                    msg: apiErrorMessage(err, 'Cover upload failed'),
+                },
+            })
+        }
     }
 
     createVolume = async () => {
         try {
-            const {volume, about, cover, date} = this.state
+            const {volume, about, cover, date, issue, year} = this.state
             const authToken = this.state.token
 
             await VolumeHandler.createNewVolume({
-                volume, about, cover, date
+                volume, about, cover, date, issue, year
             }, authToken)
 
             this.setState({
@@ -86,7 +96,7 @@ class NewVolume extends Component {
             this.setState({
                 notification: {
                     show: true,
-                    msg: 'An Error occurred in creating volume',
+                    msg: apiErrorMessage(err, 'Could not create the volume'),
                 },
             })
         }

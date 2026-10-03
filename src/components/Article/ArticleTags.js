@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom'
+import {trackClick} from '../../utils/trackEvent'
 
-function ArticleTags({tags}) {
+function ArticleTags({tags, articleId}) {
     return (<div
         className="flex flex-row flex-wrap mt-2 mb-6 noprint">
         {tags?.split(', ').map((tag, index) => {
@@ -10,6 +11,7 @@ function ArticleTags({tags}) {
             return <TagBlock
                 index={index}
                 key={index}
+                articleId={articleId}
                 {...itemLink}
             />
         })}
@@ -18,13 +20,13 @@ function ArticleTags({tags}) {
 
 function TagBlock(props) {
     const cname = "mx-2 my-2 px-4 py-2 block font-semibold text-center text-white border-0 border-indigo-400 rounded bg-oijpcr-blue focus:outline-none"
-    const {url, value, index, newTab} = props
+    const {url, value, index, newTab, articleId} = props
 
     return (<li className={cname} key={index}>
         {newTab ? <a href={url} target="_blank"
                      rel="noreferrer">
             {value}
-        </a> : <Link to={url}>
+        </a> : <Link to={url} onClick={() => trackClick(articleId, 'tag')}>
             {value}
         </Link>}
     </li>)

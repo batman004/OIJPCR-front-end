@@ -7,6 +7,7 @@ import {
     ArticleContainer,
     ArticleBody,
     ArticleTags,
+    ArticleCitation,
     PublishedDate,
     MoreArticles,
     MoreArticlesContainer,
@@ -17,6 +18,7 @@ import {
     PrintButton, PDFButton
 } from '../../components/utils'
 import {textClip} from '../../utils'
+import {trackView} from '../../utils/trackEvent'
 import {
     LoadingCardFullWidth
 } from '../../components/Loaders'
@@ -48,6 +50,7 @@ class ReadArticle extends Component {
             const {urlSlug, id} = this.props
             const url = `${config.host}/journals/${urlSlug}/${id}`
             const {data: article} = await axios.get(url);
+            trackView(article._id)
 
             const volume = article.volume
             const MoreArticlesURL = `${config.host}/journals/limit/${volume}/${3}`
@@ -93,6 +96,7 @@ class ReadArticle extends Component {
         const articleURL = `${config.host}/journals/${urlSlug}/${id}`
 
         const {data: article} = await axios.get(articleURL)
+        trackView(article._id)
 
         this.setState({article: article})
 
@@ -129,13 +133,15 @@ class ReadArticle extends Component {
             <ArticleBody content={content}>
                 <div
                     className="flex flex-wrap mt-2 mb-6 noprint">
-                    <ShareArticleOnSocialMedia/>
-                    <PrintButton/>
-                    <PDFButton pdfLink={pdfLink}/>
+                    <ShareArticleOnSocialMedia articleId={article?._id}/>
+                    <PrintButton articleId={article?._id}/>
+                    <PDFButton pdfLink={pdfLink} articleId={article?._id}/>
                 </div>
             </ArticleBody>
 
-            <ArticleTags tags={article.tags}/>
+            <ArticleTags tags={article.tags} articleId={article?._id}/>
+
+            <ArticleCitation article={article || undefined}/>
 
             <MoreArticlesContainer>
                 <MoreArticles
