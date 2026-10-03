@@ -6,21 +6,34 @@ import {
   Button,
   ButtonGroup
 } from "./Form";
+import {ConfirmDelete} from "../utils";
 
 class VolumeForm extends Component {
   constructor (props) {
     super(props)
+    this.state = {confirmDelete: false}
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.onFileChange = this.onFileChange.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
+    this.openDeleteConfirm = this.openDeleteConfirm.bind(this)
+    this.closeDeleteConfirm = this.closeDeleteConfirm.bind(this)
+    this.confirmDelete = this.confirmDelete.bind(this)
   }
 
   onFileChange (evt) {
     this.props.onFileChange(evt)
   }
 
-  handleDelete () {
+  openDeleteConfirm () {
+    this.setState({confirmDelete: true})
+  }
+
+  closeDeleteConfirm () {
+    this.setState({confirmDelete: false})
+  }
+
+  confirmDelete () {
+    this.setState({confirmDelete: false})
     this.props.handleDelete()
   }
 
@@ -43,6 +56,7 @@ class VolumeForm extends Component {
             heading = 'Submit Form',
           } = this.props
     return (
+      <>
       <FormContainer heading={heading} handleSubmit={this.handleSubmit}>
         {/*Volume*/}
         <FormField name="volume" value={volume} label="Volume" handleChange={this.handleChange}
@@ -69,7 +83,7 @@ class VolumeForm extends Component {
             ?
             <ButtonGroup
               handleSubmit={this.handleSubmit}
-              handleDelete={this.handleDelete}
+              handleDelete={this.openDeleteConfirm}
               deleteTxt="Delete Volume"
             />
             :
@@ -81,6 +95,16 @@ class VolumeForm extends Component {
             </Button>
         }
       </FormContainer>
+      {this.state.confirmDelete && (
+        <ConfirmDelete
+          title="Delete this volume?"
+          warning={`Volume ${volume} will be removed from the archive. Existing articles in this volume are not deleted automatically.`}
+          confirmLabel="Delete volume"
+          onCancel={this.closeDeleteConfirm}
+          onConfirm={this.confirmDelete}
+        />
+      )}
+      </>
     )
   }
 }

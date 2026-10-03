@@ -10,9 +10,11 @@ import {
 } from './Form'
 import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../../../UserContext'
+import { useToast } from '../../../components/utils/Toast'
 
 const SignUp = () => {
-  const { token, setToken } = useContext(UserContext)
+  const { token, setToken, setUsername } = useContext(UserContext)
+  const { showToast } = useToast()
 
   const [fields, handleFieldChange] = useFormFields({
     username: '',
@@ -35,6 +37,12 @@ const SignUp = () => {
     const newToken = data?.token
     localStorage.setItem('jwt', newToken)
     setToken(newToken)
+    setUsername(data.username || '')
+    showToast({
+      message: data.username
+        ? `Account created. You are logged in as ${data.username}.`
+        : 'Account created. You are logged in.',
+    })
   }
 
   if (token) {

@@ -1,4 +1,4 @@
-import config from '../../../config/config'
+import fallbackCover from '../../../assets/stockPhotos/r1_c1.jpg'
 
 export const NewArticleProps = {
   initialValue: 'initial Content',
@@ -6,5 +6,5 @@ export const NewArticleProps = {
   title: 'OIJPCR Article',
   slug: 'This is an Article',
   volume: 1,
-  cover: `${config.host}/editor/images/article_cover_fallback.jpg`,
+  cover: fallbackCover,
 }

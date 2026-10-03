@@ -61,7 +61,7 @@ function CardContent({ title, slug, id, path, cname, pdf }) {
           id={id}
           path={path}
         />
-        <PDFButtonSmall pdfLink={pdf} />
+        <PDFButtonSmall pdfLink={pdf} articleId={id} />
       </div>
     </div>
   );

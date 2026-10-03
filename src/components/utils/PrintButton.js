@@ -1,7 +1,11 @@
 import printIcon from "../../assets/print_icon.svg"
+import {trackClick} from "../../utils/trackEvent"
 
-function PrintButton() {
-    const printArticle = () => window.print();
+function PrintButton({articleId}) {
+    const printArticle = () => {
+        trackClick(articleId, 'print')
+        window.print()
+    };
     return (
         <div className="flex flex-row mx-2 my-2 noprint">
             <button type="button"

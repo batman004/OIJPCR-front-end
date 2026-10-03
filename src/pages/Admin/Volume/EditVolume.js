@@ -9,7 +9,8 @@ import {PopUp} from '../../../components/utils'
 import {
     AuthUtils,
     FileUploadHandler,
-    VolumeHandler
+    VolumeHandler,
+    apiErrorMessage,
 } from '../utils'
 
 class EditVolume extends Component {
@@ -122,8 +123,16 @@ class EditVolume extends Component {
 
         if (!this.state.postDataFlag) return
 
-        if (this.state.file) {
-            await this.uploadNewCoverImage()
+        try {
+            if (this.state.file) await this.uploadNewCoverImage()
+        } catch (err) {
+            this.setState({
+                notification: {
+                    show: true,
+                    msg: apiErrorMessage(err, 'Cover upload failed'),
+                },
+            })
+            return
         }
 
         await this.editVolume()
@@ -151,7 +160,7 @@ class EditVolume extends Component {
             this.setState({
                 notification: {
                     show: true,
-                    msg: 'An Error occurred in editing volume: ' + this.state.volume,
+                    msg: apiErrorMessage(err, 'Could not save volume ' + this.state.volume),
                 },
             })
         }

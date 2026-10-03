@@ -1,6 +1,7 @@
 const UploadFile = ({
   label,
   name,
+  accept,
   onFileChange
 }) => (
   <div className="my-4 border-1">
@@ -8,6 +9,7 @@ const UploadFile = ({
     <input
       type="file"
       name={name}
+      accept={accept}
       onChange={onFileChange}
     />
   </div>

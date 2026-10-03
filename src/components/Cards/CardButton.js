@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { trackClick } from '../../utils/trackEvent'
 
 const CardButton = ({
   slug,
@@ -11,6 +12,7 @@ const CardButton = ({
     <div className={cname}>
       <Link
         to={`/archive/${slug}/${id}`}
+        onClick={() => trackClick(id, 'card')}
         className="inline-flex items-center px-4 py-2.5 my-4 mr-4 text-white bg-black rounded-lg sm:my-2 max-w-max"
       >
         Read More

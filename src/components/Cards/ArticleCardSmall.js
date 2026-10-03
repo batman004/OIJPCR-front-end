@@ -2,6 +2,7 @@ import dollar from '../../assets/stockPhotos/r1_c1.jpg'
 import slugify from 'slugify'
 import { Link } from 'react-router-dom'
 import { useVolumeInfo, formatVolumeIssueShort } from '../../utils'
+import { trackClick } from '../../utils/trackEvent'
 
 export default function ArticleCardSmall (props) {
   const { slug, id } = props
@@ -15,6 +16,7 @@ export default function ArticleCardSmall (props) {
 
 
   function handleClick () {
+    trackClick(id, 'card')
     props.handleClick(url)
   }
 
