@@ -100,3 +100,104 @@
         @apply w-full lg:w-3/4 md:w-2/3;
     }
 }
+
+/* Anniversary ticker + carousel (components/Home/Anniversary) */
+.no-scrollbar {
+    scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.ticker-track {
+    animation: ticker-scroll 90s linear infinite;
+}
+.ticker-viewport:hover .ticker-track,
+.ticker-paused .ticker-track {
+    animation-play-state: paused;
+}
+@keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+.ticker-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1.5rem;
+    pointer-events: none;
+}
+.ticker-fade-left {
+    left: 0;
+    background: linear-gradient(to right, #000, rgba(0, 0, 0, 0));
+}
+.ticker-fade-right {
+    right: 0;
+    background: linear-gradient(to left, #000, rgba(0, 0, 0, 0));
+}
+
+.ticker-dot {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 9999px;
+    background: #fff;
+}
+.ticker-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: #fff;
+    animation: ticker-pulse 1.8s ease-out infinite;
+}
+@keyframes ticker-pulse {
+    from { transform: scale(1); opacity: 0.8; }
+    to { transform: scale(2.8); opacity: 0; }
+}
+
+.slide-zoom {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    display: flex;
+    padding: 0.35rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 9999px;
+    opacity: 0;
+    transition: opacity 150ms;
+}
+.slide-card:hover .slide-zoom,
+.slide-card:focus .slide-zoom {
+    opacity: 1;
+}
+
+/* Reduced motion: no scrolling headlines (the list is scrollable by hand and
+   the duplicate used for the loop is dropped), no pulsing dot. */
+@media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+        animation: none;
+    }
+    .ticker-viewport {
+        overflow-x: auto;
+    }
+    .ticker-list[aria-hidden='true'],
+    .ticker-toggle,
+    .ticker-fade {
+        display: none;
+    }
+    .ticker-dot::after {
+        animation: none;
+        display: none;
+    }
+}
+@media (hover: none) {
+    .slide-zoom {
+        opacity: 1;
+    }
+}
