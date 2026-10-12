@@ -140,6 +140,9 @@ function previewFromDraft(draft) {
         article: {
             title: draft.title,
             author: draft.author,
+            // Without this, ArticleHeader/ArticleCitation can't look up the
+            // volume's issue/year and render "NaN" in the preview.
+            volume: draft.volume,
             tags: draft.tags,
             cover: draft.cover,
             authorPhoto: draft.authorPhoto,
@@ -156,6 +159,24 @@ function previewFromDraft(draft) {
 
 class ArticleHandler {
     static baseRoute = `${config.host}/admin/editor`
+
+    // Unlike GET /journals/:slug/:id (the public read the article page uses),
+    // this returns the article regardless of status, so a draft can be opened
+    // for editing without ever being reachable through the public site.
+    static async getArticle(id, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.get(`${ArticleHandler.baseRoute}/${id}`, {...headerConfig})
+        return data
+    }
+
+    // Rebuilds the article's PDF from its last-saved content, styled like the
+    // rest of the archive. Save any editor changes first - this reads what is
+    // already on the server, not the draft in the open editor.
+    static async generatePdf(id, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.post(`${ArticleHandler.baseRoute}/${id}/pdf`, {}, {...headerConfig})
+        return data.pdf
+    }
 
     static async createNewArticle(articleData, authToken = '') {
 
@@ -203,6 +224,60 @@ class ArticleHandler {
 }
 
 
+class SubmissionHandler {
+    static baseRoute = `${config.host}/admin/submissions`
+
+    static async list(authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.get(SubmissionHandler.baseRoute, {...headerConfig})
+        return data
+    }
+
+    static async updateStatus(id, status, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.patch(
+            `${SubmissionHandler.baseRoute}/${id}`,
+            {status},
+            {...headerConfig},
+        )
+        return data.submission
+    }
+
+    static async addComment(id, body, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.post(
+            `${SubmissionHandler.baseRoute}/${id}/comments`,
+            {body},
+            {...headerConfig},
+        )
+        return data.submission
+    }
+
+    static async fileBlob(id, kind, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.get(
+            `${SubmissionHandler.baseRoute}/${id}/${kind}`,
+            {...headerConfig, responseType: 'blob'},
+        )
+        return data
+    }
+
+    // Extracts the manuscript into a draft article (status: 'draft') and
+    // generates a first PDF for it in one step. Safe to call again on the
+    // same submission - the server returns the existing draft instead of
+    // making a second one.
+    static async createDraftArticle(id, authToken = '') {
+        const headerConfig = AuthUtils.setAuthHeader(authToken)
+        const {data} = await axios.post(
+            `${SubmissionHandler.baseRoute}/${id}/draft-article`,
+            {},
+            {...headerConfig},
+        )
+        return data
+    }
+}
+
+
 class VolumeHandler {
     static baseRoute = `${config.host}/admin/volume`;
 
@@ -239,6 +314,7 @@ export {
     AuthUtils,
     AuthHandler,
     MetricsHandler,
+    SubmissionHandler,
     FileUploadHandler,
     ArticleHandler,
     VolumeHandler,

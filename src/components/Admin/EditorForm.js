@@ -43,7 +43,8 @@ class EditorForm extends Component {
 
     render() {
         const {
-            author, title, slug, volume, tags, isEdit = false, heading = 'Submit Form',
+            author, title, slug, volume, tags, status, isEdit = false, heading = 'Submit Form',
+            onGeneratePdf, generatingPdf, pdfFilePath,
         } = this.props
         return (<>
             <FormContainer heading={heading} handleSubmit={this.handleSubmit}>
@@ -60,6 +61,39 @@ class EditorForm extends Component {
                            type="number"
                            min={0}
                 />
+                {/* Draft stays off the public site; Published is reachable the
+                    normal way once a volume is set. */}
+                <div className="flex flex-col mb-4">
+                    <label className="mb-2 text-lg font-bold text-gray-900" htmlFor="status">
+                        Status
+                    </label>
+                    <select
+                        className="px-3 py-2 border text-grey-800"
+                        id="status"
+                        name="status"
+                        value={status || 'published'}
+                        onChange={this.handleChange}
+                    >
+                        <option value="draft">Draft (not visible to readers)</option>
+                        <option value="published">Published</option>
+                    </select>
+                </div>
+                {isEdit && onGeneratePdf && (
+                    <div className="flex flex-col mb-4">
+                        <span className="mb-2 text-lg font-bold text-gray-900">PDF</span>
+                        <Button
+                            type="button"
+                            handleClick={onGeneratePdf}
+                            cname="text-white bg-gray-700"
+                        >
+                            {generatingPdf ? 'Generating…' : pdfFilePath ? 'Regenerate PDF' : 'Generate PDF'}
+                        </Button>
+                        <span className="mt-2 text-sm text-gray-600">
+                            Builds a PDF from the saved article, styled like the rest of the archive. Save your
+                            changes first - this doesn't use whatever is still unsaved in the editor above.
+                        </span>
+                    </div>
+                )}
                 {/*Article Cover Image upload*/}
                 <UploadFile
                     name="articleCoverImage"

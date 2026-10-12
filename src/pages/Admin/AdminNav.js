@@ -3,6 +3,7 @@ import React from 'react'
 
 export const urlLinks = [
   { url: '/admin', value: 'Dashboard' },
+  { url: '/admin/submissions', value: 'Submissions' },
   { url: '/admin/new', value: 'New Article' },
   { url: '/admin/new/volume', value: 'New Volume' },
   { url: '/admin/list/volume', value: 'All Volumes' },
