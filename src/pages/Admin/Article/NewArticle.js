@@ -27,6 +27,9 @@ class NewArticle extends Component {
             cover: this.props.cover || '',
             authorPhoto: this.props.authorPhoto || '',
             pdfFilePath: this.props.pdfFilePath || '',
+            // A brand-new article saved from this screen is published right
+            // away, same as before the draft/published distinction existed.
+            status: this.props.status || 'published',
             articleCoverImage: null,
             pdfFile: null,
             authorImage: null,

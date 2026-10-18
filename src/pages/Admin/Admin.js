@@ -16,6 +16,7 @@ import { UserContext } from '../../UserContext'
 import config from '../../config/config'
 import { NewArticleProps } from './Article/DefaultData'
 import Dashboard from './Metrics/Dashboard'
+import Submissions from './Submissions/Submissions'
 import { AuthHandler } from './utils'
 
 function isJwtExpired(token) {
@@ -91,6 +92,10 @@ const Admin = (props) => {
         <Switch>
           <Route exact path="/admin">
             <Dashboard/>
+          </Route>
+
+          <Route exact path="/admin/submissions">
+            <Submissions/>
           </Route>
 
           <Route exact path="/admin/new/volume">

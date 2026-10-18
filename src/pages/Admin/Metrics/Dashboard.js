@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../../UserContext'
 import { MetricsHandler, apiErrorMessage } from '../utils'
 import { BarList, SeriesTable, Sparkline, TrendChart } from './MetricsCharts'
+import SubmissionInbox from '../Submissions/Inbox'
 import {
   articleUrl, engagementRate, formatCompact, formatDay, formatNumber,
   formatPercent, percentChange, relativeDate,
@@ -57,6 +58,8 @@ const Dashboard = () => {
         </div>
         <RangePicker days={days} onChange={setDays} />
       </div>
+
+      <SubmissionInbox />
 
       {error && <ErrorNotice message={error} onRetry={load} />}
       {!data && loading && <Skeleton />}

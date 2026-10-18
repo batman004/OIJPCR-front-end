@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import {Editor} from '@tinymce/tinymce-react'
 import {
@@ -9,7 +8,7 @@ import EditorForm
     from '../../../components/Admin/EditorForm'
 import ArticlePreview from '../../../components/Admin/ArticlePreview'
 import UploadScreen from '../../../components/Admin/UploadScreen'
-import config from '../../../config/config'
+import SourceImages, {imageMarkup} from '../../../components/Admin/SourceImages'
 import {PopUp} from '../../../components/utils'
 import {UserContext} from '../../../UserContext'
 import {ArticleHandler, FileUploadHandler, readEditorContent, previewFromDraft, apiErrorMessage} from '../utils'
@@ -44,6 +43,8 @@ class EditArticle extends Component {
             preview: null,
             uploading: false,
             uploadStatus: '',
+            generatingPdf: false,
+            sourceImages: [],
         }
         this.editorInit = createEditorInit({
             uploadImage: file => FileUploadHandler.uploadFile(file, this.state.token),
@@ -52,16 +53,19 @@ class EditArticle extends Component {
 
     async componentDidMount() {
         try {
-            const {urlSlug, id} = this.props.match.params
-            const url = `${config.host}/journals/${urlSlug}/${id}`
-            const {data} = await axios.get(url)
+            const {id} = this.props.match.params
+            const authToken = this.context?.token
+            // An admin-only route (unlike GET /journals/:slug/:id, the public
+            // article page's endpoint) so a draft article can be opened here
+            // without ever being reachable through the public site.
+            const data = await ArticleHandler.getArticle(id, authToken)
             const {content: initialValue} = data
             this.setState({
                 ...data,
                 pdfFilePath: data.pdf,
                 id,
                 initialValue,
-                token: this.context?.token,
+                token: authToken,
             })
         } catch (e) {
             this.setState({
@@ -200,6 +204,52 @@ class EditArticle extends Component {
         return pdfPath
     }
 
+    // Rebuilds the PDF from the article's last-saved content (not whatever is
+    // unsaved in the editor right now) and points the article at it.
+    generatePdf = async () => {
+        if (this.state.generatingPdf) return
+        this.setState({generatingPdf: true})
+        try {
+            const pdf = await ArticleHandler.generatePdf(this.state.id, this.state.token)
+            this.setState({pdfFilePath: pdf})
+            this.notify('PDF generated')
+        } catch (err) {
+            this.notify(apiErrorMessage(err, 'Could not generate the PDF'))
+        } finally {
+            this.setState({generatingPdf: false})
+        }
+    }
+
+    // Uploads a PNG/JPEG version of a manuscript image the browser cannot show.
+    // The list is saved with the article, so the new version stays after reload.
+    replaceSourceImage = async (image, file) => {
+        try {
+            await this.setUploadStatus('Uploading the image…')
+            const url = await FileUploadHandler.uploadFile(file, this.state.token)
+            this.setState({
+                sourceImages: this.state.sourceImages.map((item) =>
+                    item.url === image.url ? {...item, url, contentType: file.type} : item),
+            })
+            this.notify('Image added. Insert it into the article where it belongs, then save.')
+        } catch (err) {
+            this.notify(apiErrorMessage(err, 'Could not upload the image'))
+        } finally {
+            this.setState({uploading: false, uploadStatus: ''})
+        }
+    }
+
+    // Puts one of the manuscript images that could not be placed automatically
+    // into the article text, at the editor's cursor.
+    insertSourceImage = (image) => {
+        const editor = this.state.editorRef
+        if (!editor?.insertContent) {
+            this.notify('The editor has not finished loading yet')
+            return
+        }
+        editor.insertContent(imageMarkup(image))
+        this.setState({content: editor.getContent()})
+    }
+
     openPreview = () => {
         this.setState({preview: previewFromDraft(this.state)})
     }
@@ -228,10 +278,17 @@ class EditArticle extends Component {
                 handleDelete={this.deleteArticle}
                 handlePreview={this.openPreview}
                 onFileChange={this.onFileChange}
+                onGeneratePdf={this.generatePdf}
                 {...formState}
                 isEdit={true}
                 heading={'Edit Article'}
             >
+                <SourceImages
+                    images={this.state.sourceImages}
+                    content={this.state.content || this.state.initialValue}
+                    onInsert={this.insertSourceImage}
+                    onReplace={this.replaceSourceImage}
+                />
                 <Editor
                     onInit={this.onInit}
                     onChange={this.handleEditorChange}
