@@ -29,4 +29,14 @@ if (ENV === "dev") {
   };
 }
 
+// Static preview build: content comes from files frozen by scripts/snapshot.mjs
+// (public/snapshot/), and nothing may reach the live API. See src/index.js.
+if (process.env.REACT_APP_SNAPSHOT === "1") {
+  config = {
+    ...config,
+    snapshot: true,
+    host: "/snapshot",
+  };
+}
+
 export default config;

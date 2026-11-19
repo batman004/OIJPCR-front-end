@@ -68,6 +68,10 @@ const SubmitArticle = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault()
+    if (config.snapshot) {
+      setError('Submissions are turned off on this preview site. Please submit through oijpcr.org.')
+      return
+    }
     const problem = validate(fields, manuscript, bookPhoto)
     setError(problem)
     if (problem || sending) return

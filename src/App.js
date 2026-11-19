@@ -1,8 +1,10 @@
 import React from 'react'
 import { useMemo, useState } from 'react'
 import {
-  BrowserRouter as Router, Switch, Route,
+  BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom'
+
+import config from './config/config'
 
 import { UserContext } from './UserContext'
 
@@ -29,9 +31,14 @@ const App = () => {
             <NotFound msg="could not find that"/>}
           />
 
-          <Route path="/admin" render={(props) => <Admin {...props} />}/>
-          <Route path="/signup" render={() => <SignUp/>}/>
-          <Route path="/login" render={() => <Login/>}/>
+          {/* The static preview is read-only: no admin or auth. */}
+          {config.snapshot
+            ? <Route path={['/admin', '/signup', '/login']} render={() => <Redirect to="/"/>}/>
+            : [
+              <Route key="admin" path="/admin" render={(props) => <Admin {...props} />}/>,
+              <Route key="signup" path="/signup" render={() => <SignUp/>}/>,
+              <Route key="login" path="/login" render={() => <Login/>}/>,
+            ]}
 
           <NavController/>
         </Switch>

@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import HTMLReactParser from 'html-react-parser'
-import config from '../../config/config'
+import useApi from '../../utils/useApi'
 import { ArticleHeader, MoreArticles, ReadingProgress, ShareArticleOnSocialMedia } from '../../components/Article'
 import { PDFButton, PrintButton } from '../../components/utils'
 import { LoadingCardFullWidth } from '../../components/Loaders'
@@ -10,40 +9,16 @@ import { cleanTitle, tagList } from '../../utils'
 import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
 
 const ReadArticle = ({ urlSlug, id }) => {
-    const [article, setArticle] = useState(null)
-    const [error, setError] = useState(null)
-    const [moreArticles, setMoreArticles] = useState(null)
     const bodyRef = useRef(null)
 
-    // Same route for every article, so refetch whenever the id in the URL changes.
-    useEffect(() => {
-        let live = true
-        setArticle(null)
-        setError(null)
-        window.scrollTo(0, 0)
-        axios
-            .get(`${config.host}/journals/${urlSlug}/${id}`)
-            .then(({ data }) => live && setArticle(data))
-            .catch((err) => live && setError(err))
-        return () => {
-            live = false
-        }
-    }, [urlSlug, id])
+    // Same route for every article, so useApi refetches whenever the id in the URL changes.
+    const { data: article, error } = useApi(`/journals/${urlSlug}/${id}`)
+    useEffect(() => window.scrollTo(0, 0), [urlSlug, id])
 
+    // One extra, since the list can include the article being read.
     const volume = article?.volume
-    useEffect(() => {
-        if (volume == null) return undefined
-        let live = true
-        setMoreArticles(null)
-        // One extra, since the list can include the article being read.
-        axios
-            .get(`${config.host}/journals/limit/${volume}/4`)
-            .then(({ data }) => live && setMoreArticles(data || []))
-            .catch(() => live && setMoreArticles([]))
-        return () => {
-            live = false
-        }
-    }, [volume])
+    const more = useApi(volume == null ? null : `/journals/limit/${volume}/4`)
+    const moreArticles = more.error ? [] : more.data
 
     // The CMS has no real subheads: authors write a paragraph of only bold text. Mark those,
     // and give the first substantial paragraph a drop cap.

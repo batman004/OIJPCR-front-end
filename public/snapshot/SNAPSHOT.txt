@@ -1,0 +1,3 @@
+Captured from https://api.oijpcr.org on 2026-11-19 (home, topics, archive only).
+Volume, article and topic pages are not in this snapshot yet; refill with scripts/snapshot.mjs
+once the API rate limit uses trust proxy (see OIJPCR-back-end app.js).
