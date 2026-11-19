@@ -1,58 +1,15 @@
-import React from 'react'
-import {
-  Switch,
-  Route, Redirect,
-} from 'react-router-dom'
-import { ArticleCard } from "../../components/Cards";
-import { CircularLoader } from "../../components/Loaders";
+import { ArticleCard } from '../../components/Cards'
+import { LoadingCard } from '../../components/Loaders'
 
-const ArticleList = (props) => {
-  const { path, journals } = props
+/** Ruled list of articles for a volume or a topic. `journals` is null while loading. */
+const ArticleList = ({ journals, error, showVolume }) => {
+  if (error) return <p className="summary py-8">These articles could not be loaded. Please try again shortly.</p>
+  if (!journals) return [1, 2, 3].map((i) => <LoadingCard key={i} />)
+  if (journals.length === 0) return <p className="summary py-8">No articles found.</p>
 
-  return (
-    <div className="flex-grow">
-      <Switch>
-        <Route path={path} render={(routeProps) =>
-          <Journals journals={journals} {...routeProps} />}
-        />
-        <Route exact path={`${path}/*`}
-          render={() => <Redirect to="/notFound" />}
-        />
-      </Switch>
-    </div>
-  )
-}
-
-function Journals({ journals }) {
-  let journalList
-  if (!journals)
-    journalList = <CircularLoader height="h-16" width="w-16" />
-  else if (journals.length === 0)
-    journalList = 'No Articles Found'
-  else journalList = createJournals(journals)
-
-  return (
-    <div className="h-full mx-0 md:mx-4">
-      <div className="flex flex-row flex-wrap w-full h-full py-2 my-4 justify-evenly editor">
-        {journalList}
-      </div>
-    </div>
-  )
-}
-
-function createJournals(journals = []) {
-  return journals?.map((article) => {
-    const articleProps = {
-      id: article._id,
-      coverPhoto: article.cover,
-      cname: {
-        container: 'w-5/6 sm:w-2/3',
-        button: '',
-      },
-      ...article,
-    }
-    return <ArticleCard {...articleProps} key={article._id} />
-  })
+  return journals.map((article) => (
+    <ArticleCard key={article._id} {...article} id={article._id} coverPhoto={article.cover} showVolume={showVolume} />
+  ))
 }
 
 export default ArticleList

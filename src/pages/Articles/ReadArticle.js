@@ -1,200 +1,137 @@
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
-import {Component} from 'react'
-import {Link} from 'react-router-dom'
 import HTMLReactParser from 'html-react-parser'
-import UTCToFormalDate from '../../utils/DateTime'
 import config from '../../config/config'
+import { ArticleHeader, MoreArticles, ReadingProgress, ShareArticleOnSocialMedia } from '../../components/Article'
+import { PDFButton, PrintButton } from '../../components/utils'
+import { LoadingCardFullWidth } from '../../components/Loaders'
+import { cleanTitle, tagList } from '../../utils'
+import SubmitArticleFormFullWidth from '../Archive/SubmitArticleFormFullWidth'
 
-import {
-    ArticleHeader,
-    ArticleContainer,
-    MoreArticles,
-    MoreArticlesContainer,
-    ShareArticleOnSocialMedia
-} from "../../components/Article";
+const ReadArticle = ({ urlSlug, id }) => {
+    const [article, setArticle] = useState(null)
+    const [error, setError] = useState(null)
+    const [moreArticles, setMoreArticles] = useState(null)
+    const bodyRef = useRef(null)
 
-import {
-    PrintButton, PDFButton
-} from '../../components/utils'
-import {textClip} from '../../utils'
-import {
-    LoadingCardFullWidth
-} from '../../components/Loaders'
-
-import SubmitArticleFormFullWidth
-    from '../Archive/SubmitArticleFormFullWidth'
-
-
-class ReadArticle extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            journal: "",
-            moreJournals: [],
-            timer: true,
-            isLoadingOtherArticles: true,
-            otherArticlesLoaderMsg: "Loading Articles..."
+    // Same route for every article, so refetch whenever the id in the URL changes.
+    useEffect(() => {
+        let live = true
+        setArticle(null)
+        setError(null)
+        window.scrollTo(0, 0)
+        axios
+            .get(`${config.host}/journals/${urlSlug}/${id}`)
+            .then(({ data }) => live && setArticle(data))
+            .catch((err) => live && setError(err))
+        return () => {
+            live = false
         }
-        this.startTimer = this.startTimer.bind(this)
-        this.stopTimer = this.stopTimer.bind(this)
-        this.articleHasLoaded = this.articleHasLoaded.bind(this)
-        this.handleClickOtherArticle = this.handleClickOtherArticle.bind(this)
-    }
+    }, [urlSlug, id])
 
-    async componentDidMount() {
-        try {
-            this.startTimer()
-
-            const {urlSlug, id} = this.props
-            const url = `${config.host}/journals/${urlSlug}/${id}`
-            const {data: article} = await axios.get(url);
-
-            const volume = article.volume
-            const MoreArticlesURL = `${config.host}/journals/limit/${volume}/${3}`
-            const {data: moreArticles} = await axios.get(MoreArticlesURL)
-
-            if (moreArticles && moreArticles.length > 1) this.stopTimer()
-
-            this.setState({
-                article: article,
-                moreArticles: moreArticles,
-            })
-        } catch (e) {
-            throw new Error(e.message)
+    const volume = article?.volume
+    useEffect(() => {
+        if (volume == null) return undefined
+        let live = true
+        setMoreArticles(null)
+        // One extra, since the list can include the article being read.
+        axios
+            .get(`${config.host}/journals/limit/${volume}/4`)
+            .then(({ data }) => live && setMoreArticles(data || []))
+            .catch(() => live && setMoreArticles([]))
+        return () => {
+            live = false
         }
-    }
+    }, [volume])
 
-    startTimer() {
-        const timer = setTimeout(() => {
-            this.setState(prevState => ({
-                isLoadingOtherArticles: !prevState.isLoadingOtherArticles,
-                otherArticlesLoaderMsg: "No other articles found."
-            }))
-        }, config.timeoutValue)
-
-        this.setState({
-            timer: timer
+    // The CMS has no real subheads: authors write a paragraph of only bold text. Mark those,
+    // and give the first substantial paragraph a drop cap.
+    useEffect(() => {
+        const body = bodyRef.current
+        if (!body) return
+        const paragraphs = [...body.querySelectorAll(':scope > p')]
+        paragraphs.forEach((p) => {
+            const text = p.textContent.trim()
+            const bold = [...p.querySelectorAll('strong, b')].map((el) => el.textContent).join('').trim()
+            if (text && text.length < 120 && bold === text) p.classList.add('subhead')
         })
-    }
+        paragraphs.find((p) => p.textContent.trim().length > 160)?.classList.add('drop-cap')
+    }, [article])
 
-    stopTimer() {
-        if (this.state.timer) {
-            clearTimeout(this.state.timer)
-
-            this.setState(prevState => ({
-                isLoadingOtherArticles: !prevState.isLoadingOtherArticles,
-                otherArticlesLoaderMsg: ""
-            }))
+    useEffect(() => {
+        if (!article?.title) return undefined
+        const previous = document.title
+        document.title = `${cleanTitle(article.title)} · OIJPCR`
+        return () => {
+            document.title = previous
         }
-    }
+    }, [article])
 
-    async handleClickOtherArticle(url) {
-        const {urlSlug, id} = url
-        const articleURL = `${config.host}/journals/${urlSlug}/${id}`
-
-        const {data: article} = await axios.get(articleURL)
-
-        this.setState({article: article})
-
-        try {
-            window.scroll({
-                top: -10, left: 0, behavior: 'smooth',
-            })
-        } catch (e) {
-            // fallback for older browsers
-            window.scrollTo(0, 0)
-        }
-    }
-
-    articleHasLoaded() {
-        const article = this.state.article
-        if (!article) return false
-        return Object.keys(article).length !== 0
-    }
-
-    render() {
-        const article = this.articleHasLoaded() ? this.state.article : false
-        const author = textClip(article?.author, 60)
-        const pdfLink = article?.pdf || ''
-        const content = this.articleHasLoaded() ? article.content : ''
-        // convert createdAt into formal Date
-        const date = UTCToFormalDate(article.createdAt)
-        // format date
-        const publishedDate = (<span
-            className="text-sm leading-snug"
-            style={{ color: 'var(--color-text-muted)' }}>
-        Published {`${date?.month || ""} ${date?.day || ""}`}
-            <sup>{date?.superScript} </sup>
-            {date?.year}
-      </span>)
-
-        return (<ArticleContainer>
-            {article ? <ArticleHeader
-                article={article}
-                author={author}
-                publishedDate={publishedDate}
-            /> : <LoadingCardFullWidth/>}
-
-
-            <div
-                className="max-w-full mt-16 text-justify lg:mx-4 article-body">
-                {HTMLReactParser(content.toString())}
-
-                <div
-                    className="flex flex-row flex-wrap items-center gap-4 mt-6 mb-6 noprint">
-                    <ShareArticleOnSocialMedia/>
-                    <PrintButton/>
-                    <PDFButton pdfLink={pdfLink}/>
-                </div>
+    if (error) {
+        return (
+            <div className="wrap section">
+                <h1 className="page-title">This article could not be loaded</h1>
+                <p className="summary mt-4">
+                    It may have moved, or the journal is briefly unavailable.{' '}
+                    <Link to="/archive" className="text-link">Browse the archive</Link>
+                </p>
             </div>
-
-            <Tags tags={article.tags}/>
-
-            <MoreArticlesContainer>
-                <MoreArticles
-                    articles={this.state.moreArticles}
-                    handleClick={this.handleClickOtherArticle}
-                    path={this.props.path}
-                    isLoading={this.state.isLoadingOtherArticles}
-                    loaderMsg={this.state.otherArticlesLoaderMsg}
-                />
-            </MoreArticlesContainer>
-
-            <SubmitArticleFormFullWidth/>
-        </ArticleContainer>)
+        )
     }
+
+    const tags = tagList(article?.tags)
+
+    return (
+        <>
+            <ReadingProgress targetRef={bodyRef} />
+            <article className="wrap pt-10 md:pt-16">
+                {article ? <ArticleHeader article={article} /> : <div className="max-w-[52rem] mx-auto"><LoadingCardFullWidth /></div>}
+
+                {article && (
+                    <>
+                        <div ref={bodyRef} className="article-body mt-12 md:mt-16">
+                            {HTMLReactParser(String(article.content || ''))}
+                        </div>
+
+                        <footer className="measure mt-14 pt-8 border-t-2" style={{ borderColor: 'var(--ink)' }}>
+                            {tags.length > 0 && (
+                                <div className="mb-8 noprint">
+                                    <p className="meta mb-3">Topics</p>
+                                    <ul className="flex flex-wrap gap-2">
+                                        {tags.map((tag) => (
+                                            <li key={tag}><Link className="tag" to={`/tags/${tag}`}>{tag}</Link></li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            <div className="flex flex-wrap items-center justify-between gap-6">
+                                <ShareArticleOnSocialMedia />
+                                <div className="flex flex-wrap gap-3">
+                                    <PrintButton />
+                                    <PDFButton pdfLink={article.pdf} />
+                                </div>
+                            </div>
+                        </footer>
+                    </>
+                )}
+            </article>
+
+            {article && (
+                <section className="wrap section noprint" aria-labelledby="more-heading">
+                    <div className="section-head">
+                        <h2 id="more-heading" className="section-title">More from Volume {article.volume}</h2>
+                        <Link to={`/archive/${article.volume}`} className="text-link whitespace-nowrap">
+                            The full volume <span className="arrow" aria-hidden="true">&rarr;</span>
+                        </Link>
+                    </div>
+                    <MoreArticles articles={moreArticles} currentId={article._id} isLoading={moreArticles === null} />
+                </section>
+            )}
+
+            <SubmitArticleFormFullWidth />
+        </>
+    )
 }
-
-
-function Tags({tags}) {
-    return (<div
-        className="flex flex-row flex-wrap mt-2 mb-6 noprint">
-        {tags?.split(', ').map((tag, index) => {
-            const itemLink = {
-                value: tag, url: `/tags/${tag}`,
-            }
-            return <TagBlock
-                index={index}
-                key={index}
-                {...itemLink}
-            />
-        })}
-    </div>)
-}
-
-function TagBlock(props) {
-    const cname = "badge-academic mx-1 my-1 focus:outline-none list-none"
-    const {url, value, index, newTab} = props
-
-    return (<li className={cname} key={index}>
-        {newTab ? <a href={url} target="_blank"
-                     rel="noreferrer">
-            {value}
-        </a> : <Link to={url}>
-            {value}
-        </Link>}
-    </li>)
-}
-
 
 export default ReadArticle

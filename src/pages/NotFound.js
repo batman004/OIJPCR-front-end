@@ -1,21 +1,18 @@
-export default function NotFound (props) {
-  const {msg} = props.msg ? props : ''
+import { Link } from 'react-router-dom'
+
+export default function NotFound() {
   return (
-    <div className="p-8 flex-grow flex items-center justify-center">
-      <div className="text-center">
-        <p
-          className="text-xs uppercase tracking-widest mb-3"
-          style={{ color: 'var(--color-text-muted)', letterSpacing: '0.12em' }}
-        >Error 404</p>
-        <h1
-          className="text-3xl md:text-5xl font-serif font-bold mb-3"
-          style={{ color: 'var(--color-primary)' }}
-        >
-          Page not found
-        </h1>
-        {msg && (
-          <p style={{ color: 'var(--color-text-muted)' }}>{msg}</p>
-        )}
+    <div className="wrap flex flex-col justify-center min-h-screen py-16">
+      <p className="meta">Error 404</p>
+      <h1 className="page-title mt-3 max-w-[18ch]">This page is not in the journal</h1>
+      <p className="summary mt-5 max-w-[48ch]">
+        The address may be mistyped, or the page may have moved.
+      </p>
+      <div className="flex flex-wrap items-center gap-6 mt-8">
+        <Link to="/" className="btn">Go to the front page</Link>
+        <Link to="/archive" className="text-link">
+          Browse the archive <span className="arrow" aria-hidden="true">&rarr;</span>
+        </Link>
       </div>
     </div>
   )

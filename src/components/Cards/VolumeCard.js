@@ -1,86 +1,46 @@
-import fallback from '../../assets/stockPhotos/r2_c1.jpg'
 import { Link } from 'react-router-dom'
+import fallback from '../../assets/stockPhotos/r2_c1.jpg'
 
-// volume, about, cover, date, isAdmin?
-const VolumeCard = ({
-  volume,
-  about,
-  cover,
-  date,
-  isAdmin,
-}) => (
-  <div className="card-surface flex flex-col max-w-sm m-4 overflow-hidden text-left min-40 md:max-w-md">
-    <CardCover volumeCover={cover || fallback} volume={volume} date={date} />
-    <CardContent volume={volume} about={about} isAdmin={isAdmin} />
-  </div>
-)
-
-
-function CardCover({ volumeCover, volume, date }) {
-  return (
-    <>
-      <img className="object-cover w-full h-98 md:h-64"
-        src={volumeCover}
-        alt={`volume ${volume}`}
-      />
-      <p
-        className="mt-3 text-xs font-medium text-center tracking-widest uppercase"
-        style={{ color: 'var(--color-text-muted)' }}
-      >{date}</p>
-    </>
-  )
-}
-
-function CardContent({ about, volume, isAdmin }) {
-  const start = 0,
-    end = about.length >= 250 ? 250 : about.length
-  /**
-   * slug length limit is 250 for optimal viewing.
-   * url slug limit will be enforced later
-   * changing urls always causes trouble (-_-).
-   */
-  const volumeSlug = about.slice(start, end)
+/** One volume in the archive index (and in the admin volume list, with an edit link). */
+const VolumeCard = ({ volume, about = '', cover, date, isAdmin }) => {
+  const url = `/archive/${volume}`
 
   return (
-    <div className="mx-6 my-5 text-left flex flex-col flex-1">
-      <div
-        className="mb-3 text-3xl font-bold text-center font-serif"
-        style={{ color: 'var(--color-primary)' }}
-      >
-        Volume {volume}
-      </div>
-      <p
-        className="mb-6 text-sm font-normal leading-relaxed md:text-base"
-        style={{ color: 'var(--color-text-muted)' }}
-      >
-        {volumeSlug}
-      </p>
-      <div className="flex-1" />
-      <div>
-        <CardButton text={`Explore Vol. ${volume}`} volume={volume} />
-        {
-          isAdmin
-          &&
-          <CardButton text={`Edit Vol. ${volume}`} volume={volume} isAdmin={isAdmin} />
-        }
-      </div>
-    </div>
-  )
-}
-
-function CardButton({ text, volume, isAdmin }) {
-  let link = `/archive/${volume}`
-  if (isAdmin)
-    link = `/admin/list/volume/${volume}`
-  return (
-    <Link
-      to={link}
-      className="btn-academic mr-3 my-3 max-w-max"
+    <article
+      className="entry group grid grid-cols-[auto_minmax(0,1fr)] gap-x-5 gap-y-4 py-8 border-b md:grid-cols-[7rem_minmax(0,1fr)_14rem] md:gap-x-10"
+      style={{ borderColor: 'var(--hair)' }}
     >
-      {text}
-    </Link>
+      {/* The numeral is the volume's title; "Volume" is spoken but not shown. */}
+      <h3
+        className="serif text-6xl md:text-7xl leading-none font-medium"
+        style={{ fontVariationSettings: "'opsz' 72", fontFeatureSettings: "'lnum'" }}
+      >
+        <Link to={url} className="transition-colors duration-200 group-hover:text-[color:var(--accent)]">
+          <span className="sr-only">Volume </span>
+          {String(volume).padStart(2, '0')}
+        </Link>
+      </h3>
+
+      <div className="min-w-0">
+        <p className="meta">{date}</p>
+        {about && <p className="summary mt-2 clamp-3 max-w-[50ch]">{about}</p>}
+        <div className="flex flex-wrap gap-6 mt-4">
+          <Link to={url} className="text-link">
+            Read the volume <span className="arrow" aria-hidden="true">&rarr;</span>
+          </Link>
+          {isAdmin && (
+            <Link to={`/admin/list/volume/${volume}`} className="text-link" style={{ color: 'var(--muted)' }}>
+              Edit volume
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <Link to={url} className="hidden md:block frame ratio-4-3" tabIndex={-1} aria-hidden="true">
+        <img src={cover || fallback} alt="" loading="lazy" />
+      </Link>
+    </article>
   )
 }
-
 
 export default VolumeCard

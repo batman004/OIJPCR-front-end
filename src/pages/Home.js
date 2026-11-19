@@ -1,42 +1,31 @@
-import { Component } from 'react'
-import Header from '../components/Home/Header'
-import LeftGrid from '../components/Home/LeftGrid'
-import Topics from '../components/Home/SideBar/Topics'
-import Popular from '../components/Home/SideBar/Popular'
-import SubmitArticleForm from '../components/Home/SideBar/SubmitArticleForm'
+import useApi from '../utils/useApi'
+import FrontPage from '../components/Home/FrontPage'
+import LatestArticles from '../components/Home/LatestArticles'
+import MissionQuote from '../components/Home/MissionQuote'
+import TopicIndex from '../components/Home/TopicIndex'
+import ArchiveStrip from '../components/Home/ArchiveStrip'
 import Podcast from '../components/Home/Podcast/Podcast'
+import SubmitArticleFormFullWidth from './Archive/SubmitArticleFormFullWidth'
 
+const Home = () => {
+  const articles = useApi('/journals/home/5')
+  const topics = useApi('/journals/tags')
+  const volumes = useApi('/journals/archive')
 
-class Home extends Component {
-  render() {
-    return (
-      <div className="flex-grow max-w-7xl">
-        <Header />
-        <Main />
-        <div className="mx-2 md:mx-8">
-          <Podcast />
-        </div>
+  const [lead, ...rest] = articles.data || []
+
+  return (
+    <>
+      <FrontPage lead={lead} error={articles.error} />
+      {!articles.error && <LatestArticles articles={articles.data ? rest : null} />}
+      <MissionQuote />
+      <TopicIndex topics={topics.data} error={topics.error} />
+      <ArchiveStrip volumes={volumes.data} />
+      <SubmitArticleFormFullWidth />
+      <div className="band-alt">
+        <Podcast />
       </div>
-    )
-  }
-}
-
-function Main() {
-  return (
-    <div className="flex flex-col px-2 md:flex-row md:px-4 md:mx-4">
-      <LeftGrid />
-      <SideBar />
-    </div>
-  )
-}
-
-function SideBar() {
-  return (
-    <div className="flex flex-col w-full mt-4 lg:w-1/4 md:w-1/3">
-      <Topics />
-      <Popular />
-      <SubmitArticleForm />
-    </div>
+    </>
   )
 }
 

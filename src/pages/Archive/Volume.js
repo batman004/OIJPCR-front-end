@@ -1,69 +1,45 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import useApi from '../../utils/useApi'
 import ArticleList from './ArticleList'
-import config from '../../config/config'
 
-class Volume extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      journals: null,
-    }
-  }
+/** One volume: its numeral, the editor's note, then every article in it. */
+const Volume = ({ volume, info }) => {
+  const { data: journals, error } = useApi(`/journals/all/${volume}/info`)
 
-  async componentDidMount() {
-    try {
-      const { volume } = this.props
-
-      const { data: journals } = await axios.get(
-        `${config.host}/journals/all/${volume}/info`,
-      )
-
-      this.setState({ journals: journals })
-    } catch (e) {
-      throw new Error(e.message)
-    }
-  }
-
-  render() {
-    const { path, volume, archive: volumeInfo } = this.props
-    const about = volumeInfo ? volumeInfo.about : ''
-    return (
-      <div className="flex-grow">
-        <div className="py-8 px-4 sm:px-6 lg:px-16 my-6">
+  return (
+    <>
+      <header className="wrap pt-12 md:pt-16 pb-12">
+        <div className="grid gap-8 md:grid-cols-12 md:gap-12">
           <p
-            className="text-xs uppercase tracking-widest mb-2"
-            style={{ color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}
-          >Archive</p>
-          <h1
-            className="text-3xl md:text-5xl font-serif font-bold pb-4"
-            style={{
-              color: 'var(--color-primary)',
-              borderBottom: '1px solid var(--color-border)',
-            }}
-          >Volume {volume}</h1>
-          <h5
-            className="mt-6 mb-3 text-base font-bold uppercase tracking-wider"
-            style={{ color: 'var(--color-primary)', letterSpacing: '0.06em' }}
-          >Editor's Note</h5>
-          <p
-            className="max-w-3xl mt-2 leading-relaxed"
-            style={{
-              fontFamily: 'var(--font-body)',
-              fontSize: '1.0625rem',
-              lineHeight: 1.8,
-              color: 'var(--color-text)',
-            }}
-          >{about}</p>
+            className="md:col-span-4 serif font-medium leading-[0.8] rise"
+            style={{ fontSize: 'clamp(6rem, 4rem + 9vw, 12rem)', fontVariationSettings: "'opsz' 72", fontFeatureSettings: "'lnum'", color: 'var(--accent)' }}
+            aria-hidden="true"
+          >
+            {String(volume).padStart(2, '0')}
+          </p>
+          <div className="md:col-span-8">
+            {info?.date && <p className="meta rise">{info.date}</p>}
+            <h1 className="page-title mt-2 rise">Volume {volume}</h1>
+            {info?.about && (
+              <div className="mt-8 pt-5 border-t rise rise-2" style={{ borderColor: 'var(--hair)' }}>
+                <h2 className="text-base font-semibold" style={{ fontFamily: 'var(--font-sans)', letterSpacing: 0 }}>
+                  Editor&rsquo;s note
+                </h2>
+                <p className="summary text-lg mt-3 max-w-[50ch]">{info.about}</p>
+              </div>
+            )}
+          </div>
         </div>
-        <ArticleList
-          journals={this.state.journals}
-          path={path}
-          volume={volume}
-        />
-      </div>
-    )
-  }
+      </header>
+
+      <section className="wrap pb-16 md:pb-24" aria-labelledby="volume-articles">
+        <div className="section-head" style={{ marginBottom: 0 }}>
+          <h2 id="volume-articles" className="section-title">In this volume</h2>
+          {journals && <p className="meta">{journals.length} {journals.length === 1 ? 'article' : 'articles'}</p>}
+        </div>
+        <ArticleList journals={journals} error={error} showVolume={false} />
+      </section>
+    </>
+  )
 }
 
 export default Volume

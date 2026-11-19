@@ -1,28 +1,10 @@
 function PDFButton({ pdfLink }) {
+    if (!pdfLink) return null
     return (
-        <a
-            className="btn-academic noprint focus:outline-none"
-            href={pdfLink}
-            target="_blank"
-            rel="noreferrer"
-        >
+        <a className="btn noprint" href={pdfLink} target="_blank" rel="noreferrer">
             Download PDF
         </a>
     )
 }
 
-function PDFButtonSmall({ pdfLink }) {
-    return (
-        <a
-            className="btn-academic noprint focus:outline-none"
-            href={pdfLink}
-            target="_blank"
-            rel="noreferrer"
-        >
-            PDF
-        </a>
-    )
-}
-
-
-export { PDFButton, PDFButtonSmall }
+export { PDFButton }

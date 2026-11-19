@@ -1,29 +1,29 @@
 const HeadingText =
-        'Our objective is to provide a platform to share experiences ' +
-        'and facilitate the exchange of ideas and expertise on conflict' +
-        ' resolution techniques in the Indian context.'
+  'Our objective is to provide a platform to share experiences and facilitate the exchange of ' +
+  'ideas and expertise on conflict resolution techniques in the Indian context.'
 
-const Author = () => {
-        return (
-                <span className="font-bold"> Dr. Jyoti M. Pathania </span>
-        )
-}
-
-const AboutText = () => {
-        return (
-                <span>
-                        It is an irony that ‘India – the Land of Ahimsa and Peace’, has very few centre pursuing Peace Studies and promoting the development of skills for conflict resolution.
-                        ‘Online Indian Journal of Peace and Conflict Resolution’ is a novel initiative started by
-                        <Author /> 
-                        in March 2016, to study, examine and analyse the multifarious methods, mechanisms and theories of conflict resolution used by organizations, institutions, social activists, academicians, individuals and practitioners. 
-                        <br></br>
-                        <br></br>
-                        <b>Aim and Scope</b> 
-                        <br></br>
-                        This journal will collate successful models and practices which could be referred to or tried out in similar cases/areas of dispute/conflict, thus positively contributing and helping in the creation of a peaceful society and Nation. The Journal shall be an annual feature and solicits contribution of commentaries on factual cases as well as articles of academic or theoretical nature on the subject, which will be reviewed and published for understanding and dealing with conflict situations and furtherance of peace studies.
-                </span >
-        )
-}
-
+const AboutText = () => (
+  <>
+    <p>
+      It is an irony that India, the land of ahimsa and peace, has very few centres pursuing peace
+      studies and promoting the development of skills for conflict resolution. The Online Indian
+      Journal of Peace and Conflict Resolution is a novel initiative started by{' '}
+      <strong>Dr. Jyoti M. Pathania</strong> in March 2016 to study, examine and analyse the
+      multifarious methods, mechanisms and theories of conflict resolution used by organisations,
+      institutions, social activists, academicians, individuals and practitioners.
+    </p>
+    <h2>Aim and scope</h2>
+    <p>
+      The journal collates successful models and practices which could be referred to or tried out
+      in similar cases and areas of dispute or conflict, positively contributing to the creation of a
+      peaceful society and nation.
+    </p>
+    <p>
+      It is an annual publication and solicits commentaries on factual cases as well as articles of an
+      academic or theoretical nature. Every contribution is reviewed before publication, for the
+      understanding of conflict situations and the furtherance of peace studies.
+    </p>
+  </>
+)
 
 export { HeadingText, AboutText }

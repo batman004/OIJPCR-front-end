@@ -1,47 +1,44 @@
-import female_avatar from '../../assets/teamMembers/female_avatar.svg'
+import { Link } from 'react-router-dom'
+import { cleanTitle, formatDate } from '../../utils'
 
-const ArticleHeader = ({
-    article,
-    author,
-    publishedDate
-}) => (
-    <>
-        <h1
-            className="mb-6 text-center font-serif font-bold leading-tight"
-            style={{ color: 'var(--color-primary)' }}
-        >
-            <span className="text-3xl md:text-4xl lg:text-5xl">
-                {article?.title || 'title'}
-            </span>
+/** Title block of an article: volume and date, headline, standfirst, byline, cover. */
+const ArticleHeader = ({ article }) => {
+  const date = formatDate(article.createdAt)
+
+  return (
+    <header>
+      <div className="max-w-[52rem] mx-auto">
+        <p className="meta rise">
+          <Link to={`/archive/${article.volume}`} className="meta-strong link-draw" style={{ color: 'var(--accent)' }}>
+            Volume {article.volume}
+          </Link>
+          {date && <span className="meta-sep"><time dateTime={article.createdAt}>{date}</time></span>}
+        </p>
+        <h1 className="page-title mt-4 rise" style={{ fontSize: 'clamp(2.1rem, 1.5rem + 2.4vw, 3.5rem)' }}>
+          {cleanTitle(article.title)}
         </h1>
+        {article.slug && <p className="standfirst mt-5 rise rise-2">{article.slug}</p>}
 
-        <div
-            className="flex flex-row justify-center items-center py-3 mb-2"
-            style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)' }}
-        >
-            <img src={article?.authorPhoto || female_avatar}
-                className="inline object-cover w-12 h-12 rounded-full"
-                alt="Author"
-            />
-            <h2 className="inline py-1 ml-4 text-sm font-medium text-center">
-                <span
-                    className="block leading-snug"
-                    style={{ color: 'var(--color-text)', fontFamily: 'var(--font-body)' }}
-                >
-                    By {author ?? 'author'}
-                </span>
-                {publishedDate}
-            </h2>
+        <div className="flex items-center gap-4 pt-5 mt-8 border-t rise rise-2" style={{ borderColor: 'var(--hair)' }}>
+          {article.authorPhoto && (
+            <img src={article.authorPhoto} alt="" className="object-cover w-12 h-12 rounded-full" />
+          )}
+          <p className="text-[0.9375rem]">
+            <span style={{ color: 'var(--muted)' }}>By </span>
+            <span className="font-semibold">{article.author}</span>
+          </p>
         </div>
+      </div>
 
-        <div className="flex flex-row justify-center my-6">
-            <img src={article.cover}
-                className="article-cover-image"
-                alt="Article Cover"
-            />
-        </div>
-    </>
-)
+      {article.cover && (
+        <figure className="max-w-[60rem] mx-auto mt-10 md:mt-12 rise rise-3">
+          <div className="frame ratio-16-9">
+            <img src={article.cover} alt="" />
+          </div>
+        </figure>
+      )}
+    </header>
+  )
+}
 
-
-export default ArticleHeader;
+export default ArticleHeader

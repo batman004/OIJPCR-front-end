@@ -12,32 +12,34 @@ import Tag from '../../pages/Topic/Tag'
 
 const NavController = () => {
     return (
-        <div className="flex flex-col items-center h-screen">
+        <div className="flex flex-col min-h-screen">
+            <a className="skip-link" href="#main">Skip to content</a>
             <Nav/>
-            <Switch>
+            <main id="main" className="flex-1 w-full">
+                <Switch>
+                    <Route exact path="/about" render={() => <About/>}/>
 
-                <Route exact path="/about" render={() => <About/>}/>
+                    <Route exact path="/editorialBoard" render={() => <EditorialBoard/>}/>
 
-                <Route exact path="/editorialBoard" render={() => <EditorialBoard/>}/>
+                    <Route exact path="/contact" render={() => <Contact/>}/>
 
-                <Route exact path="/contact" render={() => <Contact/>}/>
+                    <Route exact path="/tags/:tag" render={(props) => <Tag {...props}/>}/>
 
-                <Route exact path="/tags/:tag" render={(props) => <Tag {...props}/>}/>
+                    <Route path="/archive"
+                           render={(props) => <Archive {...props}/>}
+                    />
 
-                <Route path="/archive"
-                       render={(props) => <Archive {...props}/>}
-                />
+                    <Route exact path="/submitArticle"
+                           render={() => <SubmitArticle/>}
+                    />
 
-                <Route exact path="/submitArticle"
-                       render={() => <SubmitArticle/>}
-                />
+                    <Route exact path="/" render={() => <Home/>}/>
 
-                <Route exact path="/" render={() => <Home/>}/>
-
-                <Route path="*">
-                    <Redirect to="/notFound"/>
-                </Route>
-            </Switch>
+                    <Route path="*">
+                        <Redirect to="/notFound"/>
+                    </Route>
+                </Switch>
+            </main>
             <Footer/>
         </div>
     )

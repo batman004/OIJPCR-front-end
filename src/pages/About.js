@@ -1,68 +1,33 @@
-import {
-  AboutText,
-  HeadingText,
-  JournalParticulars,
-} from "../components/About";
-import Podcast from "../components/Home/Podcast/Podcast";
+import { AboutText, HeadingText, JournalParticulars } from '../components/About'
+import { PageHeader } from '../components/utils'
+import Podcast from '../components/Home/Podcast/Podcast'
 
 const About = () => (
-  <div className="flex-grow max-w-sm xs:max-w-lg sm:max-w-2xl md:max-w-5xl lg:max-w-7xl">
-    <AboutContainer>
-      <Heading>{HeadingText}</Heading>
+  <>
+    <PageHeader title="About the journal" lede={HeadingText} />
 
-      <Description>{<AboutText />}</Description>
+    <div className="wrap pb-16 md:pb-24">
+      <div className="grid gap-14 pt-10 border-t-2 lg:grid-cols-12 lg:gap-16" style={{ borderColor: 'var(--ink)' }}>
+        <div className="lg:col-span-7">
+          <div className="article-body" style={{ marginInline: 0 }}>
+            <AboutText />
+          </div>
+        </div>
+        <aside className="lg:col-span-5" aria-labelledby="particulars-heading">
+          <div className="lg:sticky lg:top-28">
+            <h2 id="particulars-heading" className="text-base font-semibold mb-3" style={{ fontFamily: 'var(--font-sans)', letterSpacing: 0 }}>
+              Journal particulars
+            </h2>
+            <JournalParticulars />
+          </div>
+        </aside>
+      </div>
+    </div>
 
-      <h2
-        className="text-center md:text-left text-2xl md:text-3xl my-8 font-serif font-bold pb-3"
-        style={{
-          color: 'var(--color-primary)',
-          borderBottom: '1px solid var(--color-border)',
-        }}
-      >
-        Journal Particulars
-      </h2>
-      <JournalParticulars />
-    </AboutContainer>
-
-    <div className="sm:mx-4">
+    <div className="band-alt">
       <Podcast />
     </div>
-  </div>
-);
+  </>
+)
 
-function AboutContainer(props) {
-  return (
-    <div className="mx-4 mt-10 mb-8 sm:mx-8 md:mx-12 md:mt-12 md:mb-10">
-      {props.children}
-    </div>
-  );
-}
-
-function Heading(props) {
-  return (
-    <h1
-      className="text-2xl md:text-4xl lg:text-5xl text-left font-serif font-bold leading-tight w-full"
-      style={{ color: 'var(--color-primary)' }}
-    >
-      {props.children}
-    </h1>
-  );
-}
-
-function Description(props) {
-  return (
-    <div
-      className="mt-8 text-justify w-full prose-academic-body"
-      style={{
-        fontFamily: 'var(--font-body)',
-        fontSize: '1.0625rem',
-        lineHeight: 1.8,
-        color: 'var(--color-text)',
-      }}
-    >
-      {props.children}
-    </div>
-  );
-}
-
-export default About;
+export default About

@@ -1,49 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useParams } from 'react-router-dom'
+import useApi from '../../utils/useApi'
 import ArticleList from '../Archive/ArticleList'
-import config from '../../config/config'
-import { useParams, useRouteMatch } from 'react-router-dom'
-
+import { PageHeader } from '../../components/utils'
 
 const Tag = () => {
-  const [journals, setJournals] = useState([])
   const { tag } = useParams()
-  const { path, url } = useRouteMatch()
-
-  useEffect(() => {
-    async function getJournals(tag) {
-      const url = `${config.host}/journals/tags/${tag}`
-      const { data: journals } = await axios.get(url)
-      setJournals(journals)
-    }
-    return getJournals(tag)
-  }, [tag])
+  const { data: journals, error } = useApi(`/journals/tags/${tag}`)
+  const count = journals?.length
 
   return (
-    <div className="flex-grow">
-      <div className="px-4 py-6 mx-4 md:mx-12 my-6">
-        <p
-          className="text-xs uppercase tracking-widest mb-2"
-          style={{ color: 'var(--color-text-muted)', letterSpacing: '0.1em' }}
-        >Topic</p>
-        <h1
-          className="text-3xl md:text-5xl font-serif font-bold pb-3"
-          style={{
-            color: 'var(--color-primary)',
-            borderBottom: '1px solid var(--color-border)',
-          }}
-        >{tag}</h1>
-      </div>
-      <div>
-        <ArticleList
-          journals={journals}
-          path={path}
-          url={url}
-        />
-      </div>
-    </div>
+    <>
+      <PageHeader
+        meta="Topic"
+        title={tag.trim()}
+        lede={count ? `${count} ${count === 1 ? 'article' : 'articles'} on this topic.` : undefined}
+      />
+      <section className="wrap pb-16 md:pb-24" aria-labelledby="tag-articles">
+        <h2 id="tag-articles" className="sr-only">Articles</h2>
+        <div className="border-t-2" style={{ borderColor: 'var(--ink)' }}>
+          <ArticleList journals={journals} error={error} />
+        </div>
+      </section>
+    </>
   )
 }
-
 
 export default Tag

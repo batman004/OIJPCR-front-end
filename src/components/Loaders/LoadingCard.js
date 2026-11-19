@@ -1,14 +1,15 @@
+/** Placeholder shaped like an ArticleCard row. */
 const LoadingCard = () => (
-    <div className="card-surface my-4 md:max-w-md md:mx-4 overflow-hidden">
-        <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
-        <div className="mx-2 my-4 md:mx-6">
-            <div className="mb-4 h-6 bg-gray-200 rounded-sm animate-pulse"></div>
-            <div className="px-2 mb-3 h-4 bg-gray-200 rounded-sm animate-pulse"></div>
-            <div className="px-2 mb-3 h-4 bg-gray-200 rounded-sm animate-pulse w-3/4"></div>
-            <div className="px-2 mb-2 h-4 bg-gray-200 rounded-sm animate-pulse w-1/2"></div>
+    <div className="grid gap-5 py-8 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] sm:gap-10 border-b" style={{borderColor: 'var(--hair)'}} aria-hidden="true">
+        <div className="skeleton ratio-3-2"/>
+        <div>
+            <div className="skeleton h-3 w-40"/>
+            <div className="skeleton h-7 mt-4 w-11/12"/>
+            <div className="skeleton h-7 mt-2 w-2/3"/>
+            <div className="skeleton h-4 mt-5 w-full"/>
+            <div className="skeleton h-4 mt-2 w-5/6"/>
         </div>
     </div>
 )
 
-
-export default LoadingCard;
+export default LoadingCard

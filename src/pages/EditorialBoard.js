@@ -1,16 +1,5 @@
+import { PageHeader } from "../components/utils";
 import Podcast from "../components/Home/Podcast/Podcast";
-
-const EditorialBoard = () => (
-  <div className="flex-grow max-w-7xl">
-    <div className="mx-2 sm:mx-4">
-      <EditorialBoardMembers />
-    </div>
-
-    <div className="sm:mx-4">
-      <Podcast />
-    </div>
-  </div>
-);
 
 const boardMembers = [
   {
@@ -25,7 +14,7 @@ const boardMembers = [
     name: "Dr. Mallika Joseph",
     designation: "Adjunct Professor",
     university:
-      "National Institute of Advanced Studies, Indian Institute of science Campus, Bengaluru-560012",
+      "National Institute of Advanced Studies, Indian Institute of Science Campus, Bengaluru-560012",
     email: "mallikajoseph@nias.res.in",
     website:
       "https://www.nias.res.in/People/facility-member-info/People/Mallika%20Joseph%20A",
@@ -56,61 +45,59 @@ const boardMembers = [
   },
   {
     name: "Prof Sangeeta Thapliyal",
-    designation: "Professor & Head Center for Inner Asian Studies",
+    designation: "Professor & Head, Center for Inner Asian Studies",
     university:
-      "School of International Studies,Room No-101, Jawaharlal Nehru University, New Delhi-110067",
+      "School of International Studies, Room No-101, Jawaharlal Nehru University, New Delhi-110067",
     email: "sthapliyal@mail.jnu.ac.in",
     website: "https://jnu.ac.in/Faculty/sthapliyal",
   },
 ];
 
-function EditorialBoardMembers() {
-  return (
-    <div className="mt-8 mb-8 lg:mt-12 lg:mb-16">
-      <div className="mb-6 lg:mb-10">
-        <h2
-          className="text-center sm:text-left text-2xl md:text-3xl lg:text-4xl font-serif font-bold pb-3"
-          style={{
-            color: 'var(--color-primary)',
-            borderBottom: '1px solid var(--color-border)',
-          }}
-        >
-          Editorial Board
-        </h2>
-      </div>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {boardMembers.map((member, index) => {
-          return (
-            <BoardMemberCard
-              key={index}
-              name={member.name}
-              designation={member.designation}
-              university={member.university}
-              email={member.email}
-              website={member.website}
-            />
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+const [chief, ...members] = boardMembers;
 
-function BoardMemberCard({ name, designation, university, email, website }) {
-  return (
-    <div className="board-card grid grid-cols-1 gap-2 p-6">
-      <h3 className="board-name text-xl md:text-2xl font-bold leading-snug">{name}</h3>
-      <p className="board-role text-base md:text-lg">
-        {designation}
-      </p>
-      <p className="board-institution text-sm md:text-base leading-relaxed">
-        {university}
-      </p>
-      <div className="mt-2 text-sm flex flex-col gap-1">
-        <a href={`mailto:${email}`}>{email}</a>
-        <a href={`${website}`} target="_blank" rel="noreferrer">Profile &rarr;</a>
-      </div>
+const EditorialBoard = () => (
+  <>
+    <PageHeader
+      title="Editorial board"
+      lede="Scholars of peace, conflict and international studies from institutions across India review and edit every contribution."
+    />
+
+    <div className="wrap pb-16 md:pb-24">
+      <section className="grid gap-6 py-10 border-t-2 md:grid-cols-12 md:gap-12" style={{ borderColor: "var(--ink)" }} aria-label="Chief editor">
+        <p className="meta md:col-span-3">{chief.designation}</p>
+        <div className="md:col-span-9">
+          <h2 className="page-title" style={{ fontSize: "clamp(1.9rem, 1.5rem + 1.6vw, 2.75rem)" }}>{chief.name}</h2>
+          <p className="summary mt-3 max-w-[60ch]">{chief.university}</p>
+          <MemberLinks {...chief} />
+        </div>
+      </section>
+
+      <ul className="grid border-t md:grid-cols-2 md:gap-x-12" style={{ borderColor: "var(--hair)" }}>
+        {members.map((member) => (
+          <li key={member.name} className="py-8 border-b" style={{ borderColor: "var(--hair)" }}>
+            <h2 className="entry-title text-2xl">{member.name}</h2>
+            <p className="mt-1 font-semibold text-[0.9375rem]" style={{ color: "var(--accent-deep)" }}>{member.designation}</p>
+            <p className="summary text-base mt-3">{member.university}</p>
+            <MemberLinks {...member} />
+          </li>
+        ))}
+      </ul>
     </div>
+
+    <div className="band-alt">
+      <Podcast />
+    </div>
+  </>
+);
+
+function MemberLinks({ email, website, name }) {
+  return (
+    <p className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-[0.9375rem]">
+      <a className="link-draw break-all" href={`mailto:${email}`}>{email}</a>
+      <a className="text-link" href={website} target="_blank" rel="noreferrer" aria-label={`Profile of ${name}`}>
+        Profile <span className="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </p>
   );
 }
 

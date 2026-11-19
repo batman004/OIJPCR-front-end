@@ -1,29 +1,26 @@
-import box from '../../assets/submitArticleBtn.svg'
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom'
 
+/** Call for submissions, shown at the foot of the front page, archive and articles. */
 function SubmitArticleFormFullWidth() {
-    return (
-        <div className="p-6 pb-8 mx-1 mt-6 mb-6 card-surface md:mt-10 noprint">
-            <div className="flex flex-col justify-center md:ml-2">
-                <p
-                    className="px-2 my-3 text-3xl md:text-4xl font-bold text-left font-serif leading-tight"
-                    style={{ color: 'var(--color-primary)' }}
-                >
-                    Interested in seeing your article in this space?
-                </p>
-                <p
-                    className="px-2 leading-relaxed"
-                    style={{ color: 'var(--color-text-muted)' }}
-                >
-                    Submit a draft of your article and we'll get back to you.
-                </p>
-                <Link to="/submitArticle" className="btn-academic mt-8 ml-2 max-w-max">
-                    <img src={box} alt="" className="inline w-4 h-4 mb-1 mr-2" style={{ filter: 'brightness(0) invert(1)' }}/>
-                    Submit Article
-                </Link>
-            </div>
+  return (
+    <section className="wrap pb-16 md:pb-24 noprint" aria-labelledby="cfp-heading">
+      <div className="grid gap-8 py-10 md:py-14 border-t-2 border-b md:grid-cols-12 md:items-end" style={{ borderTopColor: 'var(--ink)', borderBottomColor: 'var(--hair)' }}>
+        <div className="md:col-span-8">
+          <p className="meta" style={{ color: 'var(--accent)' }}>Call for submissions</p>
+          <h2 id="cfp-heading" className="section-title mt-3 max-w-[22ch]" style={{ fontSize: 'clamp(1.75rem, 1.3rem + 1.6vw, 2.6rem)' }}>
+            Interested in seeing your article in this space?
+          </h2>
+          <p className="summary mt-4 max-w-[56ch]">
+            We publish research articles, commentary and book reviews on peace and conflict
+            resolution, with specific reference to India. Send a draft and the editors will write back.
+          </p>
         </div>
-    )
+        <div className="md:col-span-4 flex flex-wrap gap-x-6 gap-y-4 md:justify-end">
+          <Link to="/submitArticle" className="btn">Submit an article</Link>
+        </div>
+      </div>
+    </section>
+  )
 }
 
 export default SubmitArticleFormFullWidth
