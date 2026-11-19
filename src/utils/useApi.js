@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import config from '../config/config'
 
-// Keep in sync with snapshotFile() in scripts/snapshot.mjs. Only [a-z0-9-] stay literal,
+// Snapshot file name for an API path. Only [a-z0-9-] stay literal,
 // so names stay unique on case-insensitive filesystems.
 const snapshotFile = (apiPath) => {
   let p = apiPath

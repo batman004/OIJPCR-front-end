@@ -29,8 +29,8 @@ if (ENV === "dev") {
   };
 }
 
-// Static preview build: content comes from files frozen by scripts/snapshot.mjs
-// (public/snapshot/), and nothing may reach the live API. See src/index.js.
+// Static preview build: content comes from API responses copied once into
+// public/snapshot/, and nothing may reach the live API. See src/index.js.
 if (process.env.REACT_APP_SNAPSHOT === "1") {
   config = {
     ...config,
